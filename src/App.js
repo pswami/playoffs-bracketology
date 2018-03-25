@@ -7,7 +7,7 @@ import Edit from './routes/Bracket/Edit';
 import Navbar from './components/Navbar';
 import Layout from './components/Layout';
 
-import './App.css';
+import './App.scss';
 
 class App extends Component {
   render() {
