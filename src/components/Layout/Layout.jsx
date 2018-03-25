@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Container = ({ children }) => (
-  <div class="container">{children}</div>
+  <div className="container mt-5">{children}</div>
 );
 
-Container.PropTypes = {
+Container.propTypes = {
   children: PropTypes.node,
 };
 
