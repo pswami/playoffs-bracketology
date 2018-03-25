@@ -7,7 +7,7 @@ const i18n = {
 export default class Navbar extends React.Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <a className="navbar-brand" href="#">
           {i18n.nba_playoffs_bracketology}
         </a>
