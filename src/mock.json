@@ -1,0 +1,339 @@
+{
+  "_internal": {
+    "pubDateTime": "2017-06-23 04:00:21.78",
+    "xslt": "xsl/league/playoffs/marty_playoffs_bracket.xsl",
+    "eventName": "playoffs_bracket"
+  },
+  "series": [
+    {
+      "roundNum": "1",
+      "confName": "West",
+      "seriesId": "10",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "GSW wins 4-0",
+      "gameNumber": 4,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612744",
+        "seedNum": "1",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612757",
+        "seedNum": "8",
+        "wins": "0",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "1",
+      "confName": "West",
+      "seriesId": "11",
+      "isScheduleAvailable": false,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "UTA wins 4-3",
+      "gameNumber": 7,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612746",
+        "seedNum": "4",
+        "wins": "3",
+        "isSeriesWinner": false
+      },
+      "bottomRow": {
+        "teamId": "1610612762",
+        "seedNum": "5",
+        "wins": "4",
+        "isSeriesWinner": true
+      }
+    },
+    {
+      "roundNum": "1",
+      "confName": "West",
+      "seriesId": "12",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "HOU wins 4-1",
+      "gameNumber": 5,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612745",
+        "seedNum": "3",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612760",
+        "seedNum": "6",
+        "wins": "1",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "1",
+      "confName": "West",
+      "seriesId": "13",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "SAS wins 4-2",
+      "gameNumber": 6,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612759",
+        "seedNum": "2",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612763",
+        "seedNum": "7",
+        "wins": "2",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "1",
+      "confName": "East",
+      "seriesId": "14",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "BOS wins 4-2",
+      "gameNumber": 6,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612738",
+        "seedNum": "1",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612741",
+        "seedNum": "8",
+        "wins": "2",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "1",
+      "confName": "East",
+      "seriesId": "15",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "WAS wins 4-2",
+      "gameNumber": 6,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612764",
+        "seedNum": "4",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612737",
+        "seedNum": "5",
+        "wins": "2",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "1",
+      "confName": "East",
+      "seriesId": "16",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "TOR wins 4-2",
+      "gameNumber": 6,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612761",
+        "seedNum": "3",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612749",
+        "seedNum": "6",
+        "wins": "2",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "1",
+      "confName": "East",
+      "seriesId": "17",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "CLE wins 4-0",
+      "gameNumber": 4,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612739",
+        "seedNum": "2",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612754",
+        "seedNum": "7",
+        "wins": "0",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "2",
+      "confName": "West",
+      "seriesId": "20",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "GSW wins 4-0",
+      "gameNumber": 4,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612744",
+        "seedNum": "1",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612762",
+        "seedNum": "5",
+        "wins": "0",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "2",
+      "confName": "West",
+      "seriesId": "21",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "SAS wins 4-2",
+      "gameNumber": 6,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612745",
+        "seedNum": "3",
+        "wins": "2",
+        "isSeriesWinner": false
+      },
+      "bottomRow": {
+        "teamId": "1610612759",
+        "seedNum": "2",
+        "wins": "4",
+        "isSeriesWinner": true
+      }
+    },
+    {
+      "roundNum": "2",
+      "confName": "East",
+      "seriesId": "22",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "BOS wins 4-3",
+      "gameNumber": 7,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612738",
+        "seedNum": "1",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612764",
+        "seedNum": "4",
+        "wins": "3",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "2",
+      "confName": "East",
+      "seriesId": "23",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "CLE wins 4-0",
+      "gameNumber": 4,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612761",
+        "seedNum": "3",
+        "wins": "0",
+        "isSeriesWinner": false
+      },
+      "bottomRow": {
+        "teamId": "1610612739",
+        "seedNum": "2",
+        "wins": "4",
+        "isSeriesWinner": true
+      }
+    },
+    {
+      "roundNum": "3",
+      "confName": "West",
+      "seriesId": "30",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "GSW wins 4-0",
+      "gameNumber": 4,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612744",
+        "seedNum": "1",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612759",
+        "seedNum": "2",
+        "wins": "0",
+        "isSeriesWinner": false
+      }
+    },
+    {
+      "roundNum": "3",
+      "confName": "East",
+      "seriesId": "31",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "CLE wins 4-1",
+      "gameNumber": 5,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612738",
+        "seedNum": "1",
+        "wins": "1",
+        "isSeriesWinner": false
+      },
+      "bottomRow": {
+        "teamId": "1610612739",
+        "seedNum": "2",
+        "wins": "4",
+        "isSeriesWinner": true
+      }
+    },
+    {
+      "roundNum": "4",
+      "confName": "NBA Finals",
+      "seriesId": "40",
+      "isScheduleAvailable": true,
+      "isSeriesCompleted": true,
+      "summaryStatusText": "GSW wins 4-1",
+      "gameNumber": 5,
+      "isGameLive": false,
+      "topRow": {
+        "teamId": "1610612744",
+        "seedNum": "1",
+        "wins": "4",
+        "isSeriesWinner": true
+      },
+      "bottomRow": {
+        "teamId": "1610612739",
+        "seedNum": "2",
+        "wins": "1",
+        "isSeriesWinner": false
+      }
+    }
+  ]
+}
