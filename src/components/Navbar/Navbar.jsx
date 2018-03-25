@@ -1,12 +1,15 @@
 import React from 'react';
 
+import AccountModal from './AccountModal';
+
 const i18n = {
   nba_playoffs_bracketology: 'NBA Playoffs Bracketology'
 };
 
 export default class Navbar extends React.Component {
   render() {
-    return (
+    return ([
+      <AccountModal />,
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <a className="navbar-brand" href="#">
           {i18n.nba_playoffs_bracketology}
@@ -22,24 +25,13 @@ export default class Navbar extends React.Component {
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">Link</a>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-        </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">Action</a>
-                <a className="dropdown-item" href="#">Another action</a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" href="#">Disabled</a>
-            </li>
+              </li>
           </ul>
+          <div className="form-inline my-2 my-lg-0">
+            <a class="btn btn-primary" href="#login-form" data-toggle="modal" data-target=".login-register-form">Login</a>
+          </div>
         </div>
       </nav>
-    );
+    ]);
   }
 }
