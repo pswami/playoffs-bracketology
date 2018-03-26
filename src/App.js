@@ -20,8 +20,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    console.log('componentDidMount');
-
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);
       this.setState({ user });
