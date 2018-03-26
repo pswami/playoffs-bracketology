@@ -2,11 +2,23 @@ import React from 'react';
 
 import AccountModal from './AccountModal';
 
+import { auth } from '../../firebase';
+
 const i18n = {
   nba_playoffs_bracketology: 'NBA Playoffs Bracketology'
 };
 
 export default class Navbar extends React.Component {
+  logout = () => {
+    auth.signOut().then((res) => {
+      console.log('logged out');
+      console.log(res);
+      // this.setState({
+      //   user: null
+      // });
+    });
+  }
+
   render() {
     return ([
       <AccountModal />,
@@ -28,7 +40,8 @@ export default class Navbar extends React.Component {
               </li>
           </ul>
           <div className="form-inline my-2 my-lg-0">
-            <a class="btn btn-primary" href="#login-form" data-toggle="modal" data-target=".login-register-form">Login</a>
+            <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-form">Login</a>
+            <a className="btn btn-danger" onClick={this.logout}>Logout</a>
           </div>
         </div>
       </nav>

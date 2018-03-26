@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import firebase, { auth, provider } from './firebase';
+
 import Landing from './routes/Bracket/Landing';
 import Edit from './routes/Bracket/Edit';
 
@@ -13,6 +15,19 @@ import Layout from './components/Layout';
 import './App.scss';
 
 class App extends Component {
+  state = {
+    user: null,
+  };
+
+  componentDidMount() {
+    console.log('componentDidMount');
+
+    auth.onAuthStateChanged((user) => {
+      console.log('user loaded', user);
+      this.setState({ user });
+    });
+  }
+
   render() {
     return (
       <div className="App bg-secondary">
@@ -24,6 +39,10 @@ class App extends Component {
             <Route path='/list' component={List} />
           </Layout.Container>
         </Switch>
+        <code>
+          Logged IN:
+          {this.state.user ? this.state.user.email : ''}
+        </code>
       </div>
     );
   }
