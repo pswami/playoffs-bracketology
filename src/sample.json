@@ -7,16 +7,22 @@
   },
   "matchups": {
     "12": {
+      "groupId": 2,
+      "uid": "sdfp2312",
       "seriesId": 2,
       "team": "GSW",
       "winIn": 5
     },
     "213": {
+      "groupId": 2,
+      "uid": "dsfas",
       "seriesId": 2,
       "team": "GSW",
       "winIn": 5
     },
     "123": {
+      "groupId": 4,
+      "uid": "sdfp2312",
       "seriesId": 2,
       "team": "GSW",
       "winIn": 5
