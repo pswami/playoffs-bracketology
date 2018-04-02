@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import firebase, { auth, provider } from './firebase';
+import { auth, createMatchups, readMatchups } from './firebase';
+
+import Home from './routes/Home/Home';
 
 import Landing from './routes/Bracket/Landing';
 import Edit from './routes/Bracket/Edit';
@@ -23,6 +25,21 @@ class App extends Component {
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);
       this.setState({ user });
+
+      console.log();
+      readMatchups({ uid: user.uid, groupId: 4}).then((res) => console.log(res));
+      // createMatchups({
+      //   uid: user.uid,
+      //   matchups: [{
+      //     seriesId: 2,
+      //     team: "GSW",
+      //     winIn: 5,
+      //   }, {
+      //     seriesId: 20,
+      //     team: "ATL",
+      //     winIn: 7,
+      //   }]
+      // }).then((docRef) => console.log('SECOND LOG', docRef));
     });
   }
 
@@ -32,7 +49,7 @@ class App extends Component {
         <Navbar />
         <Switch>
           <Layout.Container>
-            <Route exact path='/' component={Landing} />
+            <Route exact path='/' component={Home} />
             <Route path='/edit' component={Edit} />
             <Route path='/list' component={List} />
           </Layout.Container>
