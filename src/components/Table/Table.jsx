@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import './style.scss';
+
 /* Container */
 
-export const Container = ({ children, light, hoverable }) => (
-  <table className={cx('table', {
+export const Container = ({ children, light, hoverable, ...rest }) => (
+  <table  {...rest} className={cx('table', {
     'table-hover': hoverable
   })}>
     {children}
@@ -25,8 +27,8 @@ Container.defaultProps = {
 
 /* Head */
 
-export const Head = ({ children, light }) => (
-  <thead className={cx({ 'thead-light': light })}>
+export const Head = ({ children, light, ...rest }) => (
+  <thead className={cx({ 'thead-light': light })}  {...rest}>
     {children}
   </thead>
 );
@@ -43,18 +45,18 @@ Head.defaultProps = {
 
 /* Row */
 
-export const Row = ({ children }) => (
-  <tr>{children}</tr>
+export const Row = ({ children, ...rest }) => (
+  <tr {...rest}>{children}</tr>
 );
 
 /* Header */
 
-export const Header = ({ children }) => (
-  <th>{children}</th>
+export const Header = ({ children, ...rest }) => (
+  <th {...rest}>{children}</th>
 );
 
 /* Col */
 
-export const Col = ({ children }) => (
-  <td>{children}</td>
+export const Col = ({ children, ...rest }) => (
+  <td {...rest}>{children}</td>
 );
