@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { auth, createMatchups, readMatchups, createGroup } from './firebase';
+import { auth, createMatchups, readMatchups, createGroup, readGroups } from './firebase';
 
 import Home from './routes/Home/Home';
 
@@ -26,15 +26,15 @@ class App extends Component {
       console.log('user loaded', user);
       this.setState({ user });
 
-      console.log();
-      createGroup({
-        uid: user.uid,
-        rules: {
-          "winPoints": 1,
-          "gamePoints": 1,
-          "type": "continous",
-        }
-      })
+      // createGroup({
+      //   uid: user.uid,
+      //   rules: {
+      //     "winPoints": 1,
+      //     "gamePoints": 1,
+      //     "type": "continous",
+      //   }
+      // })
+      readGroups().then((res) => console.log(res));
       // readMatchups({ uid: user.uid, groupId: 4}).then((res) => console.log(res));
       // createMatchups({
       //   uid: user.uid,

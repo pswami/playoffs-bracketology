@@ -41,6 +41,16 @@ export const createGroup = ({ uid, rules }) => {
   });
 };
 
+export const readGroups = () => {
+  const groupRef = firestore.collection("group");
+
+  return groupRef.get().then((snapshot) => {
+    if (snapshot.size > 0) {
+      return snapshot.docs.map(doc => doc.data());
+    }
+  });
+};
+
 /* Matchups */
 
 export const createMatchups = ({ uid, groupId, matchups }) => {
