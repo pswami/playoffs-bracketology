@@ -6,6 +6,8 @@ import { auth } from './firebase';
 
 import Home from './routes/Home/Home';
 
+import Me from './routes/Account/Me';
+
 import Landing from './routes/Bracket/Landing';
 import Edit from './routes/Bracket/Edit';
 
@@ -59,6 +61,7 @@ class App extends Component {
         <Switch>
           <Layout.Container>
             <Route exact path='/' component={Home} />
+            <Route path='/me' component={Me} />
             <Route path='/edit' component={Edit} />
             <Route path='/group/:groupId' component={Show} />
           </Layout.Container>
