@@ -21,7 +21,7 @@ const TeamOption = ({ series }) => (
             value={teams[series.bottomRow.teamId].tricode}
             hidden
           />
-          <img className="icon" src={iconLink(teams[series.bottomRow.teamId].tricode)} />
+          <img alt="icon" className="icon" src={iconLink(teams[series.bottomRow.teamId].tricode)} />
         </label>
       </div>
       <div className="form-check form-check-inline">
@@ -33,7 +33,7 @@ const TeamOption = ({ series }) => (
             value={teams[series.topRow.teamId].tricode}
             hidden
           />
-          <img className="icon" src={iconLink(teams[series.topRow.teamId].tricode)} />
+          <img alt="icon" className="icon" src={iconLink(teams[series.topRow.teamId].tricode)} />
         </label>
       </div>
     </fieldset>

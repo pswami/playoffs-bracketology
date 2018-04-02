@@ -34,7 +34,7 @@ class App extends Component {
       //     "type": "continous",
       //   }
       // })
-      readGroups().then((res) => console.log(res));
+      // readGroups().then((res) => console.log(res));
       // readMatchups({ uid: user.uid, groupId: 4}).then((res) => console.log(res));
       // createMatchups({
       //   uid: user.uid,

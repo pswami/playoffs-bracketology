@@ -1,5 +1,3 @@
-/* global $ */
-
 import React from 'react';
 
 import { auth } from '../../firebase';
@@ -20,10 +18,7 @@ class LoginTab extends React.Component {
         toggleModal();
       })
       .catch(error => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-
-        console.error(errorCode, errorMessage);
+        console.error(error.code, error.message);
       });
   };
 
@@ -41,7 +36,7 @@ class LoginTab extends React.Component {
             />
           </div>
           <div className="form-group">
-            <label for="pwd">Password</label>
+            <label>Password</label>
             <input
               ref={input => (this.password = input)}
               type="password"
@@ -79,8 +74,7 @@ class SignupTab extends React.Component {
         toggleModal();
       })
       .catch(function (error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        console.error(error.code, error.message);
       });
   }
 
@@ -89,7 +83,7 @@ class SignupTab extends React.Component {
       <div id="registration-form" className="tab-pane fade">
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label for="newemail">Email</label>
+            <label>Email</label>
             <input
               ref={input => (this.email = input)}
               type="email"
@@ -99,7 +93,7 @@ class SignupTab extends React.Component {
             />
           </div>
           <div className="form-group">
-            <label for="newpwd">Password</label>
+            <label>Password</label>
             <input
               ref={input => (this.password = input)}
               type="password"
@@ -128,7 +122,7 @@ export default class AccountModal extends React.Component {
         id="login-register-form"
         className="modal fade"
         ref={modal => (this.modal = modal)}
-        tabindex="-1"
+        tabIndex="-1"
         role="dialog"
       >
         <div className="modal-dialog" role="document">
