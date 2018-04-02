@@ -46,12 +46,12 @@ const TeamTable = () => (
   </table>
 );
 
-const List = ({ children }) => (
+const Show = ({ children }) => (
   <TeamTable />
 );
 
-List.propTypes = {
+Show.propTypes = {
   children: PropTypes.node,
 };
 
-export default List;
+export default Show;

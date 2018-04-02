@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { auth, createMatchups, readMatchups, createGroup, readGroups } from './firebase';
+import { auth } from './firebase';
+// import { createMatchups, readMatchups, createGroup, readGroups } from './firebase';
 
 import Home from './routes/Home/Home';
 
@@ -9,7 +10,7 @@ import Landing from './routes/Bracket/Landing';
 import Edit from './routes/Bracket/Edit';
 
 import Create from './routes/Group/Create';
-import List from './routes/Group/List';
+import Show from './routes/Group/Show';
 
 import Navbar from './components/Navbar';
 import Layout from './components/Layout';
@@ -59,7 +60,7 @@ class App extends Component {
           <Layout.Container>
             <Route exact path='/' component={Home} />
             <Route path='/edit' component={Edit} />
-            <Route path='/list' component={List} />
+            <Route path='/group/:groupId' component={Show} />
           </Layout.Container>
         </Switch>
         <code>

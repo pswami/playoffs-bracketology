@@ -9,9 +9,6 @@ const i18n = {
 };
 
 export default class Navbar extends React.Component {
-  componentDidMount() {
-    console.log(this)
-  }
   logout = () => {
     auth.signOut().then((res) => {
       console.log('logged out');
