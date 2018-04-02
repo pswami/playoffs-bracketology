@@ -15,10 +15,33 @@ firebase.initializeApp(config);
 export default firebase;
 export const provider = new firebase.auth.GoogleAuthProvider();
 export const auth = firebase.auth();
-export const db = firebase.database();
 export const firestore = firebase.firestore();
+export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 // Refs
+
+/* Group */
+
+export const createGroup = ({ uid, rules }) => {
+  const groupRef = firestore.collection("group");
+
+  return groupRef.add({
+    "creator": uid,
+    "created_at": serverTimestamp,
+    "updated_at": serverTimestamp,
+    "users": [uid],
+    "rules": {
+      "winPoints": rules.winPoints,
+      "gamePoints": rules.gamePoints,
+      "type": rules.type,
+    },
+  })
+  .then(function (docRef) {
+    return docRef;
+  });
+};
+
+/* Matchups */
 
 export const createMatchups = ({ uid, groupId, matchups }) => {
   const matchupRef = firestore.collection("matchup");
@@ -52,4 +75,4 @@ export const readMatchups = ({ uid, groupId }) => {
       return snapshot.docs.map(doc => doc.data());
     }
   });
-}
+};
