@@ -1,0 +1,25 @@
+{
+  "brackets": {
+    "1": {
+      "userId": 1232,
+      "matchupIds": [12, 213, 123]
+    }
+  },
+  "matchups": {
+    "12": {
+      "seriesId": 2,
+      "team": "GSW",
+      "winIn": 5
+    },
+    "213": {
+      "seriesId": 2,
+      "team": "GSW",
+      "winIn": 5
+    },
+    "123": {
+      "seriesId": 2,
+      "team": "GSW",
+      "winIn": 5
+    }
+  }
+}
