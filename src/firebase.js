@@ -41,12 +41,19 @@ export const createGroup = ({ uid, rules }) => {
   });
 };
 
-export const readGroups = () => {
+export const readGroups = ({ uid } = {}) => {
   const groupRef = firestore.collection("group");
+  let queryRef = groupRef;
 
-  return groupRef.get().then((snapshot) => {
+  return queryRef.get().then((snapshot) => {
     if (snapshot.size > 0) {
-      return snapshot.docs.map(doc => doc.data());
+      let docs = snapshot.docs;
+
+      if (uid) {
+        docs = docs.filter(doc => doc.data().users.includes(uid))
+      }
+
+      return docs.map(doc => doc.data());
     }
   });
 };
