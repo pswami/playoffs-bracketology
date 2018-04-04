@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Table from '../../components/Table';
+import Card from '../../components/Card';
 
 const TeamTable = () => (
   <Table.Container>
@@ -49,7 +50,12 @@ const TeamTable = () => (
 );
 
 const Show = ({ children }) => (
-  <TeamTable />
+  <Card.Container>
+    <Card.Header>Bracket 123</Card.Header>
+    <Card.Body>
+      <TeamTable />
+    </Card.Body>
+  </Card.Container>
 );
 
 Show.propTypes = {

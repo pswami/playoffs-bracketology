@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import { connect, getState } from './redux';
 import { auth } from './firebase';
 // import { createMatchups, readMatchups, createGroup, readGroups } from './firebase';
 
@@ -25,10 +26,12 @@ class App extends Component {
   };
 
   componentDidMount() {
+    const { actions } = this.props;
+
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);
-      this.setState({ user });
-
+      actions.setUser(user);
+      console.log(this.props);
       // createGroup({
       //   uid: user.uid,
       //   rules: {
@@ -56,23 +59,26 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App bg-secondary">
-        <Navbar />
-        <Switch>
-          <Layout.Container>
-            <Route exact path='/' component={Home} />
-            <Route path='/me' component={Me} />
-            <Route path='/edit' component={Edit} />
-            <Route path='/group/:groupId' component={Show} />
-          </Layout.Container>
-        </Switch>
-        <code>
-          Logged IN:
-          {this.state.user ? this.state.user.email : ''}
-        </code>
-      </div>
+      <BrowserRouter>
+        <div className="App bg-secondary">
+          <Navbar />
+          <Switch>
+            <Layout.Container>
+              <Route exact path='/' component={Home} />
+              <Route path='/me' component={Me} />
+              <Route path='/edit' component={Edit} />
+              <Route path='/group/:groupId' component={Show} />
+            </Layout.Container>
+          </Switch>
+          <code>
+            Logged IN:
+            {this.state.user ? this.state.user.email : ''}
+          </code>
+        </div>
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+// export default App;
+export default connect((state) => (state))(App)

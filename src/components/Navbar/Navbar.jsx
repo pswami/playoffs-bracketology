@@ -2,6 +2,7 @@ import React from 'react';
 
 import AccountModal from './AccountModal';
 
+import { actions, getState } from '../../redux';
 import { auth } from '../../firebase';
 
 const i18n = {

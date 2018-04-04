@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Home = ({ children }) => (
   <div>
-    <button class="btn btn-primary">Create Group</button>
+    <button className="btn btn-primary">Create Group</button>
   </div>
 );
 
