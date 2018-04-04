@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Home = ({ children }) => (
+const Home = ({ children, appState }) => (
   <div>
+    {console.log(appState)}
     <button className="btn btn-primary">Create Group</button>
   </div>
 );

@@ -2,7 +2,6 @@ import React from 'react';
 
 import AccountModal from './AccountModal';
 
-import { actions, getState } from '../../redux';
 import { auth } from '../../firebase';
 
 const i18n = {
@@ -11,16 +10,17 @@ const i18n = {
 
 export default class Navbar extends React.Component {
   logout = () => {
-    auth.signOut().then((res) => {
+    const { actions } = this.props;
+
+    auth.signOut().then(() => {
+      actions.setUser(null);
       console.log('logged out');
-      console.log(res);
-      // this.setState({
-      //   user: null
-      // });
     });
   }
 
   render() {
+    const { appState } = this.props;
+
     return (
       <React.Fragment>
         <AccountModal />
@@ -42,8 +42,10 @@ export default class Navbar extends React.Component {
                 </li>
             </ul>
             <div className="form-inline my-2 my-lg-0">
-              <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-form">Login</a>
-              <a className="btn btn-danger" onClick={this.logout}>Logout</a>
+              {appState.user ?
+                <a className="btn btn-danger" onClick={this.logout}>Logout</a> :
+                <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-form">Login</a>
+              }
             </div>
           </div>
         </nav>

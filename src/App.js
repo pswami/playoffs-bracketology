@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { connect, getState } from './redux';
+import { connect, getState } from './store';
 import { auth } from './firebase';
 // import { createMatchups, readMatchups, createGroup, readGroups } from './firebase';
 
@@ -20,18 +20,21 @@ import Layout from './components/Layout';
 
 import './App.scss';
 
-class App extends Component {
-  state = {
-    user: null,
-  };
+const RouteWithProps = (props) => ({ Component, ...rest }) => (
+  <Route {...rest} render={() => (
+    <Component {...props} />
+  )} />
+);
 
+class App extends Component {
   componentDidMount() {
     const { actions } = this.props;
 
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);
       actions.setUser(user);
-      console.log(this.props);
+      console.log('this.state', this);
+      // console.log(this.props);
       // createGroup({
       //   uid: user.uid,
       //   rules: {
@@ -58,21 +61,24 @@ class App extends Component {
   }
 
   render() {
+    const { actions, appState } = this.props;
+    const RouteProps = RouteWithProps({ actions, appState });
+
     return (
       <BrowserRouter>
         <div className="App bg-secondary">
-          <Navbar />
+          <Navbar actions={actions} appState={appState} />
           <Switch>
             <Layout.Container>
-              <Route exact path='/' component={Home} />
-              <Route path='/me' component={Me} />
-              <Route path='/edit' component={Edit} />
-              <Route path='/group/:groupId' component={Show} />
+              <RouteProps exact path='/' Component={Home} />
+              <RouteProps path='/me' Component={Me} />
+              <RouteProps path='/edit' Component={Edit} />
+              <RouteProps path='/group/:groupId' Component={Show} />
             </Layout.Container>
           </Switch>
           <code>
             Logged IN:
-            {this.state.user ? this.state.user.email : ''}
+            {appState.user ? appState.user.email : ''}
           </code>
         </div>
       </BrowserRouter>
@@ -81,4 +87,4 @@ class App extends Component {
 }
 
 // export default App;
-export default connect((state) => (state))(App)
+export default connect((state) => ({ appState: state }))(App)

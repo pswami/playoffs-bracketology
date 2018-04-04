@@ -1,7 +1,7 @@
 import { initStore } from 'react-waterfall';
 
 const store = {
-  initialState: { user: 's' },
+  initialState: { user: null },
   actions: {
     setUser: (state, user) => ({ user }),
   },
