@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { connect, getState } from './store';
+import { connect } from './store';
 import { auth } from './firebase';
 // import { createMatchups, readMatchups, createGroup, readGroups } from './firebase';
 
@@ -34,6 +34,7 @@ class App extends Component {
       console.log('user loaded', user);
       actions.setUser(user);
       console.log('this.state', this);
+      console.log(actions.fetchData())
       // console.log(this.props);
       // createGroup({
       //   uid: user.uid,
@@ -68,6 +69,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="App bg-secondary">
           <Navbar actions={actions} appState={appState} />
+          <h1>loading: {`${appState.loading}`}</h1>
           <Switch>
             <Layout.Container>
               <RouteProps exact path='/' Component={Home} />

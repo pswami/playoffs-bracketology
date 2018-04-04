@@ -1,9 +1,19 @@
 import { initStore } from 'react-waterfall';
 
 const store = {
-  initialState: { user: null },
+  initialState: { loading: false, user: null },
   actions: {
     setUser: (state, user) => ({ user }),
+    setLoading: (state, loading) => ({ loading }),
+    fetchData: (state, user) => {
+      // actions.fetching();
+      // console.log('fetching');
+
+      // setTimeout(() => {
+      //   actions.fetchDone();
+      //   console.log('fetchDone');
+      // }, 5000);
+    },
   },
 }
 
@@ -14,4 +24,4 @@ export const {
   getState,
   connect,
   subscribe,
-} = initStore(store)
+} = initStore(store);

@@ -12,3 +12,7 @@ export const Body = ({ children }) => (
 export const Header = ({ children }) => (
   <div className="card-header">{children}</div>
 );
+
+Container.propTypes = { children: PropTypes.node };
+Body.propTypes = { children: PropTypes.node };
+Header.propTypes = { children: PropTypes.node };
