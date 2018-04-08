@@ -5,7 +5,7 @@ import cx from 'classnames';
 import data from '../../data/mock.json';
 import teams from '../../data/teams.json';
 
-import './style.scss';
+// import './style.scss';
 
 const iconLink = tricode => `http://i.cdn.turner.com/nba/nba/assets/logos/teams/secondary/web/${tricode}.svg`
 
