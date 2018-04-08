@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
+import { readGroups, readMatchups } from '../../firebase';
+
 import Card from '../../components/Card';
 import Table from '../../components/Table';
 
@@ -21,8 +23,8 @@ const GroupsTable = ({ groups, history }) => {
       <tbody>
         {groups.map(group =>
           <Table.Row onClick={handleSubmit(group.id)}>
-            <Table.Header>{group.name}</Table.Header>
-            <Table.Col>{group.points}</Table.Col>
+            <Table.Header>{group.id}</Table.Header>
+            <Table.Col>{group.rules.gamePoints}</Table.Col>
           </Table.Row>
         )}
       </tbody>
@@ -30,30 +32,36 @@ const GroupsTable = ({ groups, history }) => {
   );
 };
 
-const Me = ({ children, ...rest }) => {
-  return (
-    <div>
-      <Card.Container>
-        <Card.Header>
-          My Brackets
-        </Card.Header>
-        <Card.Body>
-          <GroupsTable
-            groups={[{
-              id: 123,
-              name: 'Bracket 123',
-              points: 10,
-            }, {
-              id: 123,
-              name: 'Bracket 123',
-              points: 10,
-            }]}
-            {...rest}
-          />
-        </Card.Body>
-      </Card.Container>
-    </div>
-  );
+class Me extends React.Component {
+  state = {
+    groups: [],
+  };
+
+  componentDidMount() {
+    const { appState: { user } } = this.props;
+
+    if (user) {
+      readGroups({ uid: user.uid }).then(groups =>
+        this.setState({ groups })
+      )
+    }
+  }
+
+  render() {
+    const { groups } = this.state;
+    const { children, ...rest } = this.props;
+
+    return (
+      <div>
+        <Card.Container>
+          <Card.Header>My Brackets</Card.Header>
+          <Card.Body>
+            <GroupsTable {...rest} groups={groups} />
+          </Card.Body>
+        </Card.Container>
+      </div>
+    );
+  }
 }
 
 Me.propTypes = {
