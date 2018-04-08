@@ -2,12 +2,12 @@ import firebase from 'firebase';
 import 'firebase/firestore';
 
 var config = {
-  apiKey: "AIzaSyD4GPFeB4Q4bwN8PHUrQosqn4GbBgFV1cc",
-  authDomain: "nba-playoff-bracketology.firebaseapp.com",
-  databaseURL: "https://nba-playoff-bracketology.firebaseio.com",
-  projectId: "nba-playoff-bracketology",
-  storageBucket: "",
-  messagingSenderId: "1063363606506"
+  apiKey: 'AIzaSyD4GPFeB4Q4bwN8PHUrQosqn4GbBgFV1cc',
+  authDomain: 'nba-playoff-bracketology.firebaseapp.com',
+  databaseURL: 'https://nba-playoff-bracketology.firebaseio.com',
+  projectId: 'nba-playoff-bracketology',
+  storageBucket: '',
+  messagingSenderId: '1063363606506'
 };
 
 firebase.initializeApp(config);
@@ -18,22 +18,21 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-// Refs
-
 /* Group */
 
-export const createGroup = ({ uid, rules }) => {
-  const groupRef = firestore.collection("group");
+export const createGroup = ({ uid, name, rules }) => {
+  const groupRef = firestore.collection('group');
 
   return groupRef.add({
-    "creator": uid,
-    "created_at": serverTimestamp,
-    "updated_at": serverTimestamp,
-    "users": [uid],
-    "rules": {
-      "winPoints": rules.winPoints,
-      "gamePoints": rules.gamePoints,
-      "type": rules.type,
+    creator: uid,
+    created_at: serverTimestamp,
+    updated_at: serverTimestamp,
+    users: [uid],
+    name: name,
+    rules: {
+      winPoints: rules.winPoints,
+      gamePoints: rules.gamePoints,
+      type: rules.type,
     },
   })
   .then(function (docRef) {
@@ -42,7 +41,7 @@ export const createGroup = ({ uid, rules }) => {
 };
 
 export const readGroups = ({ uid } = {}) => {
-  const groupRef = firestore.collection("group");
+  const groupRef = firestore.collection('group');
   let queryRef = groupRef;
 
   return queryRef.get().then((snapshot) => {
@@ -53,7 +52,7 @@ export const readGroups = ({ uid } = {}) => {
         docs = docs.filter(doc => doc.data().users.includes(uid))
       }
 
-      return docs.map(doc => doc.data());
+      return docs.map(doc => ({ ...doc.data(), id: doc.id }));
     }
   });
 };
@@ -89,7 +88,7 @@ export const readMatchups = ({ uid, groupId }) => {
 
   return queryRef.get().then((snapshot) => {
     if (snapshot.size > 0) {
-      return snapshot.docs.map(doc => doc.data());
+      return snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
     }
   });
 };
