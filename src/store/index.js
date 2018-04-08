@@ -1,21 +1,77 @@
 import { initStore } from 'react-waterfall';
+import { createMatchups, readMatchups, createGroup, readGroups } from '../firebase';
 
 const store = {
-  initialState: { loading: false, user: null },
+  initialState: { loading: false, user: null, groups: [] },
   actions: {
-    setUser: (state, user) => ({ user }),
+    setUser: (state, user) => ({ user: user ? user.toJSON() : undefined }),
     setLoading: (state, loading) => ({ loading }),
-    fetchData: (state, user) => {
-      // actions.fetching();
-      // console.log('fetching');
+    setGroups: (state, groups) => ({ groups }),
+    setMyGroups: (state, myGroups) => ({ myGroups }),
+    setBracket: (state, matchups) => ({ bracket: matchups }),
+    getMyGroups: (state,) => {
+      if (state.user) {
+        actions.setLoading(true);
 
-      // setTimeout(() => {
-      //   actions.fetchDone();
-      //   console.log('fetchDone');
-      // }, 5000);
+        readGroups({ uid: state.user.uid })
+          .then((response) => {
+            actions.setLoading(false);
+            actions.setMyGroups(response);
+          });
+      } else {
+        console.error('user does not exist');
+      }
+    },
+    getGroups: (state, params) => {
+      actions.setLoading(true);
+
+      console.log(state, params);
+      readGroups(params)
+        .then((response) => {
+          actions.setLoading(false);
+          actions.setGroups(response);
+          return response;
+        });
+
+      return Promise.resolve();
+    },
+    getBracket: (state, params) => {
+      actions.setLoading(true);
+
+      readMatchups(params) //{ uid: user.uid, groupId: 4 }
+        .then((response) => {
+          actions.setLoading(false);
+          actions.setGroups(response);
+        });
+    },
+    postBracket: (state, params) => {
+      actions.setLoading(true);
+
+
+      // createMatchups({
+      //   uid: user.uid,
+      //   matchups: [{
+      //     seriesId: 2,
+      //     team: "GSW",
+      //     winIn: 5,
+      //   }, {
+      //     seriesId: 20,
+      //     team: "ATL",
+      //     winIn: 7,
+      //   }]
+      // }).then((response) => {
+      //   actions.setLoading(false);
+      //   actions.setGroups(response);
+      // });
     },
   },
 }
+
+function name(store, self) {
+  console.log(store, self);
+
+  return (key, value) => { return Promise.resolve({ [key]: Promise.resolve(value) }) };
+};
 
 export const {
   Provider,
@@ -24,4 +80,4 @@ export const {
   getState,
   connect,
   subscribe,
-} = initStore(store);
+} = initStore(store, name);

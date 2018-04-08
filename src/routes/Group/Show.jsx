@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
+import MyPicks from './MyPicks';
 import Table from '../../components/Table';
 import Card from '../../components/Card';
 
-const TeamTable = () => (
+import { readGroups, readMatchups } from '../../firebase';
+
+const TeamTable = ({ group }) => (
   <Table.Container>
     <Table.Head>
       <Table.Row>
@@ -18,48 +22,71 @@ const TeamTable = () => (
       </Table.Row>
     </Table.Head>
     <tbody>
-      <Table.Row>
-        <Table.Header>1</Table.Header>
-        <Table.Col>Mark</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-      </Table.Row>
-      <Table.Row>
-        <Table.Header>2</Table.Header>
-        <Table.Col>Jacob</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-      </Table.Row>
-      <Table.Row>
-        <Table.Header>3</Table.Header>
-        <Table.Col>Larry</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-        <Table.Col>0</Table.Col>
-      </Table.Row>
+      {group.users.map(user => (
+        <Table.Row>
+          <Table.Header>1</Table.Header>
+          <Table.Col>{user}</Table.Col>
+          <Table.Col>0</Table.Col>
+          <Table.Col>0</Table.Col>
+          <Table.Col>0</Table.Col>
+          <Table.Col>0</Table.Col>
+          <Table.Col>0</Table.Col>
+        </Table.Row>
+      ))}
     </tbody>
   </Table.Container>
-);
+)
 
-const Show = ({ children }) => (
-  <Card.Container>
-    <Card.Header>Bracket 123</Card.Header>
-    <Card.Body>
-      <TeamTable />
-    </Card.Body>
-  </Card.Container>
-);
+class Show extends React.Component {
+  state = {
+    group: undefined,
+  };
+
+  componentDidMount() {
+    const { appState: { user }, match } = this.props;
+    const { groupId } = match.params;
+
+    console.log(groupId);
+
+    if (user) {
+      readGroups({ uid: user.uid }).then(groups => {
+        const group = groups.find(group => (group.id === groupId));
+-
+        this.setState({ group });
+      })
+    }
+  }
+
+  render() {
+    const { group } = this.state;
+
+    return (
+      <React.Fragment>
+        <Card.Container>
+          <Card.Header>
+            Bracket 123
+            <button type="button" class="btn btn-primary float-right">
+              <span>+ Add Member</span>
+            </button>
+          </Card.Header>
+          <Card.Body>
+            {group && <TeamTable group={group} />}
+          </Card.Body>
+        </Card.Container>
+        <br />
+        <Card.Container>
+          <Card.Header>My Picks</Card.Header>
+          <Card.Body>
+            {<MyPicks />}
+          </Card.Body>
+        </Card.Container>
+      </React.Fragment>
+    );
+  }
+}
 
 Show.propTypes = {
   children: PropTypes.node,
 };
 
-export default Show;
+export default withRouter(Show);
