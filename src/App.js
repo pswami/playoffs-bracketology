@@ -59,6 +59,17 @@ class App extends Component {
     });
   }
 
+  devInfo = () => {
+    const { appState } = this.props;
+
+    return (
+      <strong>
+        <div>Logged IN: {appState.user ? appState.user.email : ''}</div>
+        <div>loading: {`${appState.loading}`}</div>
+      </strong>
+    );
+  };
+
   render() {
     const { actions, appState } = this.props;
     const RouteProps = RouteWithProps({ actions, appState });
@@ -67,7 +78,6 @@ class App extends Component {
       <BrowserRouter>
         <div className="App bg-secondary">
           <Navbar {...{ actions, appState }} />
-          <h1>loading: {`${appState.loading}`}</h1>
           <Switch>
             <Layout.Container>
               <RouteProps exact path='/' Component={Home} />
@@ -76,10 +86,7 @@ class App extends Component {
               <RouteProps path='/group/:groupId' Component={Show} />
             </Layout.Container>
           </Switch>
-          <code>
-            Logged IN:
-            {appState.user ? appState.user.email : ''}
-          </code>
+          {this.devInfo()}
         </div>
       </BrowserRouter>
     );
