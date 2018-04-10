@@ -67,11 +67,9 @@ const store = {
   },
 }
 
-function name(store, self) {
-  console.log(store, self);
-
-  return (key, value) => { return Promise.resolve({ [key]: Promise.resolve(value) }) };
-};
+// function name(store, self) {
+//   return (key, value) => { return Promise.resolve({ [key]: Promise.resolve(value) }) };
+// };
 
 export const {
   Provider,
@@ -80,4 +78,4 @@ export const {
   getState,
   connect,
   subscribe,
-} = initStore(store, name);
+} = initStore(store);
