@@ -8,10 +8,10 @@ import Home from './routes/Home/Home';
 
 import Me from './routes/Account/Me';
 
-import Landing from './routes/Bracket/Landing';
+// import Landing from './routes/Bracket/Landing';
 import Edit from './routes/Bracket/Edit';
 
-import Create from './routes/Group/Create';
+// import Create from './routes/Group/Create';
 import Show from './routes/Group/Show';
 
 import Navbar from './components/Navbar';
@@ -27,7 +27,7 @@ const RouteWithProps = (props) => ({ Component, ...rest }) => (
 
 class App extends Component {
   componentDidMount() {
-    const { actions, appState } = this.props;
+    const { actions } = this.props;
 
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);

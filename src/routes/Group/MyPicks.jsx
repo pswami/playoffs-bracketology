@@ -47,7 +47,7 @@ const TeamOption = ({ series }) => (
       </div>
     </fieldset>
     <span> in <br /></span>
-    <select id="games" className="form-control col-md-4">
+    <select className="form-control col-md-4">
       <option value={4}>4</option>
       <option value={5}>5</option>
       <option value={6}>6</option>
@@ -63,7 +63,7 @@ const MyPicks = ({ children }) => (
         const conferenceChanged = idx === 0 || (data.series[idx - 1] && (singleSeries.roundNum !== data.series[idx - 1].roundNum));
 
         return (
-          <React.Fragment>
+          <React.Fragment key={singleSeries.seriesId}>
             {conferenceChanged && <h2>{roundNames[singleSeries.roundNum]}</h2>}
             <TeamOption series={singleSeries} />
           </React.Fragment>

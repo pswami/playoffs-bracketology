@@ -1,5 +1,5 @@
 import { initStore } from 'react-waterfall';
-import { createMatchups, readMatchups, createGroup, readGroups } from '../firebase';
+import { readMatchups, readGroups } from '../firebase';
 
 const store = {
   initialState: { loading: false, user: null, groups: [] },

@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import MyPicks from './MyPicks';
+import AddMemberModal from './AddMemberModal';
+
 import Table from '../../components/Table';
 import Card from '../../components/Card';
 
-import { readGroups, readMatchups } from '../../firebase';
+import { readGroups } from '../../firebase';
 
 const TeamTable = ({ group }) => (
   <Table.Container>
@@ -23,7 +25,7 @@ const TeamTable = ({ group }) => (
     </Table.Head>
     <tbody>
       {group.users.map(user => (
-        <Table.Row>
+        <Table.Row key={user}>
           <Table.Header>1</Table.Header>
           <Table.Col>{user}</Table.Col>
           <Table.Col>0</Table.Col>
@@ -35,7 +37,7 @@ const TeamTable = ({ group }) => (
       ))}
     </tbody>
   </Table.Container>
-)
+);
 
 class Show extends React.Component {
   state = {
@@ -46,12 +48,10 @@ class Show extends React.Component {
     const { appState: { user }, match } = this.props;
     const { groupId } = match.params;
 
-    console.log(groupId);
-
     if (user) {
       readGroups({ uid: user.uid }).then(groups => {
         const group = groups.find(group => (group.id === groupId));
--
+
         this.setState({ group });
       })
     }
@@ -62,10 +62,16 @@ class Show extends React.Component {
 
     return (
       <React.Fragment>
+        <AddMemberModal />
         <Card.Container>
           <Card.Header>
             Bracket 123
-            <button type="button" class="btn btn-primary float-right">
+            <button
+              type="button"
+              className="btn btn-primary float-right"
+              data-toggle="modal"
+              data-target="#addMemberModal"
+            >
               <span>+ Add Member</span>
             </button>
           </Card.Header>
