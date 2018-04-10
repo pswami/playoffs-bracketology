@@ -34,7 +34,7 @@
       "isScheduleAvailable": false,
       "isSeriesCompleted": true,
       "summaryStatusText": "UTA wins 4-3",
-      "gameNumber": 7,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612746",
@@ -56,7 +56,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "HOU wins 4-1",
-      "gameNumber": 5,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612745",
@@ -78,7 +78,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "SAS wins 4-2",
-      "gameNumber": 6,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612759",
@@ -100,7 +100,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "BOS wins 4-2",
-      "gameNumber": 6,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612738",
@@ -122,7 +122,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "WAS wins 4-2",
-      "gameNumber": 6,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612764",
@@ -144,7 +144,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "TOR wins 4-2",
-      "gameNumber": 6,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612761",
@@ -166,7 +166,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "CLE wins 4-0",
-      "gameNumber": 4,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612739",
@@ -188,7 +188,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "GSW wins 4-0",
-      "gameNumber": 4,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612744",
@@ -210,7 +210,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "SAS wins 4-2",
-      "gameNumber": 6,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612745",
@@ -232,7 +232,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "BOS wins 4-3",
-      "gameNumber": 7,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612738",
@@ -254,7 +254,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "CLE wins 4-0",
-      "gameNumber": 4,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612761",
@@ -276,7 +276,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "GSW wins 4-0",
-      "gameNumber": 4,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612744",
@@ -298,7 +298,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "CLE wins 4-1",
-      "gameNumber": 5,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612738",
@@ -320,7 +320,7 @@
       "isScheduleAvailable": true,
       "isSeriesCompleted": true,
       "summaryStatusText": "GSW wins 4-1",
-      "gameNumber": 5,
+      "gameNumber": 0,
       "isGameLive": false,
       "topRow": {
         "teamId": "1610612744",

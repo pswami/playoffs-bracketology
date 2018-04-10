@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { iconNBALink, roundNames } from '../../utils';
-import { readMatchups, createMatchups } from '../../firebase';
+import { readMatchups, setMatchups } from '../../firebase';
 
 import data from '../../data/mock.json';
 import teams from '../../data/teams.json';
@@ -17,13 +17,30 @@ class TeamOption extends React.Component {
     super(props);
 
     this.state = {
-      seriesId: props.series.seriesId,
       team: undefined,
       winIn: undefined,
     };
   }
 
-  isIncomplete = () => (!this.state.team && !this.state.winIn)
+  componentWillReceiveProps(nextProps) {
+    const { pick } = nextProps;
+
+    if (pick) {
+      this.setState({
+        team: pick.team,
+        winIn: pick.winIn,
+      });
+    }
+  }
+
+  mapData = () => ({
+    team: this.state.team,
+    winIn: this.state.winIn,
+    seriesId: this.props.series.seriesId,
+    roundNum: this.props.series.roundNum,
+  })
+
+  isComplete = () => !!(this.state.team && this.state.winIn)
 
   handleTeamChange = (e) => {
     this.setState({ team: e.target.value });
@@ -74,7 +91,7 @@ class TeamOption extends React.Component {
           onChange={this.handleWinChange}
           value={this.state.winIn}
         >
-          <option value={undefined} disabled selected>Select Games</option>
+          <option disabled selected>Select Games</option>
           <option value={4}>4</option>
           <option value={5}>5</option>
           <option value={6}>6</option>
@@ -90,16 +107,55 @@ class MyPicks extends React.Component {
     super(props);
 
     this.state = {
-      picks: []
+      picks: {}
     };
 
-    this.options = {};
+    this.options = [];
+  }
+
+  componentDidMount() {
+    const { appState: { user }, group } = this.props;
+
+    console.log(this.options);
+    if (user) {
+      readMatchups({
+        uid: user.uid,
+        groupId: group.id,
+      }).then((myPicks) => {
+        if (myPicks) {
+          const picks = myPicks.reduce((acc, pick) => {
+            acc[pick.seriesId] = pick;
+
+            return acc;
+          }, {});
+
+          this.setState({ picks });
+        }
+      })
+    }
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this);
-    // createMatchups().then(res => console.log())
+
+    const { appState, group } = this.props;
+
+    const matchups = Object.keys(this.options).reduce((acc, seriesID) => {
+      if (this.options[seriesID].isComplete()) {
+        acc.push({ ...this.options[seriesID].mapData() });
+      }
+
+      return acc;
+    }, [])
+
+    console.log(appState)
+    console.log(matchups)
+
+    setMatchups({
+      uid: appState.user.uid,
+      groupId: group.id,
+      matchups,
+    }).then(res => console.log(res))
   }
 
   render() {
@@ -112,7 +168,11 @@ class MyPicks extends React.Component {
             return (
               <React.Fragment key={singleSeries.seriesId}>
                 {conferenceChanged && <h2>{roundNames[singleSeries.roundNum]}</h2>}
-                <TeamOption ref={option => (this.options[idx] = option)} series={singleSeries} />
+                <TeamOption
+                  ref={option => (this.options[singleSeries.seriesId] = option)}
+                  series={singleSeries}
+                  pick={this.state.picks[singleSeries.seriesId]}
+                />
               </React.Fragment>
             );
           })}

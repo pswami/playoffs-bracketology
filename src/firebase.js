@@ -59,24 +59,23 @@ export const readGroups = ({ uid } = {}) => {
 
 /* Matchups */
 
-export const createMatchups = ({ uid, groupId, matchups }) => {
+export const setMatchups = ({ uid, groupId, matchups }) => {
   const matchupRef = firestore.collection("matchup");
   const batch = firestore.batch();
 
   matchups.forEach(matchup => {
-    const doc = matchupRef.doc();
+    const doc = matchupRef.doc(`${uid}-${groupId}-${matchup.seriesId}`);
 
     batch.set(doc, {
       seriesId: matchup.seriesId,
       team: matchup.team,
       winIn: matchup.winIn,
       uid: uid,
-      groupId: 4,
+      groupId: groupId,
     });
 
     return doc;
   });
-
 
   return batch.commit();
 };

@@ -83,7 +83,7 @@ class Show extends React.Component {
         <Card.Container>
           <Card.Header>My Picks</Card.Header>
           <Card.Body>
-            {<MyPicks />}
+            {group && <MyPicks group={group} {...this.props} />}
           </Card.Body>
         </Card.Container>
       </React.Fragment>
