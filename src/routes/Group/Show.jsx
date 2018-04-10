@@ -8,9 +8,9 @@ import AddMemberModal from './AddMemberModal';
 import Table from '../../components/Table';
 import Card from '../../components/Card';
 
-import { readGroups } from '../../firebase';
+import { readGroups, getUserProfile } from '../../firebase';
 
-const TeamTable = ({ group }) => (
+const TeamTable = ({ group, users }) => (
   <Table.Container>
     <Table.Head>
       <Table.Row>
@@ -24,10 +24,10 @@ const TeamTable = ({ group }) => (
       </Table.Row>
     </Table.Head>
     <tbody>
-      {group.users.map(user => (
-        <Table.Row key={user}>
+      {group.users.map(uid => (
+        <Table.Row key={uid}>
           <Table.Header>1</Table.Header>
-          <Table.Col>{user}</Table.Col>
+          <Table.Col>{users[uid] ? users[uid].name : uid}</Table.Col>
           <Table.Col>0</Table.Col>
           <Table.Col>0</Table.Col>
           <Table.Col>0</Table.Col>
@@ -42,6 +42,7 @@ const TeamTable = ({ group }) => (
 class Show extends React.Component {
   state = {
     group: undefined,
+    users: {}
   };
 
   componentDidMount() {
@@ -51,14 +52,21 @@ class Show extends React.Component {
     if (user) {
       readGroups({ uid: user.uid }).then(groups => {
         const group = groups.find(group => (group.id === groupId));
-
         this.setState({ group });
+
+        group.users.forEach((uid) => {
+          getUserProfile(uid).then((user) => {
+            this.setState((curState) => ({
+              users: {...curState.users, [uid]: user }
+            }));
+          })
+        });
       })
     }
   }
 
   render() {
-    const { group } = this.state;
+    const { group, users } = this.state;
 
     return (
       <React.Fragment>
@@ -76,7 +84,8 @@ class Show extends React.Component {
             </button>
           </Card.Header>
           <Card.Body>
-            {group && <TeamTable group={group} />}
+            {group && Object.keys(users).length > 0 &&
+              <TeamTable users={users} group={group} />}
           </Card.Body>
         </Card.Container>
         <br />

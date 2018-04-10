@@ -20,6 +20,28 @@ export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 /* Group */
 
+export const getUserProfile = (uid) => {
+  const userRef = firestore.collection('user');
+  const doc = userRef.doc(uid);
+
+  return doc.get().then((snapshot) => {
+    return snapshot.data();
+  });
+};
+
+export const setUserProfile = ({ uid, name }) => {
+  const userRef = firestore.collection('user');
+  const doc = userRef.doc(uid);
+
+  return doc.set({
+    uid,
+    name,
+  })
+  .then(function (docRef) {
+    return docRef;
+  });
+};
+
 export const createGroup = ({ uid, name, rules }) => {
   const groupRef = firestore.collection('group');
 

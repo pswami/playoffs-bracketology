@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { auth } from '../../firebase';
+import { auth, setUserProfile } from '../../firebase';
 
 class LoginTab extends React.Component {
   handleSubmit = (e) => {
@@ -69,8 +69,9 @@ class SignupTab extends React.Component {
     console.log('here');
 
     auth.createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        console.log('user created', res);
+      .then(user => {
+        console.log('user created', user);
+        setUserProfile({ uid: user.uid, name: user.displayName }).then(() => console.log('user profile created'))
         toggleModal();
       })
       .catch(function (error) {
