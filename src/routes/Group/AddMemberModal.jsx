@@ -17,16 +17,20 @@ class AddMemberModal extends React.Component {
     }))
   };
 
-  getUsers (input, callback) {
-    findUsers(input).then(users => {
-      if (users) {
-        var data = {
-          options: users,
-          complete: users.length <= 10,
-        };
-        callback(null, data);
-      }
-    });
+  getUsers(input, callback) {
+    if (input){
+      findUsers(input).then(users => {
+        if (users) {
+          var data = {
+            options: users,
+            complete: users.length <= 10,
+          };
+          callback(null, data);
+        }
+      });
+    } else {
+      callback(null, {});
+    }
   }
 
   handleSubmit = () => {
@@ -48,7 +52,14 @@ class AddMemberModal extends React.Component {
     const isDisabled = this.state.selectedUsers.length === 0;
 
     return (
-      <div className="modal fade" id="addMemberModal" tabIndex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="addMemberModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="addMemberModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
@@ -69,7 +80,6 @@ class AddMemberModal extends React.Component {
                   labelKey="name"
                   loadOptions={this.getUsers}
                 />
-                <input type="text" className="form-control" onChange={this.handleQueryChange} placeholder="Enter Username" />
                 <small id="emailHelp" className="form-text text-muted">User must already be signed up</small>
               </div>
             </div>
@@ -78,6 +88,7 @@ class AddMemberModal extends React.Component {
                 onClick={this.handleSubmit}
                 type="button"
                 className="btn btn-primary"
+                disabled={isDisabled}
               >
                 Add
               </button>
