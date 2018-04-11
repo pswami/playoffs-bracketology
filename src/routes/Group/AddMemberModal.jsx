@@ -38,6 +38,8 @@ class AddMemberModal extends React.Component {
     }).then(success => {
       if (success) {
         $('#addMemberModal').modal('toggle')
+      } else {
+        console.error('Failed');
       }
     })
   }
@@ -72,7 +74,13 @@ class AddMemberModal extends React.Component {
               </div>
             </div>
             <div className="modal-footer">
-              <button onClick={this.handleSubmit} type="button" className="btn btn-primary">Add</button>
+              <button
+                onClick={this.handleSubmit}
+                type="button"
+                className="btn btn-primary"
+              >
+                Add
+              </button>
             </div>
           </div>
         </div>
