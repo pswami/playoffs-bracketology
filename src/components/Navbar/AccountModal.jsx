@@ -66,12 +66,14 @@ class SignupTab extends React.Component {
     const email = this.email.value;
     const password = this.password.value;
 
-    console.log('here');
-
     auth.createUserWithEmailAndPassword(email, password)
       .then(user => {
         console.log('user created', user);
-        setUserProfile({ uid: user.uid, name: user.displayName }).then(() => console.log('user profile created'))
+        setUserProfile({
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+        }).then(() => console.log('user profile created'))
         toggleModal();
       })
       .catch(function (error) {

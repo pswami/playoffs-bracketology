@@ -1,35 +1,49 @@
+/* global $ */
+
 import React from 'react';
+import Select from 'react-select';
 
-import { auth } from '../../firebase';
-
-function validateEmail(email) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
+import { findUsers, addUsersToGroup } from '../../firebase';
 
 class AddMemberModal extends React.Component {
   state = {
-    email: '',
+    users: [],
+    selectedUsers: [],
   };
 
-  handleEmailChange = (e) => {
-    const email = e.target.value;
+  handleChange = user => {
+    this.setState(curState =>({
+      selectedUsers: [...curState.users, ...user]
+    }))
+  };
 
-    if (validateEmail(email)) {
-      auth.fetchSignInMethodsForEmail(email).then((providers, d) => {
-        console.log(providers, d )
+  getUsers (input, callback) {
+    findUsers(input).then(users => {
+      if (users) {
+        var data = {
+          options: users,
+          complete: users.length <= 10,
+        };
+        callback(null, data);
+      }
+    });
+  }
 
-        if (providers.length > 0) {
+  handleSubmit = () => {
+    const { group } = this.props;
 
-        }
-      });
-    }
-
-    this.setState({ email });
+    addUsersToGroup({
+      groupId: group.id,
+      users: this.state.selectedUsers.map(user => (user.uid)),
+    }).then(success => {
+      if (success) {
+        $('#addMemberModal').modal('toggle')
+      }
+    })
   }
 
   render() {
-    const isDisabled = this.state.email.length === 0;
+    const isDisabled = this.state.selectedUsers.length === 0;
 
     return (
       <div className="modal fade" id="addMemberModal" tabIndex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
@@ -43,13 +57,22 @@ class AddMemberModal extends React.Component {
             </div>
             <div className="modal-body">
               <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Email address</label>
-                <input type="email" className="form-control" onChange={this.handleEmailChange} placeholder="Enter email" />
-                <small id="emailHelp" className="form-text text-muted">Email must already be signed up</small>
+                <label>Username</label>
+                <Select.Async
+                  multi={true}
+                  value={this.state.selectedUsers}
+                  onChange={this.handleChange}
+                  onValueClick={this.gotoContributor}
+                  valueKey="uid"
+                  labelKey="name"
+                  loadOptions={this.getUsers}
+                />
+                <input type="text" className="form-control" onChange={this.handleQueryChange} placeholder="Enter Username" />
+                <small id="emailHelp" className="form-text text-muted">User must already be signed up</small>
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-primary">Save changes</button>
+              <button onClick={this.handleSubmit} type="button" className="btn btn-primary">Add</button>
             </div>
           </div>
         </div>

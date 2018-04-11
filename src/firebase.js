@@ -18,7 +18,18 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-/* Group */
+/* User */
+
+export const findUsers = (name) => {
+  const userRef = firestore.collection('user');
+  const queryRef = userRef.where('name', '<=', name)
+
+  return queryRef.get().then((snapshot) => {
+    if (snapshot.size > 0) {
+      return snapshot.docs.map(doc => (doc.data()));
+    }
+  });
+};
 
 export const getUserProfile = (uid) => {
   const userRef = firestore.collection('user');
@@ -39,6 +50,26 @@ export const setUserProfile = ({ uid, name }) => {
   })
   .then(function (docRef) {
     return docRef;
+  });
+};
+
+/* Group */
+
+export const addUsersToGroup = ({ groupId, users }) => {
+  const groupRef = firestore.collection('group');
+  const doc = groupRef.doc(groupId);
+
+  return doc.get().then((snapshot) => {
+    if (snapshot) {
+      const group = snapshot.data();
+
+      return doc.set({
+        updated_at: serverTimestamp,
+        users: [...group.users, ...users],
+      }).then(function (docRef) {
+        return true;
+      });
+    }
   });
 };
 

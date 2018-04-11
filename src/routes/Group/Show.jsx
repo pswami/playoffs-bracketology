@@ -70,7 +70,7 @@ class Show extends React.Component {
 
     return (
       <React.Fragment>
-        <AddMemberModal />
+        <AddMemberModal group={group} />
         <Card.Container>
           <Card.Header>
             Bracket 123
