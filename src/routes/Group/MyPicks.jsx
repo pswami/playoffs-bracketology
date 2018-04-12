@@ -6,6 +6,8 @@ import cx from 'classnames';
 import { iconNBALink, roundNames } from '../../utils';
 import { readMatchups, setMatchups } from '../../firebase';
 
+import Card from '../../components/Card';
+
 import data from '../../data/mock.json';
 import teams from '../../data/teams.json';
 
@@ -188,29 +190,32 @@ class MyPicks extends React.Component {
     const { message, error } = this.state;
 
     return (
-      <div>
-        {message && <div className="alert alert-primary" role="alert">{message}</div>}
-        {error && <div className="alert alert-danger" role="alert">{error}</div>}
-        <form onSubmit={this.handleSubmit}>
-          {data.series.map((singleSeries, idx) => {
-            const conferenceChanged = idx === 0 || (data.series[idx - 1] && (singleSeries.roundNum !== data.series[idx - 1].roundNum));
+      <Card.Container>
+        <Card.Header>My Picks</Card.Header>
+        <Card.Body>
+          {message && <div className="alert alert-primary" role="alert">{message}</div>}
+          {error && <div className="alert alert-danger" role="alert">{error}</div>}
+          <form onSubmit={this.handleSubmit}>
+            {data.series.map((singleSeries, idx) => {
+              const conferenceChanged = idx === 0 || (data.series[idx - 1] && (singleSeries.roundNum !== data.series[idx - 1].roundNum));
 
-            if (singleSeries.isScheduleAvailable) {
-              return (
-                <React.Fragment key={singleSeries.seriesId}>
-                  {conferenceChanged && <h2 className="roundHeader text-center">{roundNames[singleSeries.roundNum]}</h2>}
-                  <TeamOption
-                    ref={option => (this.options[singleSeries.seriesId] = option)}
-                    series={singleSeries}
-                    pick={this.state.picks[singleSeries.seriesId]}
-                  />
-                </React.Fragment>
-              );
-            }
-          })}
-          <button type="submit" className="btn btn-primary btn-lg btn-block">Update</button>
-        </form>
-      </div>
+              if (singleSeries.isScheduleAvailable) {
+                return (
+                  <React.Fragment key={singleSeries.seriesId}>
+                    {conferenceChanged && <h2 className="roundHeader text-center">{roundNames[singleSeries.roundNum]}</h2>}
+                    <TeamOption
+                      ref={option => (this.options[singleSeries.seriesId] = option)}
+                      series={singleSeries}
+                      pick={this.state.picks[singleSeries.seriesId]}
+                    />
+                  </React.Fragment>
+                );
+              }
+            })}
+            <button type="submit" className="btn btn-primary btn-lg btn-block">Update</button>
+          </form>
+        </Card.Body>
+      </Card.Container>
     );
   }
 }

@@ -59,10 +59,10 @@ class TeamRow extends React.Component {
           if (myPick) {
             if (winner.team === myPick.team) {
               points += teamPoints;
-            }
 
-            if (winner.games === myPick.winIn) {
-              points += gamePoints;
+              if (winner.games === myPick.winIn) {
+                points += gamePoints;
+              }
             }
 
             return { ...acc, [`round${series.roundNum}`]: acc[`round${series.roundNum}`] + points }
@@ -108,11 +108,11 @@ const TeamTable = ({ group, users }) => (
         <Table.Row>
           <Table.Header>#</Table.Header>
           <Table.Header>Name</Table.Header>
-          <Table.Header>1st Pts</Table.Header>
-          <Table.Header>Semi Pts</Table.Header>
-          <Table.Header>Conference Pts</Table.Header>
-          <Table.Header>Finals Pts</Table.Header>
-          <Table.Header>Total Pts</Table.Header>
+          <Table.Header>1st</Table.Header>
+          <Table.Header>Semi</Table.Header>
+          <Table.Header>Conf.</Table.Header>
+          <Table.Header>Finals</Table.Header>
+          <Table.Header>Total</Table.Header>
         </Table.Row>
       </Table.Head>
       <tbody>
@@ -167,11 +167,11 @@ class Show extends React.Component {
               {group.name}
               <button
                 type="button"
-                className="btn btn-primary float-right"
+                className="badge btn btn-primary btn-sm float-right"
                 data-toggle="modal"
                 data-target="#addMemberModal"
               >
-                <span>+ Add Member</span>
+                <span>+ Add</span>
               </button>
             </Card.Header>
             <Card.Body>
@@ -181,12 +181,7 @@ class Show extends React.Component {
             </Card.Body>
           </Card.Container>
           <br />
-          <Card.Container>
-            <Card.Header>My Picks</Card.Header>
-            <Card.Body>
-              {<MyPicks group={group} {...this.props} />}
-            </Card.Body>
-          </Card.Container>
+          {<MyPicks group={group} {...this.props} />}
         </React.Fragment>
       );
     }
