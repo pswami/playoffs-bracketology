@@ -10,7 +10,7 @@ import teams from '../../data/teams.json';
 
 import './style.scss';
 
-const isSeriesLocked = series => !series.isScheduleAvailable || (series.gameNumber > 0 && !series.isGameLive);
+const isSeriesLocked = series => !series.isScheduleAvailable || (series.gameNumber > 1 && !series.isGameLive);
 
 class TeamOption extends React.Component {
   constructor(props) {
@@ -52,9 +52,18 @@ class TeamOption extends React.Component {
 
   render() {
     const { series } = this.props;
+    const classNames = cx(
+      'form-group',
+      'form-row',
+      'flex',
+      'align-items-center',
+      'justify-content-center',
+      'py-2',
+      { 'disabled': isSeriesLocked(series) }
+    );
 
     return (
-      <div className={cx('form-group form-row flex align-items-center', { 'disabled': isSeriesLocked(series) })}>
+      <div className={classNames}>
         <fieldset>
           <div className="form-check form-check-inline">
             <label className="form-check-label  team-option">
@@ -87,11 +96,11 @@ class TeamOption extends React.Component {
         </fieldset>
         <span> in <br /></span>
         <select
-          className="form-control col-md-4"
+          className="form-control col-md-4 gamesSelect"
           onChange={this.handleWinChange}
           value={this.state.winIn}
         >
-          <option disabled selected>Select Games</option>
+          <option disabled selected>_</option>
           <option value={4}>4</option>
           <option value={5}>5</option>
           <option value={6}>6</option>
@@ -107,7 +116,9 @@ class MyPicks extends React.Component {
     super(props);
 
     this.state = {
-      picks: {}
+      picks: {},
+      message: undefined,
+      error: undefined,
     };
 
     this.options = [];
@@ -134,6 +145,15 @@ class MyPicks extends React.Component {
     }
   }
 
+  setStateAndHide = (startState, endState, time) => {
+    const callback = () => setTimeout(() => this.setState(endState), time);
+
+    this.setState(
+      startState,
+      callback,
+    );
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -152,26 +172,35 @@ class MyPicks extends React.Component {
       uid: appState.user.uid,
       groupId: group.id,
       matchups,
-    }).then(res => console.log(res))
+    })
+    .then(() => this.setStateAndHide({ message: 'Sucessfully Updated' }, { message: undefined }, 3000))
+    .catch(() => this.setStateAndHide({ error: 'Failed, please try again' }, { error: undefined }, 3000))
+    .then(() => window.scrollTo(0, 0))
   }
 
   render() {
+    const { message, error } = this.state;
+
     return (
       <div>
+        {message && <div className="alert alert-primary" role="alert">{message}</div>}
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
         <form onSubmit={this.handleSubmit}>
           {data.series.map((singleSeries, idx) => {
             const conferenceChanged = idx === 0 || (data.series[idx - 1] && (singleSeries.roundNum !== data.series[idx - 1].roundNum));
 
-            return (
-              <React.Fragment key={singleSeries.seriesId}>
-                {conferenceChanged && <h2>{roundNames[singleSeries.roundNum]}</h2>}
-                <TeamOption
-                  ref={option => (this.options[singleSeries.seriesId] = option)}
-                  series={singleSeries}
-                  pick={this.state.picks[singleSeries.seriesId]}
-                />
-              </React.Fragment>
-            );
+            if (singleSeries.isScheduleAvailable) {
+              return (
+                <React.Fragment key={singleSeries.seriesId}>
+                  {conferenceChanged && <h2 className="roundHeader text-center">{roundNames[singleSeries.roundNum]}</h2>}
+                  <TeamOption
+                    ref={option => (this.options[singleSeries.seriesId] = option)}
+                    series={singleSeries}
+                    pick={this.state.picks[singleSeries.seriesId]}
+                  />
+                </React.Fragment>
+              );
+            }
           })}
           <button type="submit">Update</button>
         </form>
