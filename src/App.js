@@ -32,30 +32,6 @@ class App extends Component {
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);
       actions.setUser(user);
-      // console.log(actions.getGroups);
-      // console.log(this.props);
-      // createGroup({
-      //   uid: user.uid,
-      //   rules: {
-      //     "winPoints": 1,
-      //     "gamePoints": 1,
-      //     "type": "continous",
-      //   }
-      // })
-      // readGroups().then((res) => console.log(res));
-      // readMatchups({ uid: user.uid, groupId: 4}).then((res) => console.log(res));
-      // createMatchups({
-      //   uid: user.uid,
-      //   matchups: [{
-      //     seriesId: 2,
-      //     team: "GSW",
-      //     winIn: 5,
-      //   }, {
-      //     seriesId: 20,
-      //     team: "ATL",
-      //     winIn: 7,
-      //   }]
-      // }).then((docRef) => console.log('SECOND LOG', docRef));
     });
   }
 

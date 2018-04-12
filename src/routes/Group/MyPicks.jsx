@@ -116,7 +116,6 @@ class MyPicks extends React.Component {
   componentDidMount() {
     const { appState: { user }, group } = this.props;
 
-    console.log(this.options);
     if (user) {
       readMatchups({
         uid: user.uid,
@@ -148,8 +147,6 @@ class MyPicks extends React.Component {
       return acc;
     }, [])
 
-    console.log(appState)
-    console.log(matchups)
 
     setMatchups({
       uid: appState.user.uid,
