@@ -1,3 +1,4 @@
+/* global swal */
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -10,7 +11,12 @@ import teams from '../../data/teams.json';
 
 import './style.scss';
 
-const isSeriesLocked = series => !series.isScheduleAvailable || (series.gameNumber > 1 && !series.isGameLive);
+const isSeriesLocked = series => (
+  !series.isScheduleAvailable ||
+  series.isSeriesCompleted ||
+  series.isGameLive ||
+  series.gameNumber > 1
+);
 
 class TeamOption extends React.Component {
   constructor(props) {
@@ -173,8 +179,8 @@ class MyPicks extends React.Component {
       groupId: group.id,
       matchups,
     })
-    .then(() => this.setStateAndHide({ message: 'Sucessfully Updated' }, { message: undefined }, 3000))
-    .catch(() => this.setStateAndHide({ error: 'Failed, please try again' }, { error: undefined }, 3000))
+    .then(() => swal('Sucessfully Updated', '', 'success'))
+    .catch(() => swal('Failed', 'Please try again', 'error'))
     .then(() => window.scrollTo(0, 0))
   }
 
