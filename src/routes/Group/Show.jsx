@@ -24,7 +24,10 @@ const getWinner = (series) => {
     winner = series.bottomRow;
   }
 
-  return { team: teams[winner.teamId].tricode, games: winner.wins };
+  return {
+    team: (teams[winner.teamId] || {}).tricode,
+    games: winner.wins
+  };
 };
 
 class TeamRow extends React.Component {
@@ -99,29 +102,31 @@ class TeamRow extends React.Component {
 
 
 const TeamTable = ({ group, users }) => (
-  <Table.Container>
-    <Table.Head>
-      <Table.Row>
-        <Table.Header>#</Table.Header>
-        <Table.Header>Name</Table.Header>
-        <Table.Header>1st Pts</Table.Header>
-        <Table.Header>Semi Pts</Table.Header>
-        <Table.Header>Conference Pts</Table.Header>
-        <Table.Header>Finals Pts</Table.Header>
-        <Table.Header>Total Pts</Table.Header>
-      </Table.Row>
-    </Table.Head>
-    <tbody>
-      {group.users.map(uid => (
-        <TeamRow
-          key={uid}
-          uid={uid}
-          group={group}
-          users={users}
-        />
-      ))}
-    </tbody>
-  </Table.Container>
+  <div className="table-responsive-sm">
+    <Table.Container>
+      <Table.Head>
+        <Table.Row>
+          <Table.Header>#</Table.Header>
+          <Table.Header>Name</Table.Header>
+          <Table.Header>1st Pts</Table.Header>
+          <Table.Header>Semi Pts</Table.Header>
+          <Table.Header>Conference Pts</Table.Header>
+          <Table.Header>Finals Pts</Table.Header>
+          <Table.Header>Total Pts</Table.Header>
+        </Table.Row>
+      </Table.Head>
+      <tbody>
+        {group.users.map(uid => (
+          <TeamRow
+            key={uid}
+            uid={uid}
+            group={group}
+            users={users}
+          />
+        ))}
+      </tbody>
+    </Table.Container>
+  </div>
 );
 
 class Show extends React.Component {
@@ -153,35 +158,40 @@ class Show extends React.Component {
   render() {
     const { group, users } = this.state;
 
-    return (
-      <React.Fragment>
-        <AddMemberModal group={group} />
-        <Card.Container>
-          <Card.Header>
-            Bracket 123
-            <button
-              type="button"
-              className="btn btn-primary float-right"
-              data-toggle="modal"
-              data-target="#addMemberModal"
-            >
-              <span>+ Add Member</span>
-            </button>
-          </Card.Header>
-          <Card.Body>
-            {group && Object.keys(users).length > 0 &&
-              <TeamTable users={users} group={group} />}
-          </Card.Body>
-        </Card.Container>
-        <br />
-        <Card.Container>
-          <Card.Header>My Picks</Card.Header>
-          <Card.Body>
-            {group && <MyPicks group={group} {...this.props} />}
-          </Card.Body>
-        </Card.Container>
-      </React.Fragment>
-    );
+    if (group) {
+      return (
+        <React.Fragment>
+          <AddMemberModal group={group} />
+          <Card.Container>
+            <Card.Header>
+              {group.name}
+              <button
+                type="button"
+                className="btn btn-primary float-right"
+                data-toggle="modal"
+                data-target="#addMemberModal"
+              >
+                <span>+ Add Member</span>
+              </button>
+            </Card.Header>
+            <Card.Body>
+              {Object.keys(users).length > 0 &&
+                <TeamTable users={users} group={group} />
+              }
+            </Card.Body>
+          </Card.Container>
+          <br />
+          <Card.Container>
+            <Card.Header>My Picks</Card.Header>
+            <Card.Body>
+              {<MyPicks group={group} {...this.props} />}
+            </Card.Body>
+          </Card.Container>
+        </React.Fragment>
+      );
+    }
+
+    return null;
   }
 }
 
