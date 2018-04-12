@@ -1,12 +1,18 @@
 .icon {
-  width: 75px;
-  height: 75px;
+  width: 4rem;
+  height: 4rem;
+  border: 3px solid #f1f1f1;
+  transition: all .1s ease-in;
+
+  &:hover {
+    border: 3px solid #649e39;
+  }
 }
 
 .team-option {
   cursor: pointer;
 
-  input:checked+.icon {
+  input:checked + .icon {
     transition: all .1s ease-in;
     border: 3px solid #649e39;
   }
@@ -20,8 +26,29 @@
     content: '';
     position: absolute;
     background: #21252936;
+    border: 3px solid #949494;
     width: 100%;
     height: 100%;
     z-index: 1;
   }
+}
+
+.form-control {
+  &.gamesSelect {
+    height: 4rem !important;
+    flex-basis: 4rem;
+    font-size: 41px;
+  }
+}
+
+.roundHeader {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+  font-size: 1.7rem;
+  padding: 14px 14px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+  color: #2c2c2c;
+  letter-spacing: .05em;
+  text-shadow: 4px 4px 0px #d5d5d5;
 }

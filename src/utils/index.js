@@ -2,7 +2,7 @@ export const iconNBALink = tricode => `http://i.cdn.turner.com/nba/nba/assets/lo
 
 export const roundNames = {
   1: "First Round",
-  2: "Semi",
-  3: "Conference",
+  2: "Semi-Finals",
+  3: "Conference Finals",
   4: "Finals",
 };
