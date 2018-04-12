@@ -202,7 +202,7 @@ class MyPicks extends React.Component {
               );
             }
           })}
-          <button type="submit">Update</button>
+          <button type="submit" className="btn btn-primary btn-lg btn-block">Update</button>
         </form>
       </div>
     );
