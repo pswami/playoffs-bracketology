@@ -63,7 +63,7 @@ export const addUsersToGroup = ({ groupId, users }) => {
     if (snapshot) {
       const group = snapshot.data();
 
-      return doc.set({
+      return doc.update({
         updated_at: serverTimestamp,
         users: [...group.users, ...users],
       }).then(function (docRef) {
@@ -83,7 +83,7 @@ export const createGroup = ({ uid, name, rules }) => {
     users: [uid],
     name: name,
     rules: {
-      winPoints: rules.winPoints,
+      teamPoints: rules.teamPoints,
       gamePoints: rules.gamePoints,
       type: rules.type,
     },
@@ -123,6 +123,7 @@ export const setMatchups = ({ uid, groupId, matchups }) => {
       seriesId: matchup.seriesId,
       team: matchup.team,
       winIn: matchup.winIn,
+      roundNum: matchup.roundNum,
       uid: uid,
       groupId: groupId,
     });
