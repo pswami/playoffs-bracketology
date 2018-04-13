@@ -10,9 +10,7 @@ const store = {
     setLoading: (state, loading) => ({ loading }),
     setNbaBrackets: (state, brackets) => ({ brackets }),
     getPlayoffBrackets: (state, brackets) => {
-      var myHeaders = new Headers();
-      myHeaders.append("Access-Control-Allow-Origin", "*");
-      fetch(NBA_BRACKETS_URL, { headers: myHeaders })
+      fetch(NBA_BRACKETS_URL)
         .then(res => (res.json()))
         .then(data => (actions.setNbaBrackets(data.series)));
 
