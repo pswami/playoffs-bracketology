@@ -182,7 +182,6 @@ class MyPicks extends React.Component {
     })
     .then(() => swal('Sucessfully Updated', '', 'success'))
     .catch(() => swal('Failed', 'Please try again', 'error'))
-    .then(() => window.scrollTo(0, 0))
   }
 
   render() {
@@ -196,17 +195,17 @@ class MyPicks extends React.Component {
           {message && <div className="alert alert-primary" role="alert">{message}</div>}
           {error && <div className="alert alert-danger" role="alert">{error}</div>}
           <form onSubmit={this.handleSubmit}>
-            {brackets.map((singleSeries, idx) => {
-              const conferenceChanged = idx === 0 || (brackets[idx - 1] && (singleSeries.roundNum !== brackets[idx - 1].roundNum));
+            {brackets.map((series, idx) => {
+              const conferenceChanged = idx === 0 || (brackets[idx - 1] && (series.roundNum !== brackets[idx - 1].roundNum));
 
-              if (singleSeries.isScheduleAvailable) {
+              if (series.isScheduleAvailable) {
                 return (
-                  <React.Fragment key={singleSeries.seriesId}>
-                    {conferenceChanged && <h2 className="roundHeader text-center">{roundNames[singleSeries.roundNum]}</h2>}
+                  <React.Fragment key={series.seriesId}>
+                    {conferenceChanged && <h2 className="roundHeader text-center">{roundNames[series.roundNum]}</h2>}
                     <TeamOption
-                      ref={option => (this.options[singleSeries.seriesId] = option)}
-                      series={singleSeries}
-                      pick={this.state.picks[singleSeries.seriesId]}
+                      ref={option => (this.options[series.seriesId] = option)}
+                      series={series}
+                      pick={this.state.picks[series.seriesId]}
                     />
                   </React.Fragment>
                 );

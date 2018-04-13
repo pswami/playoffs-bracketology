@@ -1,4 +1,6 @@
+/* global $ */
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import { auth, setUserProfile } from '../../firebase';
 
@@ -6,16 +8,15 @@ class LoginTab extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { toggleModal } = this.props;
+    const { toggleModal, history } = this.props;
     const email = this.email.value;
     const password = this.password.value;
 
-    console.log(e)
-
     auth.signInWithEmailAndPassword(email, password)
       .then(res => {
-        console.log(res);
         toggleModal();
+
+        history.push('/me');
       })
       .catch(error => {
         console.error(error.code, error.message);
@@ -62,19 +63,23 @@ class SignupTab extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { toggleModal } = this.props;
+    const { toggleModal, history } = this.props;
     const email = this.email.value;
     const password = this.password.value;
 
     auth.createUserWithEmailAndPassword(email, password)
       .then(user => {
         console.log('user created', user);
+
         setUserProfile({
           uid: user.uid,
           name: user.displayName,
           email: user.email,
         }).then(() => console.log('user profile created'))
+
         toggleModal();
+
+        history.push('/me');
       })
       .catch(function (error) {
         console.error(error.code, error.message);
@@ -113,16 +118,18 @@ class SignupTab extends React.Component {
   }
 }
 
+const Login = withRouter(LoginTab);
+const Signup = withRouter(SignupTab);
+
 export default class AccountModal extends React.Component {
   toggleModal = () => {
-    debugger;
-    this.modal.modal('toggle');
+    $('#login-register-modal').modal('hide')
   }
 
   render() {
     return (
       <div
-        id="login-register-form"
+        id="login-register-modal"
         className="modal fade"
         ref={modal => (this.modal = modal)}
         tabIndex="-1"
@@ -145,8 +152,8 @@ export default class AccountModal extends React.Component {
             </div>
             <div className="modal-body">
               <div className="tab-content">
-                <LoginTab toggleModal={this.toggleModal} />
-                <SignupTab />
+                <Login toggleModal={this.toggleModal} />
+                <Signup toggleModal={this.toggleModal}/>
               </div>
             </div>
           </div>

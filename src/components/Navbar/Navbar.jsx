@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 
 import AccountModal from './AccountModal';
 
@@ -8,13 +9,13 @@ const i18n = {
   nba_playoffs_bracketology: 'NBA Playoffs Bracketology'
 };
 
-export default class Navbar extends React.Component {
+class Navbar extends React.Component {
   logout = () => {
-    const { actions } = this.props;
+    const { actions, history } = this.props;
 
     auth.signOut().then(() => {
       actions.setUser(null);
-      console.log('logged out');
+      history.push('/');
     });
   }
 
@@ -38,13 +39,13 @@ export default class Navbar extends React.Component {
                 <a className="nav-link" href="#1">Home <span className="sr-only">(current)</span></a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="me">Me</a>
+                <Link className="nav-link" to="me">Me</Link>
                 </li>
             </ul>
             <div className="form-inline my-2 my-lg-0">
               {appState.user ?
                 <a className="btn btn-danger" onClick={this.logout}>Logout</a> :
-                <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-form">Login</a>
+                <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-modal">Login</a>
               }
             </div>
           </div>
@@ -53,3 +54,5 @@ export default class Navbar extends React.Component {
     );
   }
 }
+
+export default withRouter(Navbar);

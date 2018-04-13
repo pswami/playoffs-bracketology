@@ -17,14 +17,12 @@ const GroupsTable = ({ groups, history }) => {
       <Table.Head>
         <Table.Row>
           <Table.Header>Name</Table.Header>
-          <Table.Header>Total Pts</Table.Header>
         </Table.Row>
       </Table.Head>
       <tbody>
         {groups.map(group =>
           <Table.Row onClick={handleSubmit(group.id)}>
             <Table.Header>{group.name}</Table.Header>
-            <Table.Col>{group.rules.gamePoints}</Table.Col>
           </Table.Row>
         )}
       </tbody>
@@ -54,7 +52,7 @@ class Me extends React.Component {
     return (
       <div>
         <Card.Container>
-          <Card.Header>My Brackets</Card.Header>
+          <Card.Header>My Groups</Card.Header>
           <Card.Body>
             <GroupsTable {...rest} groups={groups} />
           </Card.Body>
