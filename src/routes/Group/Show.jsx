@@ -9,6 +9,7 @@ import Table from '../../components/Table';
 import Card from '../../components/Card';
 
 import teams from '../../data/teams.json';
+import data from '../../data/mock.json';
 
 import { readMatchups, readGroups, getUserProfile } from '../../firebase';
 
@@ -159,7 +160,7 @@ class Show extends React.Component {
     const { appState: { brackets } } = this.props;
     const { group, users } = this.state;
 
-    if (brackets.length > 0 && group) {
+    if (data.series.length > 0 && group) {
       return (
         <React.Fragment>
           <AddMemberModal group={group} />
@@ -180,7 +181,7 @@ class Show extends React.Component {
                 <TeamTable
                   users={users}
                   group={group}
-                  brackets={brackets}
+                  brackets={data.series}
                 />
               }
             </Card.Body>
