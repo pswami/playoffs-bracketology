@@ -10,9 +10,13 @@ const store = {
     setLoading: (state, loading) => ({ loading }),
     setNbaBrackets: (state, brackets) => ({ brackets }),
     getPlayoffBrackets: (state, brackets) => {
-      return fetch(NBA_BRACKETS_URL)
+      var myHeaders = new Headers();
+      myHeaders.append("Access-Control-Allow-Origin", "*");
+      fetch(NBA_BRACKETS_URL, { headers: myHeaders })
         .then(res => (res.json()))
         .then(data => (actions.setNbaBrackets(data.series)));
+
+      return state;
     }
   },
 }
