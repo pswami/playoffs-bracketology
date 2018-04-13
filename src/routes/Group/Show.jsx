@@ -8,7 +8,6 @@ import AddMemberModal from './AddMemberModal';
 import Table from '../../components/Table';
 import Card from '../../components/Card';
 
-import data from '../../data/mock.json';
 import teams from '../../data/teams.json';
 
 import { readMatchups, readGroups, getUserProfile } from '../../firebase';
@@ -39,7 +38,7 @@ class TeamRow extends React.Component {
   };
 
   componentDidMount() {
-    const { group, uid } = this.props;
+    const { group, uid, brackets } = this.props;
     const { teamPoints, gamePoints } = group.rules;
 
     readMatchups({
@@ -51,7 +50,7 @@ class TeamRow extends React.Component {
           return { ...acc, ...{ [pick.seriesId]: pick } };
         }, {});
 
-        const pointsMap = data.series.reduce((acc, series) => {
+        const pointsMap = brackets.reduce((acc, series) => {
           let points = 0;
           let myPick = picksMap[series.seriesId];
           let winner = getWinner(series);
@@ -101,7 +100,7 @@ class TeamRow extends React.Component {
 }
 
 
-const TeamTable = ({ group, users }) => (
+const TeamTable = ({ group, users, brackets }) => (
   <div className="table-responsive-sm">
     <Table.Container>
       <Table.Head>
@@ -122,6 +121,7 @@ const TeamTable = ({ group, users }) => (
             uid={uid}
             group={group}
             users={users}
+            brackets={brackets}
           />
         ))}
       </tbody>
@@ -156,9 +156,10 @@ class Show extends React.Component {
   }
 
   render() {
+    const { appState: { brackets } } = this.props;
     const { group, users } = this.state;
 
-    if (group) {
+    if (brackets.length > 0 && group) {
       return (
         <React.Fragment>
           <AddMemberModal group={group} />
@@ -176,7 +177,11 @@ class Show extends React.Component {
             </Card.Header>
             <Card.Body>
               {Object.keys(users).length > 0 &&
-                <TeamTable users={users} group={group} />
+                <TeamTable
+                  users={users}
+                  group={group}
+                  brackets={brackets}
+                />
               }
             </Card.Body>
           </Card.Container>

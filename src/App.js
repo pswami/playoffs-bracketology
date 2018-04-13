@@ -29,6 +29,8 @@ class App extends Component {
   componentDidMount() {
     const { actions } = this.props;
 
+    actions.getPlayoffBrackets();
+
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);
       actions.setUser(user);
@@ -50,6 +52,7 @@ class App extends Component {
     const { actions, appState } = this.props;
     const RouteProps = RouteWithProps({ actions, appState });
 
+    console.log(appState);
     return (
       <BrowserRouter>
         <div className="App bg-secondary">

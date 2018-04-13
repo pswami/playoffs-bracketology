@@ -1,75 +1,22 @@
 import { initStore } from 'react-waterfall';
 import { readMatchups, readGroups } from '../firebase';
 
+const NBA_BRACKETS_URL = 'https://data.nba.net/prod/v1/2017/playoffsBracket.json';
+
 const store = {
-  initialState: { loading: false, user: null, groups: [] },
+  initialState: { loading: false, brackets: [] },
   actions: {
     setUser: (state, user) => ({ user: user ? user.toJSON() : undefined }),
     setLoading: (state, loading) => ({ loading }),
-    setGroups: (state, groups) => ({ groups }),
-    setMyGroups: (state, myGroups) => ({ myGroups }),
-    setBracket: (state, matchups) => ({ bracket: matchups }),
-    getMyGroups: (state,) => {
-      if (state.user) {
-        actions.setLoading(true);
-
-        readGroups({ uid: state.user.uid })
-          .then((response) => {
-            actions.setLoading(false);
-            actions.setMyGroups(response);
-          });
-      } else {
-        console.error('user does not exist');
-      }
-    },
-    getGroups: (state, params) => {
-      actions.setLoading(true);
-
-      console.log(state, params);
-      readGroups(params)
-        .then((response) => {
-          actions.setLoading(false);
-          actions.setGroups(response);
-          return response;
-        });
-
-      return Promise.resolve();
-    },
-    getBracket: (state, params) => {
-      actions.setLoading(true);
-
-      readMatchups(params) //{ uid: user.uid, groupId: 4 }
-        .then((response) => {
-          actions.setLoading(false);
-          actions.setGroups(response);
-        });
-    },
-    postBracket: (state, params) => {
-      actions.setLoading(true);
-
-
-      // createMatchups({
-      //   uid: user.uid,
-      //   matchups: [{
-      //     seriesId: 2,
-      //     team: "GSW",
-      //     winIn: 5,
-      //   }, {
-      //     seriesId: 20,
-      //     team: "ATL",
-      //     winIn: 7,
-      //   }]
-      // }).then((response) => {
-      //   actions.setLoading(false);
-      //   actions.setGroups(response);
-      // });
-    },
+    setNbaBrackets: (state, brackets) => ({ brackets }),
+    getPlayoffBrackets: (state, brackets) => {
+      return fetch(NBA_BRACKETS_URL)
+        .then(res => (res.json()))
+        .then(data => (actions.setNbaBrackets(data.series)));
+    }
   },
 }
 
-// function name(store, self) {
-//   return (key, value) => { return Promise.resolve({ [key]: Promise.resolve(value) }) };
-// };
 
 export const {
   Provider,

@@ -8,7 +8,6 @@ import { readMatchups, setMatchups } from '../../firebase';
 
 import Card from '../../components/Card';
 
-import data from '../../data/mock.json';
 import teams from '../../data/teams.json';
 
 import './style.scss';
@@ -187,6 +186,7 @@ class MyPicks extends React.Component {
   }
 
   render() {
+    const { appState: { brackets } } = this.props;
     const { message, error } = this.state;
 
     return (
@@ -196,8 +196,8 @@ class MyPicks extends React.Component {
           {message && <div className="alert alert-primary" role="alert">{message}</div>}
           {error && <div className="alert alert-danger" role="alert">{error}</div>}
           <form onSubmit={this.handleSubmit}>
-            {data.series.map((singleSeries, idx) => {
-              const conferenceChanged = idx === 0 || (data.series[idx - 1] && (singleSeries.roundNum !== data.series[idx - 1].roundNum));
+            {brackets.map((singleSeries, idx) => {
+              const conferenceChanged = idx === 0 || (brackets[idx - 1] && (singleSeries.roundNum !== brackets[idx - 1].roundNum));
 
               if (singleSeries.isScheduleAvailable) {
                 return (
@@ -212,7 +212,12 @@ class MyPicks extends React.Component {
                 );
               }
             })}
-            <button type="submit" className="btn btn-primary btn-lg btn-block">Update</button>
+            <button
+              type="submit"
+              className="btn btn-primary btn-lg btn-block mt-5"
+            >
+              Update
+            </button>
           </form>
         </Card.Body>
       </Card.Container>
