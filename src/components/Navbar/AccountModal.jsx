@@ -2,7 +2,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { auth, setUserProfile } from '../../firebase';
+import { auth, setUserProfile, addUsersToGroup } from '../../firebase';
 
 class LoginTab extends React.Component {
   handleSubmit = (e) => {
@@ -64,6 +64,7 @@ class SignupTab extends React.Component {
     e.preventDefault();
 
     const { toggleModal, history } = this.props;
+    const username = this.username.value;
     const email = this.email.value;
     const password = this.password.value;
 
@@ -73,13 +74,18 @@ class SignupTab extends React.Component {
 
         setUserProfile({
           uid: user.uid,
-          name: user.displayName,
+          name: username,
           email: user.email,
         }).then(() => console.log('user profile created'))
 
-        toggleModal();
+        addUsersToGroup({
+          groupId: '9vNbvCgZ1wtdjOo2bF1p',
+          users: [user.uid],
+        }).then(() => {
+          toggleModal();
 
-        history.push('/me');
+          history.push('/me');
+        })
       })
       .catch(function (error) {
         console.error(error.code, error.message);
@@ -91,12 +97,20 @@ class SignupTab extends React.Component {
       <div id="registration-form" className="tab-pane fade">
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
+            <label>Username</label>
+            <input
+              ref={input => (this.username = input)}
+              type="text"
+              className="form-control"
+              placeholder="Enter username"
+            />
+          </div>
+          <div className="form-group">
             <label>Email</label>
             <input
               ref={input => (this.email = input)}
               type="email"
               className="form-control"
-              id="newemail"
               placeholder="Enter new email"
             />
           </div>
