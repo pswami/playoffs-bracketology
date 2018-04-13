@@ -47,7 +47,7 @@ class TeamOption extends React.Component {
     roundNum: this.props.series.roundNum,
   })
 
-  isComplete = () => !!(this.state.team && this.state.winIn)
+  isFilled = () => !!(this.state.team && this.state.winIn)
 
   handleTeamChange = (e) => {
     this.setState({ team: e.target.value });
@@ -66,7 +66,7 @@ class TeamOption extends React.Component {
       'align-items-center',
       'justify-content-center',
       'py-2',
-      { 'disabled': isSeriesLocked(series) }
+      { disabled: isSeriesLocked(series) }
     );
 
     return (
@@ -167,7 +167,7 @@ class MyPicks extends React.Component {
     const { appState, group } = this.props;
 
     const matchups = Object.keys(this.options).reduce((acc, seriesID) => {
-      if (this.options[seriesID].isComplete()) {
+      if (this.options[seriesID].isFilled()) {
         acc.push({ ...this.options[seriesID].mapData() });
       }
 

@@ -1,0 +1,19 @@
+.navbar-brand {
+  font-size: 1.3rem;
+  font-family: 'Black Han Sans', sans-serif;
+  text-transform: uppercase;
+}
+
+.bracket-sign {
+  font-weight: bolder;
+  text-shadow: 3px 3px 1px black;
+  -webkit-text-stroke: 0.3px white;
+
+  &.left {
+    color: #C91F37;
+  }
+
+  &.right {
+    color: #19B5FE;
+  }
+}

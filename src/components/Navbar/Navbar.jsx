@@ -4,9 +4,10 @@ import { Link, withRouter } from 'react-router-dom';
 import AccountModal from './AccountModal';
 
 import { auth } from '../../firebase';
+import './style.scss';
 
 const i18n = {
-  nba_playoffs_bracketology: 'NBA Playoffs Bracketology'
+  bracketology: 'Bracketology'
 };
 
 class Navbar extends React.Component {
@@ -27,7 +28,7 @@ class Navbar extends React.Component {
         <AccountModal />
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <a className="navbar-brand" href="#1">
-            {i18n.nba_playoffs_bracketology}
+            <span className="bracket-sign left">{'{'}</span> {i18n.bracketology} <span className="bracket-sign right">{'}'}</span>
           </a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
