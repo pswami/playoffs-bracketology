@@ -22,4 +22,8 @@ app.get('/api/v1/brackets/nba', function (req, res) {
   })
 });
 
+app.get("/api/example", function (req, res, next) {
+  res.json({ hi: 'bye' });
+});
+
 app.listen(port, host, () => console.log(`Listening on port ${port}`));
