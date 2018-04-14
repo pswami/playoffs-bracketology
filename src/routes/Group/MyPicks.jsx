@@ -9,7 +9,6 @@ import { readMatchups, setMatchups } from '../../firebase';
 import Card from '../../components/Card';
 
 import teams from '../../data/teams.json';
-import data from '../../data/mock.json';
 
 import './style.scss';
 
@@ -196,8 +195,8 @@ class MyPicks extends React.Component {
           {message && <div className="alert alert-primary" role="alert">{message}</div>}
           {error && <div className="alert alert-danger" role="alert">{error}</div>}
           <form onSubmit={this.handleSubmit}>
-            {data.series.map((series, idx) => {
-              const conferenceChanged = idx === 0 || (data[idx - 1] && (series.roundNum !== data[idx - 1].roundNum));
+            {brackets.map((series, idx) => {
+              const conferenceChanged = idx === 0 || (brackets[idx - 1] && (series.roundNum !== brackets[idx - 1].roundNum));
 
               if (series.isScheduleAvailable) {
                 return (

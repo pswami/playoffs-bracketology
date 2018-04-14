@@ -1,7 +1,7 @@
 import { initStore } from 'react-waterfall';
 import { readMatchups, readGroups } from '../firebase';
 
-const NBA_BRACKETS_URL = 'https://data.nba.net/prod/v1/2017/playoffsBracket.json';
+const NBA_BRACKETS_URL = '/api/v1/brackets/nba';
 
 const store = {
   initialState: { loading: false, brackets: [] },
@@ -11,8 +11,17 @@ const store = {
     setNbaBrackets: (state, brackets) => ({ brackets }),
     getPlayoffBrackets: (state, brackets) => {
       fetch(NBA_BRACKETS_URL)
-        .then(res => (res.json()))
-        .then(data => (actions.setNbaBrackets(data.series)));
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+        })
+        .then(data => {
+          if (data) {
+            actions.setNbaBrackets(data.series);
+          }
+        }
+      );
 
       return state;
     }

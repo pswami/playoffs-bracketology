@@ -47,11 +47,11 @@ const TeamOption = ({ series }) => (
   </div>
 );
 
-const Edit = ({ children }) => (
+const Edit = ({ brackets, children }) => (
   <div>
     Series
     <form>
-      {data.series.map(series => (
+      {brackets.map(series => (
         <TeamOption series={series} />
       ))}
       <button type="submit">Update</button>
