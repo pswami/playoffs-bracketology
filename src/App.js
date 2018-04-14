@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { connect } from './store';
 import { auth } from './firebase';
@@ -54,7 +54,7 @@ class App extends Component {
 
     console.log(appState);
     return (
-      <HashRouter>
+      <BrowserRouter>
         <div className="App bg-secondary">
           <Navbar {...{ actions, appState }} />
           <Switch>
@@ -67,7 +67,7 @@ class App extends Component {
           </Switch>
           {this.devInfo()}
         </div>
-      </HashRouter>
+      </BrowserRouter>
     );
   }
 }
