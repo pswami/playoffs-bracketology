@@ -9,15 +9,9 @@ import { readMatchups, setMatchups } from '../../firebase';
 import Card from '../../components/Card';
 
 import teams from '../../data/teams.json';
+import { isSeriesLocked } from '../../utils';
 
 import './style.scss';
-
-const isSeriesLocked = series => (
-  !series.isScheduleAvailable ||
-  series.isSeriesCompleted ||
-  series.isGameLive ||
-  series.gameNumber > 1
-);
 
 class TeamOption extends React.Component {
   constructor(props) {

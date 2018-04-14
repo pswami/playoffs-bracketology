@@ -6,3 +6,10 @@ export const roundNames = {
   3: "Conference Finals",
   4: "Finals",
 };
+
+export const isSeriesLocked = series => (
+  !series.isScheduleAvailable ||
+  series.isSeriesCompleted ||
+  series.isGameLive ||
+  series.gameNumber > 1
+);

@@ -7,6 +7,7 @@ import { readMatchups } from '../../firebase';
 
 import Card from '../../components/Card';
 import Table from '../../components/Table';
+import { isSeriesLocked } from '../../utils';
 
 import './style.scss';
 
@@ -58,7 +59,8 @@ class MyPicks extends React.Component {
                   {brackets.map(series => {
                     const picks = this.state[series.seriesId];
 
-                    if (picks && picks.length === group.users.length) {
+                  if (isSeriesLocked(series) &&
+                      (picks && picks.length === group.users.length)) {
                       return (
                         <Table.Row>
                           {picks.map(pick => (
