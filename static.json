@@ -5,7 +5,7 @@
     "/**": "index.html"
   },
   "proxies": {
-    "/api/*": {
+    "/api/": {
       "origin": "https://testbracket.herokuapp.com/api"
     }
   }
