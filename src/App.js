@@ -14,6 +14,7 @@ import Edit from './routes/Bracket/Edit';
 // import Create from './routes/Group/Create';
 import Show from './routes/Group/Show';
 
+import Terminal from './components/Terminal';
 import Navbar from './components/Navbar';
 import Layout from './components/Layout';
 
@@ -41,10 +42,10 @@ class App extends Component {
     const { appState } = this.props;
 
     return (
-      <strong>
-        <div>Logged IN: {appState.user ? appState.user.email : ''}</div>
-        <div>loading: {`${appState.loading}`}</div>
-      </strong>
+      <Terminal>
+        <li>Logged IN: {appState.user ? appState.user.email : ''}</li>
+        <li>loading: {`${appState.loading}`}</li>
+      </Terminal>
     );
   };
 
