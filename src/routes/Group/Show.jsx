@@ -192,11 +192,11 @@ class Show extends React.Component {
           <br />
           <div className="row">
             <div className="col-lg-6">
-              {<MyPicks  {...{ ...this.props, group }} />}
+              {<AllPicks {...{ ...this.props, group, users }} />}
               <br />
             </div>
             <div className="col-lg-6">
-              {<AllPicks {...{ ...this.props, group, users }} />}
+              {<MyPicks  {...{ ...this.props, group }} />}
             </div>
           </div>
         </React.Fragment>
