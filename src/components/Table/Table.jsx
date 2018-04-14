@@ -6,23 +6,28 @@ import './style.scss';
 
 /* Container */
 
-export const Container = ({ children, light, hoverable, ...rest }) => (
-  <table  {...rest} className={cx('table', {
-    'table-hover': hoverable
+export const Container = ({ children, light, hoverable, fixed, className,...rest }) => (
+  <table  {...rest} className={cx('table', className, {
+    'table-hover': hoverable,
+    'table-fixed': fixed,
   })}>
     {children}
   </table>
 );
 
 Container.propTypes = {
+  className: PropTypes.string,
   children: PropTypes.node.isRequired,
   light: PropTypes.bool,
   hoverable: PropTypes.bool,
+  fixed: PropTypes.bool,
 };
 
 Container.defaultProps = {
+  className: undefined,
   light: true,
   hoverable: false,
+  fixed: false,
 };
 
 /* Head */

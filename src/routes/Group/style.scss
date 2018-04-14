@@ -52,3 +52,13 @@
   letter-spacing: .05em;
   text-shadow: 4px 4px 0px #d5d5d5;
 }
+
+.picksTable {
+  th {
+    width: 105px;
+    white-space: normal;
+    word-wrap: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

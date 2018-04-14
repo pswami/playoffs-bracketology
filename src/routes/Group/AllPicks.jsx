@@ -44,10 +44,10 @@ class MyPicks extends React.Component {
         <Card.Header>Picks Table</Card.Header>
         <Card.Body>
           <div className="table-responsive-sm">
-            <Table.Container hoverable>
+            <Table.Container className="picksTable" fixed hoverable>
               <Table.Head>
                 {Object.keys(users).length > 0 &&
-                  <Table.Row>
+                  <Table.Row >
                     {group.users.map(uid =>
                       <Table.Header>{users[uid].name}</Table.Header>
                     )}
@@ -63,7 +63,7 @@ class MyPicks extends React.Component {
                       return (
                         <Table.Row>
                           {picks.map(pick => (
-                            <Table.Header>{pick.team} in {pick.winIn}</Table.Header>
+                            <Table.Col>{pick.team} in {pick.winIn}</Table.Col>
                           ))}
                         </Table.Row>
                       );
