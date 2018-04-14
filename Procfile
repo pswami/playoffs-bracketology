@@ -1,2 +1,2 @@
-buld: npm run build
+build: npm run build
 server: node server.js
