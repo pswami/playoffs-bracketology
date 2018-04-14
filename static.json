@@ -1,8 +1,0 @@
-{
-  "root": "build/",
-  "proxies": {
-    "/api/": {
-      "origin": "https://testbracket.herokuapp.com/api"
-    }
-  }
-}
