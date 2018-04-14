@@ -12,14 +12,10 @@ const store = {
     getPlayoffBrackets: (state, brackets) => {
       fetch(NBA_BRACKETS_URL)
         .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
+          if (res.ok) return res.json();
         })
         .then(data => {
-          if (data) {
-            actions.setNbaBrackets(data.series);
-          }
+          if (data) actions.setNbaBrackets(data.series);
         }
       );
 
