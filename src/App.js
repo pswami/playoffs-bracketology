@@ -54,7 +54,6 @@ class App extends Component {
     const { actions, appState } = this.props;
     const RouteProps = RouteWithProps({ actions, appState });
 
-    console.log();
     return (
       <BrowserRouter>
         <div className="App bg-secondary">

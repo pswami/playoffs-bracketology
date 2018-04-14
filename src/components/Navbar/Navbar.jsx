@@ -43,7 +43,7 @@ class Navbar extends React.Component {
     return (
       <React.Fragment>
         <AccountModal />
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark" ref={this.navbar}>
+        <nav className="navbar navbar-expand-lg navbar-dark navbar-blue" ref={this.navbar}>
           <a className="navbar-brand" href="#1">
             <span className="bracket-sign left">{'['}</span> {i18n.bracketology} <span className="bracket-sign right">{']'}</span>
           </a>
@@ -71,7 +71,7 @@ class Navbar extends React.Component {
             </ul>
             <div className="form-inline my-2 my-lg-0">
               {appState.user ?
-                <a className="btn btn-danger" onClick={this.logout}>Logout</a> :
+                <a className="btn btn-danger text-white" onClick={this.logout}>Logout</a> :
                 <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-modal">Login/Register</a>
               }
             </div>
