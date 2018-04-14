@@ -44,7 +44,8 @@ class App extends Component {
     return (
       <Terminal>
         <li>Logged IN: {appState.user ? appState.user.email : ''}</li>
-        <li>loading: {`${appState.loading}`}</li>
+        <li>loading: {appState.loading}</li>
+        <li>environment: {process.env && process.env.NODE_ENV}</li>
       </Terminal>
     );
   };
@@ -53,7 +54,7 @@ class App extends Component {
     const { actions, appState } = this.props;
     const RouteProps = RouteWithProps({ actions, appState });
 
-    console.log(appState);
+    console.log();
     return (
       <BrowserRouter>
         <div className="App bg-secondary">
