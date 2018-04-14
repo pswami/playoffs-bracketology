@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const Container = ({ children }) => (
-  <div className="card">{children}</div>
+  <div className="card text-white bg-dark">{children}</div>
 );
 
 export const Body = ({ children }) => (
@@ -10,7 +10,7 @@ export const Body = ({ children }) => (
 );
 
 export const Header = ({ children }) => (
-  <div className="card-header bg-light">{children}</div>
+  <div className="card-header text-dark bg-light">{children}</div>
 );
 
 Container.propTypes = { children: PropTypes.node };

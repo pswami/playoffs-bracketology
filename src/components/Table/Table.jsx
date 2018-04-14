@@ -6,10 +6,11 @@ import './style.scss';
 
 /* Container */
 
-export const Container = ({ children, light, hoverable, fixed, className,...rest }) => (
-  <table  {...rest} className={cx('table', className, {
+export const Container = ({ children, light, hoverable, fixed, bordered, className,...rest }) => (
+  <table  {...rest} className={cx('table table-dark', className, {
     'table-hover': hoverable,
     'table-fixed': fixed,
+    'table-bordered': bordered,
   })}>
     {children}
   </table>
@@ -18,22 +19,22 @@ export const Container = ({ children, light, hoverable, fixed, className,...rest
 Container.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
-  light: PropTypes.bool,
   hoverable: PropTypes.bool,
   fixed: PropTypes.bool,
+  bordered: PropTypes.bool,
 };
 
 Container.defaultProps = {
   className: undefined,
-  light: true,
   hoverable: false,
   fixed: false,
+  bordered: false,
 };
 
 /* Head */
 
-export const Head = ({ children, light, ...rest }) => (
-  <thead className={cx({ 'thead-light': light })}  {...rest}>
+export const Head = ({ children, light, className, ...rest }) => (
+  <thead className={cx('bg-secondary', className)}  {...rest}>
     {children}
   </thead>
 );
@@ -41,10 +42,6 @@ export const Head = ({ children, light, ...rest }) => (
 Head.propTypes = {
   children: PropTypes.node.isRequired,
   light: PropTypes.bool,
-};
-
-Head.defaultProps = {
-  light: true,
 };
 
 
