@@ -58,12 +58,11 @@ class MyPicks extends React.Component {
                   {brackets.map(series => {
                     const picks = this.state[series.seriesId];
 
-                    if (picks) {
+                    if (picks && picks.length === group.users.length) {
                       return (
                         <Table.Row>
                           {picks.map(pick => (
-                            pick.isSeriesCompleted &&
-                              <Table.Header>{pick.team} in {pick.winIn}</Table.Header>
+                            <Table.Header>{pick.team} in {pick.winIn}</Table.Header>
                           ))}
                         </Table.Row>
                       );
