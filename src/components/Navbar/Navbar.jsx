@@ -45,7 +45,7 @@ class Navbar extends React.Component {
         <AccountModal />
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark" ref={this.navbar}>
           <a className="navbar-brand" href="#1">
-            <span className="bracket-sign left">{'{'}</span> {i18n.bracketology} <span className="bracket-sign right">{'}'}</span>
+            <span className="bracket-sign left">{'['}</span> {i18n.bracketology} <span className="bracket-sign right">{']'}</span>
           </a>
           <button
             ref={this.collapseButton}
