@@ -59,8 +59,7 @@ class MyPicks extends React.Component {
                   {brackets.map(series => {
                     const picks = this.state[series.seriesId];
 
-                  if (isSeriesLocked(series) &&
-                      (picks && picks.length === group.users.length)) {
+                  if (isSeriesLocked(series) && picks) {
                       return (
                         <Table.Row>
                           {picks.map(pick => (
