@@ -8,6 +8,5 @@
     "/api/*": {
       "origin": "https://testbracket.herokuapp.com/api"
     }
-  },
-  
+  }
 }
