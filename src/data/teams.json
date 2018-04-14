@@ -78,6 +78,7 @@
     "divName": ""
   },
   "1610612737": {
+    "teamColor": "#c8102e",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Atlanta",
@@ -91,6 +92,7 @@
     "divName": "Southeast"
   },
   "1610612738": {
+    "teamColor": "#007a33",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Boston",
@@ -104,6 +106,7 @@
     "divName": "Atlantic"
   },
   "1610612739": {
+    "teamColor": "#6f263d",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Cleveland",
@@ -117,6 +120,7 @@
     "divName": "Central"
   },
   "1610612740": {
+    "teamColor": "#002b5c",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "New Orleans",
@@ -130,6 +134,7 @@
     "divName": "Southwest"
   },
   "1610612741": {
+    "teamColor": "#ba0c2f",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Chicago",
@@ -143,6 +148,7 @@
     "divName": "Central"
   },
   "1610612742": {
+    "teamColor": "#007dc5",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Dallas",
@@ -156,6 +162,7 @@
     "divName": "Southwest"
   },
   "1610612743": {
+    "teamColor": "#041e42",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Denver",
@@ -169,6 +176,7 @@
     "divName": "Northwest"
   },
   "1610612744": {
+    "teamColor": "#003da5",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Golden State",
@@ -182,6 +190,7 @@
     "divName": "Pacific"
   },
   "1610612745": {
+    "teamColor": "#ce1141",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Houston",
@@ -208,6 +217,7 @@
     "divName": "Pacific"
   },
   "1610612747": {
+    "teamColor": "#582c83",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Los Angeles",
@@ -221,6 +231,7 @@
     "divName": "Pacific"
   },
   "1610612748": {
+    "teamColor": "#98002e",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Miami",
@@ -234,6 +245,7 @@
     "divName": "Southeast"
   },
   "1610612749": {
+    "teamColor": "#00471b",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Milwaukee",
@@ -247,6 +259,7 @@
     "divName": "Central"
   },
   "1610612750": {
+    "teamColor": "#002b5c",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Minnesota",
@@ -260,6 +273,7 @@
     "divName": "Northwest"
   },
   "1610612751": {
+    "teamColor": "#000",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Brooklyn",
@@ -273,6 +287,7 @@
     "divName": "Atlantic"
   },
   "1610612752": {
+    "teamColor": "#003da5",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "New York",
@@ -286,6 +301,7 @@
     "divName": "Atlantic"
   },
   "1610612753": {
+    "teamColor": "#0057b8",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Orlando",
@@ -299,6 +315,7 @@
     "divName": "Southeast"
   },
   "1610612754": {
+    "teamColor": "#041e42",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Indiana",
@@ -312,6 +329,7 @@
     "divName": "Central"
   },
   "1610612755": {
+    "teamColor": "#003da5",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Philadelphia",
@@ -325,6 +343,7 @@
     "divName": "Atlantic"
   },
   "1610612756": {
+    "teamColor": "#201747",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Phoenix",
@@ -338,6 +357,7 @@
     "divName": "Pacific"
   },
   "1610612757": {
+    "teamColor": "#c8102e",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Portland",
@@ -351,6 +371,7 @@
     "divName": "Northwest"
   },
   "1610612758": {
+    "teamColor": "#582C83",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Sacramento",
@@ -364,6 +385,7 @@
     "divName": "Pacific"
   },
   "1610612759": {
+    "teamColor": "#000",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "San Antonio",
@@ -377,6 +399,7 @@
     "divName": "Southwest"
   },
   "1610612760": {
+    "teamColor": "#0072ce",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Oklahoma City",
@@ -390,6 +413,7 @@
     "divName": "Northwest"
   },
   "1610612761": {
+    "teamColor": "#BA0C2F",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Toronto",
@@ -403,6 +427,7 @@
     "divName": "Atlantic"
   },
   "1610612762": {
+    "teamColor": "#0c2340",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Utah",
@@ -416,6 +441,7 @@
     "divName": "Northwest"
   },
   "1610612763": {
+    "teamColor": "#6189b9",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Memphis",
@@ -429,6 +455,7 @@
     "divName": "Southwest"
   },
   "1610612764": {
+    "teamColor": "#0C2340",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Washington",
@@ -442,6 +469,7 @@
     "divName": "Southeast"
   },
   "1610612765": {
+    "teamColor": "#d50032",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Detroit",
@@ -455,6 +483,7 @@
     "divName": "Central"
   },
   "1610612766": {
+    "teamColor": "#201747",
     "isNBAFranchise": true,
     "isAllStar": false,
     "city": "Charlotte",
@@ -507,6 +536,7 @@
     "divName": "West"
   },
   "1610616840": {
+    "teamColor": "#d50032",
     "isNBAFranchise": false,
     "isAllStar": true,
     "city": "Team Clippers",

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import MyPicks from './MyPicks';
+import AllPicks from './AllPicks';
 import AddMemberModal from './AddMemberModal';
 
 import Table from '../../components/Table';
@@ -142,14 +143,17 @@ class Show extends React.Component {
     if (user) {
       readGroups({ uid: user.uid }).then(groups => {
         const group = groups.find(group => (group.id === groupId));
+        const users = {};
         this.setState({ group });
 
-        group.users.forEach((uid) => {
-          getUserProfile(uid).then((user) => {
-            this.setState((curState) => ({
-              users: {...curState.users, [uid]: user }
-            }));
-          })
+        const promises = group.users.map((uid) => {
+          return getUserProfile(uid).then((user) => {
+            users[uid] = user;
+          });
+        });
+
+        Promise.all(promises).then(values => {
+          this.setState({ users });
         });
       })
     }
@@ -186,7 +190,15 @@ class Show extends React.Component {
             </Card.Body>
           </Card.Container>
           <br />
-          {<MyPicks group={group} {...this.props} />}
+          <div className="row">
+            <div className="col-lg-6">
+              {<MyPicks  {...{ ...this.props, group }} />}
+            </div>
+            <div className="col-lg-6">
+              <br />
+              {<AllPicks {...{ ...this.props, group, users }} />}
+            </div>
+          </div>
         </React.Fragment>
       );
     }
