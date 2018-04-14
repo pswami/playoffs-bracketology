@@ -10,7 +10,7 @@ export const Body = ({ children }) => (
 );
 
 export const Header = ({ children }) => (
-  <div className="card-header bg-liight">{children}</div>
+  <div className="card-header bg-light">{children}</div>
 );
 
 Container.propTypes = { children: PropTypes.node };
