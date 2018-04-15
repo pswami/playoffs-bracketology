@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const Home = ({ children, appState }) => (
   <div className="jumbotron">
@@ -7,7 +8,7 @@ const Home = ({ children, appState }) => (
     <p className="lead">App is currently in beta...</p>
     <hr className="my-4" />
     <p className="lead">
-      <a className="btn btn-primary btn-lg" href="" role="button">Learn more</a>
+      <Link className="btn btn-primary btn-lg" to="/me" role="button">My Stuff</Link>
     </p>
   </div>
 );
