@@ -44,7 +44,7 @@ class MyPicks extends React.Component {
         <Card.Header>Picks Table</Card.Header>
         <Card.Body>
           <div className="table-responsive">
-            <Table.Container className="picksTable" bordered fixed hoverable>
+            <Table.Container className="picksTable" centered bordered fixed hoverable>
               <Table.Head>
                 {Object.keys(users).length > 0 &&
                   <Table.Row >

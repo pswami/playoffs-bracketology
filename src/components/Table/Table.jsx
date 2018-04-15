@@ -6,15 +6,33 @@ import './style.scss';
 
 /* Container */
 
-export const Container = ({ children, light, hoverable, fixed, bordered, className,...rest }) => (
+export const Container = ({
+  children,
+  light,
+  hoverable,
+  fixed,
+  bordered,
+  centered,
+  className,
+  ...rest
+}) => (
   <table  {...rest} className={cx('table table-dark', className, {
     'table-hover': hoverable,
     'table-fixed': fixed,
     'table-bordered': bordered,
+    'table-centered': centered,
   })}>
     {children}
   </table>
 );
+
+Container.defaultProps = {
+  className: undefined,
+  hoverable: false,
+  fixed: false,
+  bordered: false,
+  centered: false,
+};
 
 Container.propTypes = {
   className: PropTypes.string,
@@ -22,13 +40,7 @@ Container.propTypes = {
   hoverable: PropTypes.bool,
   fixed: PropTypes.bool,
   bordered: PropTypes.bool,
-};
-
-Container.defaultProps = {
-  className: undefined,
-  hoverable: false,
-  fixed: false,
-  bordered: false,
+  centered: PropTypes.bool,
 };
 
 /* Head */
