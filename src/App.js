@@ -30,7 +30,7 @@ class App extends Component {
   componentDidMount() {
     const { actions } = this.props;
 
-    actions.getPlayoffBrackets();
+    console.log(actions.getPlayoffBrackets());
 
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);
