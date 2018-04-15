@@ -5,3 +5,11 @@
 .table-fixed {
   table-layout: fixed;
 }
+
+.table-dark {
+  thead {
+    td, th {
+      border-color: #828080;
+    }
+  }
+}

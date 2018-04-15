@@ -7,6 +7,8 @@ import Card from '../../components/Card';
 import Table from '../../components/Table';
 import { isSeriesLocked } from '../../utils';
 
+import teams_by_tri from '../../data/teams_by_tri.json';
+
 import './style.scss';
 
 class MyPicks extends React.Component {
@@ -61,7 +63,7 @@ class MyPicks extends React.Component {
                       return (
                         <Table.Row key={series.seriesId}>
                           {picks.map(pick => (
-                            <Table.Col key={pick.id}>{pick.team} in {pick.winIn}</Table.Col>
+                            <Table.Col key={pick.id} style={{ background: teams_by_tri[pick.team].teamColor }}>{pick.team} in {pick.winIn}</Table.Col>
                           ))}
                         </Table.Row>
                       );
