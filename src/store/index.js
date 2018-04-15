@@ -1,5 +1,5 @@
 import { initStore } from 'react-waterfall';
-import { readMatchups, readGroups } from '../firebase';
+// import { readMatchups, readGroups } from '../firebase';
 
 const NBA_BRACKETS_URL = '/api/v1/brackets/nba';
 

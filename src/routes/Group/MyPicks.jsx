@@ -204,6 +204,7 @@ class MyPicks extends React.Component {
                   </React.Fragment>
                 );
               }
+              return null;
             })}
             <button
               type="submit"

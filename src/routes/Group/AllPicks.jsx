@@ -1,8 +1,6 @@
   import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
-// import { iconNBALink, roundNames } from '../../utils';
 import { readMatchups } from '../../firebase';
 
 import Card from '../../components/Card';
@@ -49,7 +47,7 @@ class MyPicks extends React.Component {
                 {Object.keys(users).length > 0 &&
                   <Table.Row >
                     {group.users.map(uid =>
-                      <Table.Header>{users[uid].name}</Table.Header>
+                      <Table.Header key={uid}>{users[uid].name}</Table.Header>
                     )}
                   </Table.Row>
                 }
@@ -59,15 +57,17 @@ class MyPicks extends React.Component {
                   {brackets.map(series => {
                     const picks = this.state[series.seriesId];
 
-                  if (isSeriesLocked(series) && picks) {
+                    if (isSeriesLocked(series) && picks) {
                       return (
-                        <Table.Row>
+                        <Table.Row key={series.seriesId}>
                           {picks.map(pick => (
-                            <Table.Col>{pick.team} in {pick.winIn}</Table.Col>
+                            <Table.Col key={pick.id}>{pick.team} in {pick.winIn}</Table.Col>
                           ))}
                         </Table.Row>
                       );
                     }
+
+                    return null;
                   })}
                 </tbody>
               }

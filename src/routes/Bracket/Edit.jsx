@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import data from '../../data/mock.json';
 import teams from '../../data/teams.json';
 
 // import './style.scss';
