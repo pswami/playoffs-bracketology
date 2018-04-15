@@ -126,6 +126,7 @@ export const setMatchups = ({ uid, groupId, matchups }) => {
       roundNum: matchup.roundNum,
       uid: uid,
       groupId: groupId,
+      updated_at: serverTimestamp,
     });
 
     return doc;
