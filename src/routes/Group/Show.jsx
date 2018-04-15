@@ -102,7 +102,7 @@ class TeamRow extends React.Component {
 
 
 const TeamTable = ({ group, users, brackets }) => (
-  <div className="table-responsive-sm">
+  <div className="table-responsive">
     <Table.Container>
       <Table.Head>
         <Table.Row>
