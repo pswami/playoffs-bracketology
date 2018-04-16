@@ -6,12 +6,11 @@
   font-size: 1.3rem;
   font-family: 'Black Han Sans', sans-serif;
   text-transform: uppercase;
+  text-shadow: 2px 2px 1px black;
 }
 
 .bracket-sign {
   font-weight: bolder;
-  text-shadow: 3px 3px 1px black;
-  -webkit-text-stroke: 0.1px white;
 
   &.left {
     color: #C91F37;
