@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Muli');
 @import url('https://fonts.googleapis.com/css?family=Black+Han+Sans');
 
 body, html, #root, .App {
   min-height: 100%;
   min-width: 100%;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Muli', sans-serif;
   background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('./images/bg.jpg');
   background-size: contain;
 }
