@@ -18,17 +18,28 @@
   }
 }
 
+.form-control {
+  &.gamesSelect {
+    text-align: center;
+    height: 4rem !important;
+    padding: 0;
+    flex-basis: 4rem;
+    font-size: 41px;
+    -webkit-appearance: none;
+    text-align-last: center;
+  }
+}
+
 .disabled {
   position: relative;
   pointer-events: none;
-   opacity: 0.5;
-}
+  opacity: 0.5;
 
-.form-control {
-  &.gamesSelect {
-    height: 4rem !important;
-    flex-basis: 4rem;
-    font-size: 41px;
+  .form-control {
+    &.gamesSelect {
+      color: white;
+      background: #343a40;
+    }
   }
 }
 

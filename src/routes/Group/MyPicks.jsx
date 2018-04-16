@@ -9,7 +9,7 @@ import { readMatchups, setMatchups } from '../../firebase';
 import Card from '../../components/Card';
 
 import teams from '../../data/teams.json';
-import { isSeriesLocked } from '../../utils';
+import { checkSeriesLocked } from '../../utils';
 
 import './style.scss';
 
@@ -53,6 +53,7 @@ class TeamOption extends React.Component {
 
   render() {
     const { series } = this.props;
+    const isSeriesLocked = checkSeriesLocked(series);
     const classNames = cx(
       'form-group',
       'form-row',
@@ -60,7 +61,7 @@ class TeamOption extends React.Component {
       'align-items-center',
       'justify-content-center',
       'py-2',
-      { disabled: isSeriesLocked(series) }
+      { disabled: isSeriesLocked }
     );
 
     return (
@@ -96,17 +97,20 @@ class TeamOption extends React.Component {
           </div>
         </fieldset>
         <span> in <br /></span>
-        <select
-          className="form-control col-md-4 gamesSelect"
-          onChange={this.handleWinChange}
-          value={this.state.winIn}
-        >
-          <option disabled selected>_</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>7</option>
-        </select>
+        {isSeriesLocked ?
+          <div className="form-control gamesSelect"> {this.state.winIn}</div> :
+          <select
+            className="form-control gamesSelect"
+            onChange={this.handleWinChange}
+            value={this.state.winIn}
+          >
+            <option disabled selected>_</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+            <option value={7}>7</option>
+          </select>
+        }
       </div>
     );
   }

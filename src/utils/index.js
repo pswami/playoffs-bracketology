@@ -7,7 +7,7 @@ export const roundNames = {
   4: "Finals",
 };
 
-export const isSeriesLocked = series => (
+export const checkSeriesLocked = series => (
   !series.isScheduleAvailable ||
   series.isSeriesCompleted ||
   series.isGameLive ||
