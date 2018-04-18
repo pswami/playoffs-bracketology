@@ -65,8 +65,11 @@ class Navbar extends React.Component {
                 <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/me">Me</Link>
-                </li>
+                <Link className="nav-link" to="/search">Search</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/me">My Stuff</Link>
+              </li>
             </ul>
             <div className="form-inline my-2 my-lg-0">
               {appState.user ?

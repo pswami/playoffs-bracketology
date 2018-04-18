@@ -11,7 +11,7 @@ import Card from '../../components/Card';
 
 import teams from '../../data/teams.json';
 
-import { readMatchups, readGroups, getUserProfile } from '../../firebase';
+import { readMatchups, readGroup, getUserProfile } from '../../firebase';
 
 const getWinner = (series) => {
   let winner = {};
@@ -141,10 +141,8 @@ class Show extends React.Component {
     const { groupId } = match.params;
 
     if (currentUser) {
-      readGroups({ uid: currentUser.uid }).then(groups => {
-        const group = groups.find(group => (group.id === groupId));
+      readGroup(groupId).then(group => {
         const users = {};
-        this.setState({ group });
 
         const promises = group.users.map((uid) => {
           return getUserProfile(uid).then((user) => {
@@ -153,54 +151,60 @@ class Show extends React.Component {
         });
 
         Promise.all(promises).then(values => {
-          this.setState({ users });
+          this.setState({ group, users });
         });
       })
     }
   }
 
   render() {
-    const { appState: { brackets } } = this.props;
+    const { appState: { currentUser, brackets } } = this.props;
     const { group, users } = this.state;
 
     if (brackets.length > 0 && group) {
-      return (
-        <React.Fragment>
-          <AddMemberModal group={group} />
-          <Card.Container>
-            <Card.Header>
-              {group.name}
-              <button
-                type="button"
-                className="badge btn btn-primary btn-sm float-right"
-                data-toggle="modal"
-                data-target="#addMemberModal"
-              >
-                <span>+ Add</span>
-              </button>
-            </Card.Header>
-            <Card.Body>
-              {Object.keys(users).length > 0 &&
-                <TeamTable
-                  users={users}
-                  group={group}
-                  brackets={brackets}
-                />
-              }
-            </Card.Body>
-          </Card.Container>
-          <br />
-          <div className="row">
-            <div className="col-lg-6">
-              {<AllPicks {...{ ...this.props, group, users }} />}
-              <br />
+      const isUserInGroup = !!users[currentUser.uid];
+
+      if (group.public_access || isUserInGroup) {
+        return (
+          <React.Fragment>
+            <AddMemberModal group={group} />
+            <Card.Container>
+              <Card.Header>
+                {group.name}
+                {isUserInGroup &&
+                  <button
+                    type="button"
+                    className="badge btn btn-primary btn-sm float-right"
+                    data-toggle="modal"
+                    data-target="#addMemberModal"
+                  >
+                    <span>+ Add</span>
+                  </button>
+                }
+              </Card.Header>
+              <Card.Body>
+                {Object.keys(users).length > 0 &&
+                  <TeamTable
+                    users={users}
+                    group={group}
+                    brackets={brackets}
+                  />
+                }
+              </Card.Body>
+            </Card.Container>
+            <br />
+            <div className="row">
+              <div className="col-lg-6">
+                {<AllPicks {...{ ...this.props, group, users }} />}
+                <br />
+              </div>
+              <div className="col-lg-6">
+                {isUserInGroup && <MyPicks  {...{ ...this.props, group }} />}
+              </div>
             </div>
-            <div className="col-lg-6">
-              {<MyPicks  {...{ ...this.props, group }} />}
-            </div>
-          </div>
-        </React.Fragment>
-      );
+          </React.Fragment>
+        );
+      }
     }
 
     return null;

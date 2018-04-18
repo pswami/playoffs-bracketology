@@ -73,7 +73,7 @@ export const addUsersToGroup = ({ groupId, users }) => {
   });
 };
 
-export const createGroup = ({ uid, name, rules, public_acesss }) => {
+export const createGroup = ({ uid, name, rules, public_access }) => {
   const groupRef = firestore.collection('group');
 
   return groupRef.add({
@@ -82,7 +82,7 @@ export const createGroup = ({ uid, name, rules, public_acesss }) => {
     updated_at: serverTimestamp,
     users: [uid],
     name,
-    public_acesss,
+    public_access,
     rules: {
       teamPoints: rules.teamPoints,
       gamePoints: rules.gamePoints,
@@ -94,9 +94,13 @@ export const createGroup = ({ uid, name, rules, public_acesss }) => {
   });
 };
 
-export const readGroups = ({ uid } = {}) => {
+export const readGroups = ({ uid, public_access } = {}) => {
   const groupRef = firestore.collection('group');
   let queryRef = groupRef;
+
+  if (public_access) {
+    queryRef = queryRef.where('public_access', '==', public_access);
+  }
 
   return queryRef.get().then((snapshot) => {
     if (snapshot.size > 0) {
@@ -104,11 +108,20 @@ export const readGroups = ({ uid } = {}) => {
 
       if (uid) {
         docs = docs.filter(doc => doc.data().users.includes(uid))
-      } else {
-        docs = docs.filter(doc => doc.data().public_acesss)
       }
 
       return docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    }
+  });
+};
+
+export const readGroup = (groupId) => {
+  const groupRef = firestore.collection('group');
+  const doc = groupRef.doc(groupId);
+
+  return doc.get().then((snapshot) => {
+    if (snapshot) {
+      return { ...snapshot.data(), id: doc.id };
     }
   });
 };

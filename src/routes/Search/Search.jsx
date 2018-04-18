@@ -16,7 +16,7 @@ class Search extends React.Component {
     const { appState: { currentUser } } = this.props;
 
     if (currentUser) {
-      readGroups().then(groups =>
+      readGroups({ public_access: true }).then(groups =>
         this.setState({ groups })
       )
     }
@@ -29,12 +29,12 @@ class Search extends React.Component {
     return (
       <Card.Container>
         <Card.Header>
-          <span>My Groups</span>
+          <span>Search Groups</span>
           <form className="float-right">
             <div class="form-group m-0">
               <input
                 type="email"
-                class="form-control form-control-sm m-0"
+                class="form-control form-control-sm m-0 border-primary"
                 placeholder="Search Groups"
               />
             </div>
