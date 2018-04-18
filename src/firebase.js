@@ -73,7 +73,7 @@ export const addUsersToGroup = ({ groupId, users }) => {
   });
 };
 
-export const createGroup = ({ uid, name, rules }) => {
+export const createGroup = ({ uid, name, rules, public }) => {
   const groupRef = firestore.collection('group');
 
   return groupRef.add({
@@ -81,7 +81,8 @@ export const createGroup = ({ uid, name, rules }) => {
     created_at: serverTimestamp,
     updated_at: serverTimestamp,
     users: [uid],
-    name: name,
+    name,
+    public,
     rules: {
       teamPoints: rules.teamPoints,
       gamePoints: rules.gamePoints,
