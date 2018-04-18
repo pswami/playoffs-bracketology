@@ -22,11 +22,13 @@ class MyPicks extends React.Component {
 
     const promises = group.users.map(uid => {
       return readMatchups({ uid, groupId: group.id }).then(picks => {
-        picks.forEach(pick => {
-          if (pick) {
-            picksTable[pick.seriesId] = (picksTable[pick.seriesId] || []).concat(pick);
-          }
-        })
+        if (picks) {
+          picks.forEach(pick => {
+            if (pick) {
+              picksTable[pick.seriesId] = (picksTable[pick.seriesId] || []).concat(pick);
+            }
+          })
+        }
       })
     });
 
