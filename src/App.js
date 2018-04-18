@@ -9,7 +9,7 @@ import Home from './routes/Home/Home';
 import Me from './routes/Account/Me';
 
 // import Landing from './routes/Bracket/Landing';
-import Edit from './routes/Bracket/Edit';
+import Search from './routes/Search';
 
 // import Create from './routes/Group/Create';
 import Show from './routes/Group/Show';
@@ -62,7 +62,7 @@ class App extends Component {
             <Layout.Container>
               <RouteProps exact path='/' Component={Home} />
               <RouteProps path='/me' Component={Me} />
-              <RouteProps path='/edit' Component={Edit} />
+              <RouteProps path='/search' Component={Search} />
               <RouteProps path='/group/:groupId' Component={Show} />
             </Layout.Container>
           </Switch>

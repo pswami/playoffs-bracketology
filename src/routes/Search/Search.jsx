@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
 import { readGroups } from '../../firebase';
 
@@ -8,7 +7,7 @@ import Card from '../../components/Card';
 import { GroupsTable } from '../../components/Table';
 
 
-class Me extends React.Component {
+class Search extends React.Component {
   state = {
     groups: [],
   };
@@ -17,7 +16,7 @@ class Me extends React.Component {
     const { appState: { user } } = this.props;
 
     if (user) {
-      readGroups({ uid: user.uid }).then(groups =>
+      readGroups().then(groups =>
         this.setState({ groups })
       )
     }
@@ -38,8 +37,4 @@ class Me extends React.Component {
   }
 }
 
-Me.propTypes = {
-  children: PropTypes.node,
-};
-
-export default withRouter(Me);
+export default Search;
