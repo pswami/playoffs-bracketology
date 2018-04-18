@@ -6,7 +6,7 @@ const NBA_BRACKETS_URL = '/api/v1/brackets/nba';
 const store = {
   initialState: { loading: false, brackets: [] },
   actions: {
-    setUser: (state, user) => ({ user: user ? user.toJSON() : undefined }),
+    setCurrentUser: (state, currentUser) => ({ currentUser: currentUser ? currentUser.toJSON() : undefined }),
     setLoading: (state, loading) => ({ loading }),
     setNbaBrackets: (state, brackets) => ({ brackets }),
     getPlayoffBrackets: (state, brackets) => {

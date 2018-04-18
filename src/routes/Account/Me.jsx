@@ -14,10 +14,10 @@ class Me extends React.Component {
   };
 
   componentDidMount() {
-    const { appState: { user } } = this.props;
+    const { appState: { currentUser } } = this.props;
 
-    if (user) {
-      readGroups({ uid: user.uid }).then(groups =>
+    if (currentUser) {
+      readGroups({ uid: currentUser.uid }).then(groups =>
         this.setState({ groups })
       )
     }

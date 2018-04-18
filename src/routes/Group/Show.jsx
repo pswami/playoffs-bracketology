@@ -137,11 +137,11 @@ class Show extends React.Component {
   };
 
   componentDidMount() {
-    const { appState: { user }, match } = this.props;
+    const { appState: { currentUser }, match } = this.props;
     const { groupId } = match.params;
 
-    if (user) {
-      readGroups({ uid: user.uid }).then(groups => {
+    if (currentUser) {
+      readGroups({ uid: currentUser.uid }).then(groups => {
         const group = groups.find(group => (group.id === groupId));
         const users = {};
         this.setState({ group });

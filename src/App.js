@@ -34,7 +34,7 @@ class App extends Component {
 
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);
-      actions.setUser(user);
+      actions.setCurrentUser(user);
     });
   }
 

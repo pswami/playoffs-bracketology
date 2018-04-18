@@ -31,7 +31,7 @@ class Navbar extends React.Component {
     const { actions, history } = this.props;
 
     auth.signOut().then(() => {
-      actions.setUser(null);
+      actions.setCurrentUser(null);
       history.push('/');
     });
   }
