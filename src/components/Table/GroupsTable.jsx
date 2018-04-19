@@ -29,7 +29,7 @@ const GroupsTable = ({ groups, history }) => {
 };
 
 GroupsTable.propTypes = {
-  groups: PropTypes.object,
+  groups: PropTypes.array,
   history: PropTypes.object,
 }
 
