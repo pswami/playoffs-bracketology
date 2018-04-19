@@ -15,13 +15,9 @@ class Search extends React.Component {
   };
 
   componentDidMount() {
-    const { appState: { currentUser } } = this.props;
-
-    if (currentUser) {
-      readGroups({ public_access: true }).then(groups =>
-        groups && this.setState({ groups })
-      )
-    }
+    readGroups({ public_access: true }).then(groups =>
+      groups && this.setState({ groups })
+    )
   }
 
   handleQueryChange = (e) => this.setState({ query: e.target.value })

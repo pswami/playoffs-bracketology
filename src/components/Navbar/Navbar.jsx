@@ -72,7 +72,7 @@ class Navbar extends React.Component {
               </li>
             </ul>
             <div className="form-inline my-2 my-lg-0">
-              {appState.user ?
+              {appState.currentUser ?
                 <a className="btn btn-danger text-white" onClick={this.logout}>Logout</a> :
                 <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-modal">Login/Register</a>
               }

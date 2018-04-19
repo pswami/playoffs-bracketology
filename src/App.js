@@ -43,7 +43,7 @@ class App extends Component {
 
     return (
       <Terminal>
-        <li>Logged IN: {appState.user ? appState.user.email : ''}</li>
+        <li>Logged IN: {appState.currentUser ? appState.currentUser.email : ''}</li>
         <li>loading: {appState.loading}</li>
         <li>environment: {process.env && process.env.NODE_ENV}</li>
       </Terminal>

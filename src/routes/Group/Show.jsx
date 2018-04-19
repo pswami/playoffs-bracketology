@@ -140,21 +140,19 @@ class Show extends React.Component {
     const { appState: { currentUser }, match } = this.props;
     const { groupId } = match.params;
 
-    if (currentUser) {
-      readGroup(groupId).then(group => {
-        const users = {};
+    readGroup(groupId).then(group => {
+      const users = {};
 
-        const promises = group.users.map((uid) => {
-          return getUserProfile(uid).then((user) => {
-            users[uid] = user;
-          });
+      const promises = group.users.map((uid) => {
+        return getUserProfile(uid).then((user) => {
+          users[uid] = user;
         });
+      });
 
-        Promise.all(promises).then(values => {
-          this.setState({ group, users });
-        });
-      })
-    }
+      Promise.all(promises).then(values => {
+        this.setState({ group, users });
+      });
+    })
   }
 
   render() {
@@ -162,49 +160,47 @@ class Show extends React.Component {
     const { group, users } = this.state;
 
     if (brackets.length > 0 && group) {
-      const isUserInGroup = !!users[currentUser.uid];
+      const isUserInGroup = currentUser && !!users[currentUser.uid];
 
-      if (group.public_access || isUserInGroup) {
-        return (
-          <React.Fragment>
-            <AddMemberModal group={group} />
-            <Card.Container>
-              <Card.Header>
-                {group.name}
-                {isUserInGroup &&
-                  <button
-                    type="button"
-                    className="badge btn btn-primary btn-sm float-right"
-                    data-toggle="modal"
-                    data-target="#addMemberModal"
-                  >
-                    <span>+ Add</span>
-                  </button>
-                }
-              </Card.Header>
-              <Card.Body>
-                {Object.keys(users).length > 0 &&
-                  <TeamTable
-                    users={users}
-                    group={group}
-                    brackets={brackets}
-                  />
-                }
-              </Card.Body>
-            </Card.Container>
-            <br />
-            <div className="row">
-              <div className="col-lg-6">
-                {<AllPicks {...{ ...this.props, group, users }} />}
-                <br />
-              </div>
-              <div className="col-lg-6">
-                {isUserInGroup && <MyPicks  {...{ ...this.props, group }} />}
-              </div>
+      return (
+        <React.Fragment>
+          <AddMemberModal group={group} />
+          <Card.Container>
+            <Card.Header>
+              {group.name}
+              {isUserInGroup &&
+                <button
+                  type="button"
+                  className="badge btn btn-primary btn-sm float-right"
+                  data-toggle="modal"
+                  data-target="#addMemberModal"
+                >
+                  <span>+ Add</span>
+                </button>
+              }
+            </Card.Header>
+            <Card.Body>
+              {Object.keys(users).length > 0 &&
+                <TeamTable
+                  users={users}
+                  group={group}
+                  brackets={brackets}
+                />
+              }
+            </Card.Body>
+          </Card.Container>
+          <br />
+          <div className="row">
+            <div className="col-lg-6">
+              {<AllPicks {...{ ...this.props, group, users }} />}
+              <br />
             </div>
-          </React.Fragment>
-        );
-      }
+            <div className="col-lg-6">
+              {isUserInGroup && <MyPicks  {...{ ...this.props, group }} />}
+            </div>
+          </div>
+        </React.Fragment>
+      );
     }
 
     return null;
