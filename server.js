@@ -1,5 +1,9 @@
 const express = require('express');
 const request = require('request');
+const bodyParser = require('body-parser');
+const groupSchema = require('./server/schema/group');
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+
 const paths   = require('./config/paths');
 
 const NBA_BRACKETS_URL = 'https://data.nba.net/prod/v1/2017/playoffsBracket.json';
@@ -7,6 +11,9 @@ const port = process.env.PORT || 5000;
 const host = process.env.HOST || '0.0.0.0';
 
 const app  = express();
+
+app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: groupSchema }));
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 app.get('/api/v1/brackets/nba', function (req, res) {
   request(NBA_BRACKETS_URL, function (error, response, body) {
