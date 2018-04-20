@@ -1,0 +1,30 @@
+type Pick {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  team: String!
+  wins: Int!
+  round: Int!
+  user: User!
+  group: Group!
+}
+
+type Group {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  users: [User!]! @relation(name: "GroupUser")
+  name: String!
+  publicAccess: Boolean! @default(value: "false")
+  gamePoints: Int!
+  teamPoints: Int!
+  type: String!
+}
+
+type User {
+  id: ID! @unique
+  email: String! @unique
+  password: String!
+  name: String!
+  groups: [Group!]! @relation(name: "GroupUser")
+}
