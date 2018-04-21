@@ -1,7 +1,7 @@
-# import Post from "./generated/prisma.graphql"
+# import GroupCreateInput from "./generated/prisma.graphql"
 
 type Query {
-  groups(userId: ID!): [Group!]!
+  groupsForUser(userId: ID!): [Group!]!
   group(id: ID!): Group
   picks(userId: ID!, groupId: ID!): [Pick!]!
   me: User
@@ -10,7 +10,8 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  createGroup(name: String!, text: String!): Group!
+  createGroup(data: GroupCreateInput): Group!
+  addUserToGroup(groupId: ID!, userId: ID!): Group!
   deleteGroup(id: ID!): Group!
 }
 
