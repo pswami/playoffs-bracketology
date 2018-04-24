@@ -16,6 +16,7 @@ type Mutation {
   addUserToGroup(groupId: ID!, userId: ID!): Group!
   deleteGroup(id: ID!): Group!
   upsertPick(groupId: ID, pickId: ID, data: PickInput!): Pick!
+  deletePick(where: PickWhereUniqueInput!): Pick
 }
 
 type AuthPayload {

@@ -39,13 +39,13 @@ const pick = {
     }
   },
 
-  // async updatePick(parent, { groupId, data }, ctx, info) {
-  //   const userId = getUserId(ctx);
+  async deletePick(parent, { where }, ctx, info) {
+    const userId = getUserId(ctx);
 
-  //   if (userId) {
-  //     return ctx.db.mutation.updatePick({ data }, info);
-  //   }
-  // },
+    if (userId) {
+      return ctx.db.mutation.deletePick({ where }, info);
+    }
+  },
 }
 
 module.exports = { pick }
