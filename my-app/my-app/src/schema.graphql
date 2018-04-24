@@ -15,6 +15,7 @@ type Mutation {
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group!
   addUserToGroup(groupId: ID!, userId: ID!): Group!
   deleteGroup(id: ID!): Group!
+  upsertPick(groupId: ID, pickId: ID, data: PickInput!): Pick!
 }
 
 type AuthPayload {
@@ -27,4 +28,9 @@ type User {
   email: String!
   name: String!
   groups: [Group!]!
+}
+
+input PickInput {
+  team: String!
+  wins: Int!
 }

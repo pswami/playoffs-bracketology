@@ -2,11 +2,10 @@ type Pick {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  team: String!
-  wins: Int!
-  round: Int!
   user: User!
   group: Group!
+  team: String!
+  wins: Int!
 }
 
 type Group {

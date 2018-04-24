@@ -19,13 +19,12 @@ type Group implements Node {
 
 type Pick implements Node {
   id: ID!
+  user(where: UserWhereInput): User!
+  group(where: GroupWhereInput): Group!
   createdAt: DateTime!
   updatedAt: DateTime!
   team: String!
   wins: Int!
-  round: Int!
-  user(where: UserWhereInput): User!
-  group(where: GroupWhereInput): Group!
 }
 
 type User implements Node {
@@ -623,7 +622,6 @@ type PickConnection {
 input PickCreateInput {
   team: String!
   wins: Int!
-  round: Int!
   user: UserCreateOneInput!
   group: GroupCreateOneInput!
 }
@@ -653,8 +651,6 @@ enum PickOrderByInput {
   team_DESC
   wins_ASC
   wins_DESC
-  round_ASC
-  round_DESC
 }
 
 type PickPreviousValues {
@@ -663,7 +659,6 @@ type PickPreviousValues {
   updatedAt: DateTime!
   team: String!
   wins: Int!
-  round: Int!
 }
 
 type PickSubscriptionPayload {
@@ -704,7 +699,6 @@ input PickSubscriptionWhereInput {
 input PickUpdateInput {
   team: String
   wins: Int
-  round: Int
   user: UserUpdateOneInput
   group: GroupUpdateOneInput
 }
@@ -911,35 +905,6 @@ input PickWhereInput {
   All values greater than or equal the given value.
   """
   wins_gte: Int
-  round: Int
-  """
-  All values that are not equal to given value.
-  """
-  round_not: Int
-  """
-  All values that are contained in given list.
-  """
-  round_in: [Int!]
-  """
-  All values that are not contained in given list.
-  """
-  round_not_in: [Int!]
-  """
-  All values less than the given value.
-  """
-  round_lt: Int
-  """
-  All values less than or equal the given value.
-  """
-  round_lte: Int
-  """
-  All values greater than the given value.
-  """
-  round_gt: Int
-  """
-  All values greater than or equal the given value.
-  """
-  round_gte: Int
   user: UserWhereInput
   group: GroupWhereInput
 }
