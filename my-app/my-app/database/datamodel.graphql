@@ -24,6 +24,6 @@ type User {
   id: ID! @unique
   email: String! @unique
   password: String!
-  name: String!
+  username: String!
   groups: [Group!]! @relation(name: "GroupUser")
 }
