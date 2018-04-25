@@ -182,9 +182,20 @@ class MyPicks extends React.Component {
     .catch(() => swal('Failed', 'Please try again', 'error'))
   }
 
+  mappedByRound = () => {
+    const { appState: { brackets } } = this.props;
+
+    return brackets.reduce((acc, val) => {
+      acc[val.roundNum].push(val);
+
+      return acc;
+    }, { 1: [], 2: [], 3: [], 4: [] });
+  }
+
   render() {
     const { appState: { brackets } } = this.props;
     const { message, error } = this.state;
+    const bracketMap = this.mappedByRound();
 
     return (
       <Card.Container>
@@ -193,22 +204,23 @@ class MyPicks extends React.Component {
           {message && <div className="alert alert-primary" role="alert">{message}</div>}
           {error && <div className="alert alert-danger" role="alert">{error}</div>}
           <form onSubmit={this.handleSubmit}>
-            {brackets.map((series, idx) => {
-              const conferenceChanged = idx === 0 || (brackets[idx - 1] && (series.roundNum !== brackets[idx - 1].roundNum));
+            {Object.keys(bracketMap).map(roundNum => {
+              const seriesArr = bracketMap[roundNum];
 
-              if (series.isScheduleAvailable) {
-                return (
-                  <React.Fragment key={series.seriesId}>
-                    {conferenceChanged && <h2 className="roundHeader text-center">{roundNames[series.roundNum]}</h2>}
-                    <TeamOption
-                      ref={option => (this.options[series.seriesId] = option)}
-                      series={series}
-                      pick={this.state.picks[series.seriesId]}
-                    />
-                  </React.Fragment>
-                );
-              }
-              return null;
+              return (
+                <React.Fragment key={`round-${roundNum}`}>
+                  <h2 className="roundHeader text-center">{roundNames[roundNum]}</h2>
+                  {seriesArr.map(series => (
+                    series.isScheduleAvailable &&
+                      <TeamOption
+                        key={series.seriesId}
+                        ref={option => (this.options[series.seriesId] = option)}
+                        series={series}
+                        pick={this.state.picks[series.seriesId]}
+                      />
+                  ))}
+                </React.Fragment>
+              );
             })}
             <button
               type="submit"
