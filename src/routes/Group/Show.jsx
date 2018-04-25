@@ -14,19 +14,23 @@ import teams from '../../data/teams.json';
 import { readMatchups, readGroup, getUserProfile } from '../../firebase';
 
 const getWinner = (series) => {
-  let winner = {};
+  let teamWinner = {};
+  let totalGames = 0;
 
   if (series.topRow.isSeriesWinner) {
-    winner = series.topRow;
+    teamWinner = series.topRow;
   }
 
   if (series.bottomRow.isSeriesWinner) {
-    winner = series.bottomRow;
+    teamWinner = series.bottomRow;
   }
 
+  totalGames += parseInt(series.topRow.wins);
+  totalGames += parseInt(series.bottomRow.wins);
+
   return {
-    team: (teams[winner.teamId] || {}).tricode,
-    games: winner.wins
+    team: (teams[teamWinner.teamId] || {}).tricode,
+    games: totalGames.toString()
   };
 };
 
@@ -60,6 +64,7 @@ class TeamRow extends React.Component {
             if (winner.team === myPick.team) {
               points += teamPoints;
 
+              console.log(winner.games, myPick.winIn);
               if (winner.games === myPick.winIn) {
                 points += gamePoints;
               }
