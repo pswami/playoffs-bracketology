@@ -9,30 +9,9 @@ import AddMemberModal from './AddMemberModal';
 import Table from '../../components/Table';
 import Card from '../../components/Card';
 
-import teams from '../../data/teams.json';
+import { getWinner } from '../../utils';
 
 import { readMatchups, readGroup, getUserProfile } from '../../firebase';
-
-const getWinner = (series) => {
-  let teamWinner = {};
-  let totalGames = 0;
-
-  if (series.topRow.isSeriesWinner) {
-    teamWinner = series.topRow;
-  }
-
-  if (series.bottomRow.isSeriesWinner) {
-    teamWinner = series.bottomRow;
-  }
-
-  totalGames += parseInt(series.topRow.wins);
-  totalGames += parseInt(series.bottomRow.wins);
-
-  return {
-    team: (teams[teamWinner.teamId] || {}).tricode,
-    games: totalGames.toString()
-  };
-};
 
 class TeamRow extends React.Component {
   state = {

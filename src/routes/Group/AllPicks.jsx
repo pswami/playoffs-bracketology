@@ -1,11 +1,12 @@
-  import React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import { readMatchups } from '../../firebase';
 
 import Card from '../../components/Card';
 import Table from '../../components/Table';
-import { checkSeriesLocked } from '../../utils';
+import { checkSeriesLocked, getWinner } from '../../utils';
 
 import teams_by_tri from '../../data/teams_by_tri.json';
 
@@ -64,9 +65,20 @@ class MyPicks extends React.Component {
                     if (checkSeriesLocked(series) && picks) {
                       return (
                         <Table.Row key={series.seriesId}>
-                          {picks.map(pick => (
-                            <Table.Col key={pick.id} style={{ background: teams_by_tri[pick.team].teamColor }}>{pick.team} in {pick.winIn}</Table.Col>
-                          ))}
+                          {picks.map(pick => {
+                            const winner = getWinner(series);
+                            const isTeamCorrect = (pick.team === winner.team);
+                            const areGamesCorrect = (pick.winIn === winner.games);
+
+                            console.log(pick.team, winner.team, isTeamCorrect);
+                            return (
+                              <Table.Col key={pick.id} style={{ background: teams_by_tri[pick.team].teamColor }}>
+                                <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect})}>{pick.team}</span>
+                                <span> in </span>
+                                <span className={cx('games', { highlightBox: series.isSeriesCompleted && areGamesCorrect })}>{pick.winIn}</span>
+                              </Table.Col>
+                            );
+                          })}
                         </Table.Row>
                       );
                     }
