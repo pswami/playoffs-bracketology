@@ -185,8 +185,10 @@ class MyPicks extends React.Component {
   mappedByRound = () => {
     const { appState: { brackets } } = this.props;
 
-    return brackets.reduce((acc, val) => {
-      acc[val.roundNum].push(val);
+    return brackets.reduce((acc, series) => {
+      if (!checkSeriesLocked(series)) {
+        acc[series.roundNum].push(series);
+      }
 
       return acc;
     }, { 1: [], 2: [], 3: [], 4: [] });
@@ -209,7 +211,7 @@ class MyPicks extends React.Component {
 
               return (
                 <React.Fragment key={`round-${roundNum}`}>
-                  <h2 className="roundHeader text-center">{roundNames[roundNum]}</h2>
+                  {seriesArr.length > 0 && <h2 className="roundHeader text-center">{roundNames[roundNum]}</h2>}
                   {seriesArr.map(series => (
                     series.isScheduleAvailable &&
                       <TeamOption
