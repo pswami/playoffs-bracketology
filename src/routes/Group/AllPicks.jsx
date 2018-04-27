@@ -41,6 +41,7 @@ class MyPicks extends React.Component {
   render() {
     const { group, users, appState: { brackets } } = this.props;
     const seriesIds = Object.keys(this.state || {});
+    const numUsers = Object.keys(users).length;
 
     return (
       <Card.Container>
@@ -49,7 +50,7 @@ class MyPicks extends React.Component {
           <div className="table-responsive">
             <Table.Container className="picksTable" centered bordered fixed hoverable>
               <Table.Head>
-                {Object.keys(users).length > 0 &&
+                {numUsers > 0 &&
                   <Table.Row >
                     {group.users.map(uid =>
                       <Table.Header key={uid}>{users[uid].name}</Table.Header>
