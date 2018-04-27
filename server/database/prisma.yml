@@ -16,4 +16,3 @@ seed:
   import: seed.graphql
 
 cluster: ${env:PRISMA_CLUSTER}
-endpoint: http://localhost:4466
