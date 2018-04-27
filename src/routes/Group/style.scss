@@ -64,3 +64,10 @@
     text-overflow: ellipsis;
   }
 }
+
+.highlightBox {
+  position: relative;
+  box-shadow: inset 0px 0px 0px 2px #ffd400;
+  padding: 4px 8px;
+  border-radius: 6px;
+}

@@ -1,11 +1,12 @@
-  import React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import { readMatchups } from '../../firebase';
 
 import Card from '../../components/Card';
 import Table from '../../components/Table';
-import { checkSeriesLocked } from '../../utils';
+import { checkSeriesLocked, getWinner } from '../../utils';
 
 import teams_by_tri from '../../data/teams_by_tri.json';
 
@@ -40,6 +41,7 @@ class MyPicks extends React.Component {
   render() {
     const { group, users, appState: { brackets } } = this.props;
     const seriesIds = Object.keys(this.state || {});
+    const numUsers = Object.keys(users).length;
 
     return (
       <Card.Container>
@@ -48,7 +50,7 @@ class MyPicks extends React.Component {
           <div className="table-responsive">
             <Table.Container className="picksTable" centered bordered fixed hoverable>
               <Table.Head>
-                {Object.keys(users).length > 0 &&
+                {numUsers > 0 &&
                   <Table.Row >
                     {group.users.map(uid =>
                       <Table.Header key={uid}>{users[uid].name}</Table.Header>
@@ -64,9 +66,20 @@ class MyPicks extends React.Component {
                     if (checkSeriesLocked(series) && picks) {
                       return (
                         <Table.Row key={series.seriesId}>
-                          {picks.map(pick => (
-                            <Table.Col key={pick.id} style={{ background: teams_by_tri[pick.team].teamColor }}>{pick.team} in {pick.winIn}</Table.Col>
-                          ))}
+                          {picks.map(pick => {
+                            const winner = getWinner(series);
+                            const isTeamCorrect = (pick.team === winner.team);
+                            const areGamesCorrect = (pick.winIn === winner.games);
+
+                            console.log(pick.team, winner.team, isTeamCorrect);
+                            return (
+                              <Table.Col key={pick.id} style={{ background: teams_by_tri[pick.team].teamColor }}>
+                                <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect})}>{pick.team}</span>
+                                <span> in </span>
+                                <span className={cx('games', { highlightBox: series.isSeriesCompleted && areGamesCorrect })}>{pick.winIn}</span>
+                              </Table.Col>
+                            );
+                          })}
                         </Table.Row>
                       );
                     }
