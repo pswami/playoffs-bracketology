@@ -1,5 +1,49 @@
 import gql from "graphql-tag";
 
+export const ME_QUERY = gql`
+  query {
+    me {
+      id
+      username
+      email
+    }
+  }
+`;
+
+export const LOGIN_MUTATION = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        id
+        username
+        email
+      }
+    }
+  }
+`;
+
+export const SIGNUP_MUTATION = gql`
+  mutation signup(
+    $email: String!,
+    $username: String!
+    $password: String!,
+  ) {
+    signup(
+      email: $email,
+      username: $username,
+      password: $password
+    ) {
+      token
+      user {
+        id
+        username
+        email
+      }
+    }
+  }
+`;
+
 export default class Api {
   constructor(client) {
     this.client = client;
@@ -7,58 +51,20 @@ export default class Api {
 
   me = (query) => {
     return this.client.query({
-      query: gql`
-        query {
-          me {
-            id
-            username
-            email
-          }
-        }
-      `,
+      query: ME_QUERY,
     });
   }
 
   login = ({ email, password }) => {
     return this.client.mutate({
-      mutation: gql`
-        mutation login($email: String!, $password: String!) {
-          login(email: $email, password: $password) {
-            token
-            user {
-              id
-              username
-              email
-            }
-          }
-        }
-      `,
+      mutation: LOGIN_MUTATION,
       variables: { email, password },
     })
   }
 
   signup = ({ email, username, password }) => {
     return this.client.mutate({
-      mutation: gql`
-        mutation signup(
-          $email: String!,
-          $username: String!
-          $password: String!,
-        ) {
-          signup(
-            email: $email,
-            username: $username,
-            password: $password
-          ) {
-            token
-            user {
-              id
-              username
-              email
-            }
-          }
-        }
-      `,
+      mutation: SIGNUP_MUTATION,
       variables: { email, username, password },
     })
   }
