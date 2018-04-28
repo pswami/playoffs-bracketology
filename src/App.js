@@ -24,16 +24,26 @@ const RouteWithProps = (props) => ({ Component, ...rest }) => (
 );
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    window.API = new Api(props.client);
+  }
   componentDidMount() {
-    const { client } = this.props;
+    const { actions } = this.props;
 
-    window.API = new Api(client);
+    // window.API.getNBABracket()
+    // .then(result => {
+    //   console.log(result)
+    // });
 
-    window.API.getNBABracket()
-    .then(result => {
-      console.log(result)
-      console.log(this.props.client)
-    });
+    // window.API.login({
+    //   email: 'pap@yahoo.com',
+    //   password: '123456',
+    // })
+    // .then(result => {
+    //   console.log(result)
+    // });
 
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);

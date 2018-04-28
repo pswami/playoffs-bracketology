@@ -2,8 +2,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { auth, setUserProfile, addUsersToGroup } from '../../firebase';
-
 class LoginTab extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
@@ -12,15 +10,20 @@ class LoginTab extends React.Component {
     const email = this.email.value;
     const password = this.password.value;
 
-    auth.signInWithEmailAndPassword(email, password)
-      .then(res => {
-        toggleModal();
+    window.API.login({
+      email,
+      password,
+    })
+    .then(({ data }) => {
+      console.log('user login', data)
+      localStorage.setItem('token', data.login.token);
+      toggleModal();
 
-        history.push('/me');
-      })
-      .catch(error => {
-        console.error(error.code, error.message);
-      });
+      history.push('/me');
+    })
+    .catch(function (error) {
+      console.error(error.code, error.message);
+    });
   };
 
   render() {
@@ -68,28 +71,21 @@ class SignupTab extends React.Component {
     const email = this.email.value;
     const password = this.password.value;
 
-    auth.createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        console.log('user created', user);
+    window.API.signup({
+      email,
+      password,
+      username,
+    })
+    .then(({ data }) => {
+      console.log('user create', data)
+      localStorage.setItem('token', data.signup.token);
+      toggleModal();
 
-        setUserProfile({
-          uid: user.uid,
-          name: username,
-          email: user.email,
-        }).then(() => console.log('user profile created'))
-
-        addUsersToGroup({
-          groupId: '9vNbvCgZ1wtdjOo2bF1p',
-          users: [user.uid],
-        }).then(() => {
-          toggleModal();
-
-          history.push('/me');
-        })
-      })
-      .catch(function (error) {
-        console.error(error.code, error.message);
-      });
+      history.push('/me');
+    })
+    .catch(function (error) {
+      console.error(error.code, error.message);
+    });
   }
 
   render() {

@@ -31,7 +31,11 @@ export default class Api {
           $username: String!
           $password: String!,
         ) {
-          login(email: $email, password: $password) {
+          signup(
+            email: $email,
+            username: $username,
+            password: $password
+          ) {
             token
             user {
               id
