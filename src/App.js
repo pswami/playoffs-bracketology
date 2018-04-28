@@ -37,18 +37,15 @@ class App extends Component {
     //   console.log(result)
     // });
 
-    // window.API.login({
-    //   email: 'pap@yahoo.com',
-    //   password: '123456',
-    // })
-    // .then(result => {
-    //   console.log(result)
-    // });
-
-    auth.onAuthStateChanged((user) => {
-      console.log('user loaded', user);
-      actions.setCurrentUser(user);
+    window.API.me()
+    .then(result => {
+      console.log(result)
     });
+
+    // auth.onAuthStateChanged((user) => {
+    //   console.log('user loaded', user);
+    //   actions.setCurrentUser(user);
+    // });
   }
 
   devInfo = () => {

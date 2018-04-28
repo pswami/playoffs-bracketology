@@ -5,6 +5,20 @@ export default class Api {
     this.client = client;
   }
 
+  me = (query) => {
+    return this.client.query({
+      query: gql`
+        query {
+          me {
+            id
+            username
+            email
+          }
+        }
+      `,
+    });
+  }
+
   login = ({ email, password }) => {
     return this.client.mutate({
       mutation: gql`
