@@ -7,7 +7,7 @@ type Query {
   groupsForUser(userId: ID!): [Group!]!
   group(id: ID!): Group
   picks(userId: ID!, groupId: ID!): [Pick!]!
-  getNBABracket: JSON!
+  NBABracket: JSON!
   me: User
 }
 

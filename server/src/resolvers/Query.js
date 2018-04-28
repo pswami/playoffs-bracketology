@@ -27,7 +27,7 @@ const Query = {
   // },
 
 
-  getNBABracket(parent, args, ctx, info) {
+  NBABracket(parent, args, ctx, info) {
     return rp({ uri: NBA_BRACKETS_URL })
       .then(data => JSON.parse(data).series)
       .catch(data => {});

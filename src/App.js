@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { withApollo } from 'react-apollo';
 
+import Api from './api';
 import { connect } from './store';
 import { auth } from './firebase';
 
@@ -24,11 +25,15 @@ const RouteWithProps = (props) => ({ Component, ...rest }) => (
 
 class App extends Component {
   componentDidMount() {
-    const { actions } = this.props;
+    const { client } = this.props;
 
-    console.log(this)
+    window.API = new Api(client);
 
-    actions.getPlayoffBrackets()
+    window.API.getNBABracket()
+    .then(result => {
+      console.log(result)
+      console.log(this.props.client)
+    });
 
     auth.onAuthStateChanged((user) => {
       console.log('user loaded', user);
