@@ -1,10 +1,13 @@
 # import GroupCreateInput from "./generated/prisma.graphql"
 # import GroupUpdateInput from "./generated/prisma.graphql"
 
+scalar JSON
+
 type Query {
   groupsForUser(userId: ID!): [Group!]!
   group(id: ID!): Group
   picks(userId: ID!, groupId: ID!): [Pick!]!
+  getNBABracket: JSON!
   me: User
 }
 
