@@ -38,6 +38,7 @@ class Navbar extends React.Component {
 
   render() {
     const { appState } = this.props;
+    console.log(this.props.client)
 
     return (
       <React.Fragment>

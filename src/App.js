@@ -37,11 +37,12 @@ class App extends Component {
     //   console.log(result)
     // });
 
-    window.API.me()
-    .then(result => {
-      console.log(result)
-    });
-
+    if(localStorage.getItem('token')) {
+      window.API.me()
+        .then(result => {
+          console.log(result)
+        });
+    }
     // auth.onAuthStateChanged((user) => {
     //   console.log('user loaded', user);
     //   actions.setCurrentUser(user);
@@ -61,13 +62,13 @@ class App extends Component {
   };
 
   render() {
-    const { actions, appState } = this.props;
-    const RouteProps = RouteWithProps({ actions, appState });
+    const { actions, appState, client } = this.props;
+    const RouteProps = RouteWithProps({ actions, appState, client });
 
     return (
       <BrowserRouter>
         <div className="App bg-secondary">
-          <Navbar {...{ actions, appState }} />
+          <Navbar {...{ actions, appState, client }} />
           <Switch>
             <Layout.Container>
               <RouteProps exact path='/' Component={Home} />
