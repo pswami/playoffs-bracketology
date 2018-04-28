@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { withApollo } from 'react-apollo';
 
 import { connect } from './store';
 import { auth } from './firebase';
 
 import Home from './routes/Home/Home';
-
 import Me from './routes/Account/Me';
-
-// import Landing from './routes/Bracket/Landing';
 import Search from './routes/Search';
-
-// import Create from './routes/Group/Create';
 import Show from './routes/Group/Show';
 
 import Terminal from './components/Terminal';
@@ -29,6 +25,8 @@ const RouteWithProps = (props) => ({ Component, ...rest }) => (
 class App extends Component {
   componentDidMount() {
     const { actions } = this.props;
+
+    console.log(this)
 
     actions.getPlayoffBrackets()
 
@@ -74,4 +72,4 @@ class App extends Component {
 }
 
 // export default App;
-export default connect((state) => ({ appState: state }))(App)
+export default withApollo(connect((state) => ({ appState: state }))(App));
