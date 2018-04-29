@@ -6,7 +6,7 @@ import { readMatchups } from '../../firebase';
 
 import Card from '../../components/Card';
 import Table from '../../components/Table';
-import { checkSeriesLocked, getWinner } from '../../utils';
+import { checkSeriesLocked, getWinner, roundNames } from '../../utils';
 
 import teams_by_tri from '../../data/teams_by_tri.json';
 
@@ -38,10 +38,25 @@ class MyPicks extends React.Component {
     });
   }
 
+  mappedByRound = () => {
+    const { appState: { brackets } } = this.props;
+
+    return brackets.reduce((acc, series) => {
+      if (checkSeriesLocked(series)) {
+        acc[series.roundNum].push(series);
+      }
+
+      console.log(series, roundNames[series.roundNum]);
+
+      return acc;
+    }, { 1: [], 2: [], 3: [], 4: [] });
+  }
+
   render() {
     const { group, users, appState: { brackets } } = this.props;
     const seriesIds = Object.keys(this.state || {});
     const numUsers = Object.keys(users).length;
+    const bracketMap = this.mappedByRound();
 
     return (
       <Card.Container>
@@ -51,7 +66,7 @@ class MyPicks extends React.Component {
             <Table.Container className="picksTable" centered bordered fixed hoverable>
               <Table.Head>
                 {numUsers > 0 &&
-                  <Table.Row >
+                  <Table.Row>
                     {group.users.map(uid =>
                       <Table.Header key={uid}>{users[uid].name}</Table.Header>
                     )}
@@ -60,35 +75,47 @@ class MyPicks extends React.Component {
               </Table.Head>
               {seriesIds.length > 0 &&
                 <tbody>
-                  {brackets.map(series => {
-                    const picks = this.state[series.seriesId];
+                  {Object.keys(bracketMap).map(roundNum => {
+                    const seriesArr = bracketMap[roundNum];
 
-                    if (checkSeriesLocked(series) && picks) {
-                      return (
-                        <Table.Row key={series.seriesId}>
-                          {picks.map(pick => {
-                            const winner = getWinner(series);
-                            const isTeamCorrect = (pick.team === winner.team);
-                            const areGamesCorrect = (pick.winIn === winner.games);
+                    return (
+                      <React.Fragment key={`round-${roundNum}`}>
+                        {seriesArr.length > 0 &&
+                          <Table.Row>
+                            <Table.Header colspan={numUsers}>{roundNames[roundNum]}</Table.Header>
+                          </Table.Row>
+                        }
+                        {seriesArr.map(series => {
+                          const picks = this.state[series.seriesId];
 
-                            console.log(pick.team, winner.team, isTeamCorrect);
+                          if (checkSeriesLocked(series) && picks) {
                             return (
-                              <Table.Col
-                                key={pick.id}
-                                class="pickColumn"
-                                style={{ background: teams_by_tri[pick.team].teamColor }}
-                              >
-                                <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect})}>{pick.team}</span>
-                                <span> in </span>
-                                <span className={cx('games', { highlightBox: series.isSeriesCompleted && isTeamCorrect && areGamesCorrect })}>{pick.winIn}</span>
-                              </Table.Col>
-                            );
-                          })}
-                        </Table.Row>
-                      );
-                    }
+                              <Table.Row key={series.seriesId}>
+                                {picks.map(pick => {
+                                  const winner = getWinner(series);
+                                  const isTeamCorrect = pick.team === winner.team;
+                                  const areGamesCorrect = pick.winIn === winner.games;
 
-                    return null;
+                                  return (
+                                    <Table.Col
+                                      key={pick.id}
+                                      class="pickColumn"
+                                      style={{ background: teams_by_tri[pick.team].teamColor }}
+                                    >
+                                      <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect })}>{pick.team}</span>
+                                      <span> in </span>
+                                      <span className={cx('games', { highlightBox: series.isSeriesCompleted && isTeamCorrect && areGamesCorrect })}>{pick.winIn}</span>
+                                    </Table.Col>
+                                  );
+                                })}
+                              </Table.Row>
+                            );
+                          }
+
+                          return null;
+                        })}
+                      </React.Fragment>
+                    );
                   })}
                 </tbody>
               }
