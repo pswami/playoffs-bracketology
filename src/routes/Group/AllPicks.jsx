@@ -80,7 +80,7 @@ class MyPicks extends React.Component {
                               >
                                 <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect})}>{pick.team}</span>
                                 <span> in </span>
-                                <span className={cx('games', { highlightBox: series.isSeriesCompleted && areGamesCorrect })}>{pick.winIn}</span>
+                                <span className={cx('games', { highlightBox: series.isSeriesCompleted && isTeamCorrect && areGamesCorrect })}>{pick.winIn}</span>
                               </Table.Col>
                             );
                           })}
