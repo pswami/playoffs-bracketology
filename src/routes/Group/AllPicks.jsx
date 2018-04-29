@@ -73,7 +73,11 @@ class MyPicks extends React.Component {
 
                             console.log(pick.team, winner.team, isTeamCorrect);
                             return (
-                              <Table.Col key={pick.id} style={{ background: teams_by_tri[pick.team].teamColor }}>
+                              <Table.Col
+                                key={pick.id}
+                                class="pickColumn"
+                                style={{ background: teams_by_tri[pick.team].teamColor }}
+                              >
                                 <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect})}>{pick.team}</span>
                                 <span> in </span>
                                 <span className={cx('games', { highlightBox: series.isSeriesCompleted && areGamesCorrect })}>{pick.winIn}</span>
