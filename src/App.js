@@ -41,6 +41,7 @@ class App extends Component {
       window.API.me()
         .then(result => {
           console.log(result)
+          console.log(this.props.client);
         });
     }
     // auth.onAuthStateChanged((user) => {
