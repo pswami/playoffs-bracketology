@@ -30,7 +30,7 @@ class App extends Component {
     window.API = new Api(props.client);
   }
   componentDidMount() {
-    const { actions } = this.props;
+    const { actions, client } = this.props;
 
     // window.API.getNBABracket()
     // .then(result => {
@@ -38,12 +38,19 @@ class App extends Component {
     // });
 
     if(localStorage.getItem('token')) {
-      window.API.me()
-        .then(result => {
-          console.log(result)
-          console.log(this.props.client);
-        });
+      window.API.me().then(s => {
+        console.log(window.API.me())
+      });
     }
+        // window.API.login({
+        //   email: "pap@yahoo.com",
+        //   password: "123456",
+        // })
+        //   .then(({ data }) => {
+        //     console.log(data);
+        //     console.log(client);
+        //     console.log(window.API.meCache());
+        //   })
     // auth.onAuthStateChanged((user) => {
     //   console.log('user loaded', user);
     //   actions.setCurrentUser(user);
