@@ -43,7 +43,7 @@ class TeamRow extends React.Component {
             if (winner.team === myPick.team) {
               points += teamPoints;
 
-              console.log(winner.games, myPick.winIn);
+              // console.log(winner.games, myPick.winIn);
               if (winner.games === myPick.winIn) {
                 points += gamePoints;
               }
@@ -121,7 +121,7 @@ class Show extends React.Component {
   };
 
   componentDidMount() {
-    const { appState: { currentUser }, match } = this.props;
+    const {  match } = this.props;
     const { groupId } = match.params;
 
     readGroup(groupId).then(group => {

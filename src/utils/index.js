@@ -28,8 +28,8 @@ export const getWinner = (series) => {
     teamWinner = series.bottomRow;
   }
 
-  totalGames += parseInt(series.topRow.wins);
-  totalGames += parseInt(series.bottomRow.wins);
+  totalGames += parseInt(series.topRow.wins, 10);
+  totalGames += parseInt(series.bottomRow.wins, 10);
 
   return {
     team: (teams[teamWinner.teamId] || {}).tricode,

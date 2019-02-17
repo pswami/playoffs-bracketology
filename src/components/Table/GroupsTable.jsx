@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import Card from '../../components/Card';
 import Table from '../../components/Table';
 
 const GroupsTable = ({ groups, history }) => {

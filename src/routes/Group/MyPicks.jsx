@@ -195,7 +195,6 @@ class MyPicks extends React.Component {
   }
 
   render() {
-    const { appState: { brackets } } = this.props;
     const { message, error } = this.state;
     const bracketMap = this.mappedByRound();
 

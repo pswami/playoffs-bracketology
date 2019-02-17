@@ -46,14 +46,14 @@ class MyPicks extends React.Component {
         acc[series.roundNum].push(series);
       }
 
-      console.log(series, roundNames[series.roundNum]);
+      // console.log(series, roundNames[series.roundNum]);
 
       return acc;
     }, { 1: [], 2: [], 3: [], 4: [] });
   }
 
   render() {
-    const { group, users, appState: { brackets } } = this.props;
+    const { group, users } = this.props;
     const seriesIds = Object.keys(this.state || {});
     const numUsers = Object.keys(users).length;
     const bracketMap = this.mappedByRound();
@@ -82,7 +82,7 @@ class MyPicks extends React.Component {
                       <React.Fragment key={`round-${roundNum}`}>
                         {seriesArr.length > 0 &&
                           <Table.Row>
-                            <Table.Header colspan={numUsers}>{roundNames[roundNum]}</Table.Header>
+                            <Table.Header colSpan={numUsers}>{roundNames[roundNum]}</Table.Header>
                           </Table.Row>
                         }
                         {seriesArr.map(series => {
@@ -99,7 +99,7 @@ class MyPicks extends React.Component {
                                   return (
                                     <Table.Col
                                       key={pick.id}
-                                      class="pickColumn"
+                                      className="pickColumn"
                                       style={{ background: teams_by_tri[pick.team].teamColor }}
                                     >
                                       <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect })}>{pick.team}</span>
