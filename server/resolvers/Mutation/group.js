@@ -5,16 +5,9 @@ const group = {
     const userId = getUserId(ctx)
 
     if (userId) {
-      return ctx.db.mutation.createGroup({
-        data: {
-          ...data,
-          users: {
-            connect: {
-              id: userId
-            }
-          }
-        },
-      });
+      return ctx.prisma.createGroup({
+        ...data,
+      }, info);
     }
   },
 

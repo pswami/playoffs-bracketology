@@ -1,6 +1,10 @@
+# import GroupCreateInput from './generated/prisma-client/prisma.graphql'
+
 scalar JSON
 
 type Query {
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   groupsForUser(userId: ID!): [Group!]!
   group(id: ID!): Group
   picks(userId: ID!, groupId: ID!): [Pick!]!
@@ -28,10 +32,32 @@ type User {
   id: ID!
   email: String!
   username: String!
-  groups: [Group!]!
+  groups: [Group]
 }
 
 input PickInput {
   team: String!
   wins: Int!
+}
+
+type Pick {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  group: Group!
+  team: String!
+  wins: Int!
+}
+
+type Group {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  users: [User!]!
+  name: String!
+  publicAccess: Boolean!
+  gamePoints: Int!
+  teamPoints: Int!
+  type: String!
 }
