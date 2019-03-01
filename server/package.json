@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.17.4",
-    "prisma-client-lib": "^1.27.3"
+    "jsonwebtoken": "^8.5.0",
+    "prisma-client-lib": "^1.27.3",
+    "request-promise": "^4.2.4"
   }
 }
