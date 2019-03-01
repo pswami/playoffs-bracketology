@@ -1,25 +1,37 @@
+scalar JSON
+
 type Query {
-  publishedPosts: [Post!]!
-  post(postId: ID!): Post
-  postsByUser(userId: ID!): [Post!]!
+  groupsForUser(userId: ID!): [Group!]!
+  group(id: ID!): Group
+  picks(userId: ID!, groupId: ID!): [Pick!]!
+  NBABracket: JSON!
+  me: User
 }
 
 type Mutation {
-  createUser(name: String!): User
-  createDraft(title: String!, userId: ID!): Post
-  publish(postId: ID!): Post
+  signup(email: String!, password: String!, username: String!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+  createGroup(data: GroupCreateInput!): Group!
+  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group!
+  addUserToGroup(groupId: ID!, userId: ID!): Group!
+  deleteGroup(id: ID!): Group!
+  upsertPick(groupId: ID, pickId: ID, data: PickInput!): Pick!
+  deletePick(where: PickWhereUniqueInput!): Pick
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
 }
 
 type User {
   id: ID!
-  email: String
-  name: String!
-  posts: [Post!]!
+  email: String!
+  username: String!
+  groups: [Group!]!
 }
 
-type Post {
-  id: ID!
-  title: String!
-  published: Boolean!
-  author: User
+input PickInput {
+  team: String!
+  wins: Int!
 }

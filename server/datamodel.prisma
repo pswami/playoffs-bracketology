@@ -1,13 +1,29 @@
-type User {
+type Pick {
   id: ID! @unique
-  email: String @unique
-  name: String!
-  posts: [Post!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  group: Group!
+  team: String!
+  wins: Int!
 }
 
-type Post {
+type Group {
   id: ID! @unique
-  title: String!
-  published: Boolean! @default(value: "false")
-  author: User
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  users: [User!]! @relation(name: "GroupUser")
+  name: String!
+  publicAccess: Boolean! @default(value: "true")
+  gamePoints: Int!
+  teamPoints: Int!
+  type: String!
+}
+
+type User {
+  id: ID! @unique
+  email: String! @unique
+  password: String!
+  username: String!
+  groups: [Group!]! @relation(name: "GroupUser")
 }
