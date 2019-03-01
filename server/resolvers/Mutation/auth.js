@@ -4,12 +4,14 @@ const jwt = require('jsonwebtoken');
 const auth = {
   async signup(parent, args, ctx, info) {
     const password = await bcrypt.hash(args.password, 10)
-    const user = await ctx.db.mutation.createUser({
-      data: { ...args, password },
+    console.log(args)
+    const user = await ctx.prisma.createUser({
+      ...args,
+      password,
     })
 
     return {
-      token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
+      token: jwt.sign({ userId: user.id }, 'process.env.APP_SECRET'),
       user,
     }
   },
@@ -26,7 +28,7 @@ const auth = {
     }
 
     return {
-      token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
+      token: jwt.sign({ userId: user.id }, 'process.env.APP_SECRET'),
       user,
     }
   },
