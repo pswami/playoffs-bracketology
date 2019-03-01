@@ -17,7 +17,7 @@ const auth = {
   },
 
   async login(parent, { email, password }, ctx, info) {
-    const user = await ctx.db.query.user({ where: { email } })
+    const user = await ctx.prisma.user({ email })
     if (!user) {
       throw new Error(`No such user found for email: ${email}`)
     }
