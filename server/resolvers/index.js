@@ -12,6 +12,16 @@ module.exports = {
     ...group,
     ...pick,
   },
+  User: {
+    groups(parent, args, ctx, info) {
+      return ctx.prisma.user({ id: parent.id }).groups();
+    }
+  },
+  Group: {
+    users(parent, args, ctx, info) {
+      return ctx.prisma.group({ id: parent.id }).users();
+    }
+  },
   // Subscription,
   AuthPayload,
 }
