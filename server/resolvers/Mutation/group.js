@@ -43,11 +43,11 @@ const group = {
     }, info);
   },
 
-  async deleteGroup(parent, { where }, ctx, info) {
+  async deleteGroup(parent, { id }, ctx, info) {
     const userId = getUserId(ctx);
 
     if (userId) {
-      return ctx.db.mutation.deleteGroup({ where }, info);
+      return ctx.prisma.deleteGroup({ id }, info);
     }
   },
 }
