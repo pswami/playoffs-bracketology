@@ -11,11 +11,11 @@ const group = {
     }
   },
 
-  async updateGroup(parent, { groupId, data }, ctx, info) {
+  async updateGroup(parent, { where, groupId, data }, ctx, info) {
     const userId = getUserId(ctx);
 
     if (userId) {
-      return ctx.db.mutation.updateGroup({ data }, info);
+      return ctx.prisma.updateGroup({ where, data }, info);
     }
   },
 
