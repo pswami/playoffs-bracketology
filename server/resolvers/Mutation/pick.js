@@ -20,17 +20,17 @@ const pick = {
         }
 
         return await ctx.prisma.createPick({
-            ...data,
-            user: {
-              connect: {
-                id: userId
-              }
-            },
-            group: {
-              connect: {
-                id: groupId
-              }
+          ...data,
+          user: {
+            connect: {
+              id: userId
             }
+          },
+          group: {
+            connect: {
+              id: groupId
+            }
+          }
         });
       }
 
