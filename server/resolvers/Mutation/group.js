@@ -20,7 +20,8 @@ const group = {
   },
 
   async addUserToGroup(parent, { groupId, userId }, ctx, info) {
-    const groupExists = await ctx.db.exists.Group({ id: groupId });
+    console.log(ctx.prisma)
+    const groupExists = await ctx.prisma.$exists.group({ id: groupId });
 
     if (!userId) {
       throw new Error(`User not found`)
@@ -30,7 +31,7 @@ const group = {
       throw new Error(`Group not found`)
     }
 
-    return ctx.db.mutation.updateGroup({
+    return ctx.prisma.updateGroup({
       where: { id: groupId },
       data: {
         users: {
