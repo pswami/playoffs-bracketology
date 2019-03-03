@@ -6,21 +6,20 @@ const pick = {
 
     if (userId) {
       if (pickId) {
-        return await ctx.db.mutation.updatePick({
+        return await ctx.updatePick({
           where: {
             id: pickId
           },
           data
         });
       } else {
-        const groupExists = await ctx.db.exists.Group({ id: groupId });
+        const groupExists = await ctx.prisma.$exists.group({ id: groupId });
 
         if (!groupExists) {
           throw new Error(`Group not found`)
         }
 
-        return await ctx.db.mutation.createPick({
-          data: {
+        return await ctx.prisma.createPick({
             ...data,
             user: {
               connect: {
@@ -32,18 +31,17 @@ const pick = {
                 id: groupId
               }
             }
-          }
         });
       }
 
     }
   },
 
-  async deletePick(parent, { where }, ctx, info) {
+  async deletePick(parent, { id }, ctx, info) {
     const userId = getUserId(ctx);
 
     if (userId) {
-      return ctx.db.mutation.deletePick({ where }, info);
+      return ctx.prisma.deletePick({ id }, info);
     }
   },
 }
