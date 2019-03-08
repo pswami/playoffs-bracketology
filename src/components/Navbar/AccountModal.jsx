@@ -1,29 +1,36 @@
 /* global $ */
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { graphql } from 'react-apollo';
 
 import { auth, setUserProfile, addUsersToGroup } from '../../firebase';
+import { LOGIN_MUTATION } from '../../queries';
 
 class LoginTab extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { toggleModal, history } = this.props;
+    const { mutate, toggleModal, history } = this.props;
     const email = this.email.value;
     const password = this.password.value;
 
-    auth.signInWithEmailAndPassword(email, password)
-      .then(res => {
-        toggleModal();
+    mutate({
+      variables: { email, password },
+      // update: (cache, { data }) => {
+      //   cache.writeData({ data: { currentUser: data.login }});
+      // }
+    }).then(data => {
+      console.log('logged in', data);
 
-        history.push('/me');
-      })
-      .catch(error => {
-        console.error(error.code, error.message);
-      });
+      toggleModal();
+      history.push('/me');
+    }).catch(error => {
+      console.error(error.code, error.message);
+    });
   };
 
   render() {
+    console.log(this.props)
     return (
       <div id="login-form" className="tab-pane in active">
         <form onSubmit={this.handleSubmit}>
@@ -132,7 +139,7 @@ class SignupTab extends React.Component {
   }
 }
 
-const Login = withRouter(LoginTab);
+const Login = withRouter(graphql(LOGIN_MUTATION)(LoginTab));
 const Signup = withRouter(SignupTab);
 
 export default class AccountModal extends React.Component {
