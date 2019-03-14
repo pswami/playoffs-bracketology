@@ -9,7 +9,7 @@ type Query {
   group(id: ID!): Group
   picks(userId: ID!, groupId: ID!): [Pick!]!
   NBABracket: JSON!
-  me: User
+  currentUser: User
 }
 
 type Mutation {

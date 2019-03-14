@@ -23,7 +23,7 @@ const Query = {
       .catch(data => {});
   },
 
-  me(parent, args, ctx, info) {
+  currentUser(parent, args, ctx, info) {
     const id = getUserId(ctx)
     return ctx.prisma.user({ id }, info)
   },
