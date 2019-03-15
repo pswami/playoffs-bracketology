@@ -18,6 +18,8 @@ import Terminal from './components/Terminal';
 import Navbar from './components/Navbar';
 import Layout from './components/Layout';
 
+// import { LOGIN_MUTATION } from './queries';
+
 import './App.scss';
 
 const RouteWithProps = (props) => ({ Component, ...rest }) => (
@@ -30,12 +32,13 @@ class App extends Component {
   componentDidMount() {
     const { actions } = this.props;
 
+    console.log('this.props', this.props);
     actions.getPlayoffBrackets()
 
-    auth.onAuthStateChanged((user) => {
-      console.log('user loaded', user);
-      actions.setCurrentUser(user);
-    });
+    // auth.onAuthStateChanged((user) => {
+    //   console.log('user loaded', user);
+    //   actions.setCurrentUser(user);
+    // });
   }
 
   devInfo = () => {
