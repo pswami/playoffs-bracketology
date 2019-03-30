@@ -26,21 +26,7 @@ const RouteWithProps = (props) => ({ Component, ...rest }) => (
 );
 
 class App extends Component {
-  componentDidMount() {
-    const { actions, currentUser } = this.props;
-
-    // console.log('this.props', this.props);
-    // actions.getPlayoffBrackets()
-
-    // auth.onAuthStateChanged((user) => {
-    //   console.log('user loaded', user);
-    //   actions.setCurrentUser(user);
-    // });
-  }
-
   devInfo = () => {
-    const { appState } = this.props;
-
     return (
       <Terminal>
         <li>Logged IN: {this.props.data.currentUser ? this.props.data.currentUser.email : ''}</li>

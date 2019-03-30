@@ -1,37 +1,25 @@
 import React from 'react';
-
-import { readGroups } from '../../firebase';
+import { Query } from "react-apollo";
 
 import Card from '../../components/Card';
 import { GroupsTable } from '../../components/Table';
 
+import { GROUPS_QUERY } from '../../queries';
 
 class Search extends React.Component {
   state = {
-    groups: [],
-    searchedGroups: [],
     query: '',
   };
 
-  componentDidMount() {
-    readGroups({ public_access: true }).then(groups =>
-      groups && this.setState({ groups })
-    )
-  }
-
   handleQueryChange = (e) => this.setState({ query: e.target.value })
 
-  filterGroups = () => (
-    this.state.groups.filter(
+  filterGroups = (groups) => (
+    groups.filter(
       group => group.name.toLowerCase().includes(this.state.query.toLowerCase())
     )
-  );
+  )
 
   render() {
-    const { groups } = this.state;
-    const { children, ...rest } = this.props;
-    const filteredGroups = this.filterGroups(groups);
-
     return (
       <Card.Container>
         <Card.Header>
@@ -44,9 +32,23 @@ class Search extends React.Component {
             />
           </div>
         </Card.Header>
-        <Card.Body>
-          <GroupsTable {...rest} groups={filteredGroups} />
-        </Card.Body>
+        <Query query={GROUPS_QUERY}>
+          {({ loading, error, data }) => {
+            console.log('data - groups', loading)
+
+            if (!error && !loading) {
+              const filteredGroups = this.filterGroups(data.groups);
+
+              return (
+                <Card.Body>
+                  <GroupsTable groups={filteredGroups} />
+                </Card.Body>
+              );
+            }
+
+            return null;
+          }}
+        </Query>
       </Card.Container>
     );
   }

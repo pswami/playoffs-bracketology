@@ -31,6 +31,21 @@ export const CURRENT_USER_QUERY = gql`
   }
 `;
 
+export const GROUPS_QUERY = gql`
+  query {
+    groups {
+      id
+      name
+      users {
+        id
+        username
+        email
+      }
+
+    }
+  }
+`;
+
 // export const resolvers = {
 //   Query: {
 //     currentUser: (_, { text }, { cache }) => {
