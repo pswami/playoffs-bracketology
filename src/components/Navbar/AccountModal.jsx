@@ -3,8 +3,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 
-import { auth, setUserProfile, addUsersToGroup } from '../../firebase';
-import { LOGIN_MUTATION } from '../../queries';
+import { LOGIN_MUTATION, CURRENT_USER_QUERY, SIGNUP_MUTATION } from '../../queries';
 
 class LoginTab extends React.Component {
   handleSubmit = (e) => {
@@ -16,8 +15,12 @@ class LoginTab extends React.Component {
 
     login({
       variables: { email, password },
-    }).then(data => {
+    }).then(({ data }) => {
       console.log('logged in', data);
+      console.log('token set', data.login.token);
+
+      localStorage.setItem('token', data.login.token);
+      this.props.data.refetch();
       toggleModal();
       history.push('/me');
     }).catch(error => {
@@ -65,33 +68,24 @@ class SignupTab extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { toggleModal, history } = this.props;
+    const { signup, toggleModal, history } = this.props;
     const username = this.username.value;
     const email = this.email.value;
     const password = this.password.value;
 
-    auth.createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        console.log('user created', user);
+    signup({
+      variables: { email, password, username },
+    }).then(({ data }) => {
+      console.log('signed up', data);
+      console.log('token set', data.signup.token);
 
-        setUserProfile({
-          uid: user.uid,
-          name: username,
-          email: user.email,
-        }).then(() => console.log('user profile created'))
-
-        addUsersToGroup({
-          groupId: '9vNbvCgZ1wtdjOo2bF1p',
-          users: [user.uid],
-        }).then(() => {
-          toggleModal();
-
-          history.push('/me');
-        })
-      })
-      .catch(function (error) {
-        console.error(error.code, error.message);
-      });
+      localStorage.setItem('token', data.signup.token);
+      this.props.data.refetch();
+      toggleModal();
+      history.push('/me');
+    }).catch(error => {
+      console.error(error.code, error.message);
+    });
   }
 
   render() {
@@ -134,8 +128,15 @@ class SignupTab extends React.Component {
   }
 }
 
-const Login = withRouter(graphql(LOGIN_MUTATION, { name: 'login' })(LoginTab));
-const Signup = withRouter(SignupTab);
+const Login = compose(
+  graphql(LOGIN_MUTATION, { name: 'login' }),
+  graphql(CURRENT_USER_QUERY),
+)(withRouter(LoginTab));
+
+const Signup = compose(
+  graphql(SIGNUP_MUTATION, { name: 'signup' }),
+  graphql(CURRENT_USER_QUERY),
+)(withRouter(SignupTab));
 
 export default class AccountModal extends React.Component {
   toggleModal = () => {

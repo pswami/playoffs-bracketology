@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { graphql, compose } from 'react-apollo';
 
 import { connect } from './store';
 import { auth } from './firebase';
@@ -18,7 +19,7 @@ import Terminal from './components/Terminal';
 import Navbar from './components/Navbar';
 import Layout from './components/Layout';
 
-// import { LOGIN_MUTATION } from './queries';
+import { CURRENT_USER_QUERY } from './queries';
 
 import './App.scss';
 
@@ -30,10 +31,10 @@ const RouteWithProps = (props) => ({ Component, ...rest }) => (
 
 class App extends Component {
   componentDidMount() {
-    const { actions } = this.props;
+    const { actions, currentUser } = this.props;
 
-    console.log('this.props', this.props);
-    actions.getPlayoffBrackets()
+    // console.log('this.props', this.props);
+    // actions.getPlayoffBrackets()
 
     // auth.onAuthStateChanged((user) => {
     //   console.log('user loaded', user);
@@ -46,9 +47,10 @@ class App extends Component {
 
     return (
       <Terminal>
-        <li>Logged IN: {appState.currentUser ? appState.currentUser.email : ''}</li>
-        <li>loading: {appState.loading}</li>
+        <li>Logged IN: {this.props.data.currentUser ? this.props.data.currentUser.email : ''}</li>
+        <li>user loading: {this.props.data.loading.toString()}</li>
         <li>environment: {process.env && process.env.NODE_ENV}</li>
+        <button onClick={() => this.forceUpdate()}>Force Refresh</button>
       </Terminal>
     );
   };
@@ -57,6 +59,7 @@ class App extends Component {
     const { actions, appState } = this.props;
     const RouteProps = RouteWithProps({ actions, appState });
 
+    // console.log('this.props', this.props.currentUser);
     return (
       <BrowserRouter>
         <div className="App bg-secondary">
@@ -77,4 +80,4 @@ class App extends Component {
 }
 
 // export default App;
-export default connect((state) => ({ appState: state }))(App)
+export default connect((state) => ({ appState: state }))((graphql(CURRENT_USER_QUERY))(App))

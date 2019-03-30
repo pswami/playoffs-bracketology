@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { Query } from "react-apollo";
 
 import AccountModal from './AccountModal';
 
+import { CURRENT_USER_QUERY } from '../../queries';
 import { auth } from '../../firebase';
 import './style.scss';
 
@@ -27,18 +29,15 @@ class Navbar extends React.Component {
     }
   }
 
-  logout = () => {
-    const { actions, history } = this.props;
+  logout = (client) => () => {
+    const { history } = this.props;
 
-    auth.signOut().then(() => {
-      actions.setCurrentUser(null);
-      history.push('/');
-    });
+    client.resetStore();
+    localStorage.removeItem('token');
+    history.push('/');
   }
 
   render() {
-    const { appState } = this.props;
-
     return (
       <React.Fragment>
         <AccountModal />
@@ -71,12 +70,29 @@ class Navbar extends React.Component {
                 <Link className="nav-link" to="/me">My Stuff</Link>
               </li>
             </ul>
-            <div className="form-inline my-2 my-lg-0">
-              {appState.currentUser ?
-                <a className="btn btn-danger text-white" onClick={this.logout}>Logout</a> :
-                <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-modal">Login/Register</a>
-              }
-            </div>
+            <Query query={CURRENT_USER_QUERY} fetchPolicy="network-only">
+              {({ loading, error, data, client }) => {
+                let cachedData;
+
+                try {
+                  // const { currentUser } = client.readQuery({ query: CURRENT_USER_QUERY })
+
+                  // console.log('data', data)
+                  cachedData = data.currentUser;
+                } catch(e) {
+                  cachedData = undefined;
+                }
+
+                return (
+                  <div className="form-inline my-2 my-lg-0">
+                    {cachedData ?
+                      <a className="btn btn-danger text-white" onClick={this.logout(client)}>Logout</a> :
+                      <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-modal">Login/Register</a>
+                    }
+                  </div>
+                );
+              }}
+            </Query>
           </div>
         </nav>
       </React.Fragment>
