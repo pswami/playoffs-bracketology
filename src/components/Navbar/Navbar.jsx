@@ -5,7 +5,6 @@ import { Query } from "react-apollo";
 import AccountModal from './AccountModal';
 
 import { CURRENT_USER_QUERY } from '../../queries';
-import { auth } from '../../firebase';
 import './style.scss';
 
 const i18n = {

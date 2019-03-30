@@ -3,15 +3,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 
 import { connect } from './store';
-import { auth } from './firebase';
 
 import Home from './routes/Home/Home';
-
 import Me from './routes/Account/Me';
-
 // import Landing from './routes/Bracket/Landing';
 import Search from './routes/Search';
-
 // import Create from './routes/Group/Create';
 import Show from './routes/Group/Show';
 
