@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from "react-apollo";
-import ApolloClient from "apollo-boost";
+import { ApolloClient } from "apollo-client";
+import { ApolloLink } from 'apollo-link';
+// import { withClientState } from 'apollo-link-state';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { setContext } from 'apollo-link-context';
+import { createHttpLink } from 'apollo-link-http';
 
 import { Provider } from './store';
 
@@ -11,35 +16,32 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const client = new ApolloClient({
-  uri: "http://localhost:4000"
+// import { resolvers } from './queries';
+
+const cache = new InMemoryCache();
+
+// const stateLink = withClientState({ resolvers, cache });
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  console.log('token', token);
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
 });
 
-// client.mutate({
-//   mutation: gql`
-//     mutation {
-//       login(email: "p@p.com", password: "123456") {
-//         token
-//         user {
-//           email
-//         }
-//       }
-//     }
-//   `
-// })
-// .then(result => console.log(result));
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000',
+  credentials: 'same-origin'
+});
 
-// client.query({
-//   query: gql`
-//     {
-//       users {
-//         id
-//         email
-//       }
-//     }
-//   `
-// })
-// .then(result => console.log(result));
+const client = new ApolloClient({
+  cache,
+  link: ApolloLink.from([authLink, httpLink]),
+});
 
 ReactDOM.render(
   <Provider>
