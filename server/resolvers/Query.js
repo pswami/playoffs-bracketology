@@ -17,6 +17,17 @@ const Query = {
     return ctx.prisma.users(args, info)
   },
 
+  picks(parent, args, ctx, info) {
+    return ctx.prisma.picks({ where: {
+      user: {
+        id: args.userId,
+      },
+      group: {
+        id: args.groupId,
+      }
+    }}, info)
+  },
+
   NBABracket(parent, args, ctx, info) {
     return rp({ uri: NBA_BRACKETS_URL })
       .then(data => JSON.parse(data).series)
