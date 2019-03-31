@@ -48,7 +48,8 @@ type Pick {
   group: Group!
   team: String!
   wins: Int!
-  round: Int!
+  round: Int
+  seriesId: Int
 }
 
 type Group {
