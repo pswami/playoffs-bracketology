@@ -10,7 +10,7 @@ import Table from '../../components/Table';
 import { checkSeriesLocked, getWinner, roundNames } from '../../utils';
 
 import teams_by_tri from '../../data/teams_by_tri.json';
-import { NBA_BRACKETS_QUERY } from '../../queries';
+import { NBA_BRACKETS_QUERY, PICKS_QUERY } from '../../queries';
 
 import './style.scss';
 
@@ -20,24 +20,21 @@ class MyPicks extends React.Component {
   }
 
   getUsersPicks = () => {
-    const { group } = this.props;
+    const { group, picksQuery } = this.props;
     const picksTable = {};
 
-    const promises = group.users.map(uid => {
-      return readMatchups({ uid, groupId: group.id }).then(picks => {
-        if (picks) {
-          picks.forEach(pick => {
-            if (pick) {
-              picksTable[pick.seriesId] = (picksTable[pick.seriesId] || []).concat(pick);
-            }
-          })
-        }
-      })
-    });
+    //TODO: fix, shouldn't refetch
+    picksQuery.refetch().then(({ data }) => {
+      const picks = data.picks;
 
-    Promise.all(promises).then(values => {
+      picks.forEach(pick => {
+        if (pick) {
+          picksTable[pick.seriesId] = (picksTable[pick.seriesId] || []).concat(pick);
+        }
+      });
+
       this.setState({ ...picksTable })
-    });
+    })
   }
 
   mappedByRound = () => {
@@ -62,7 +59,6 @@ class MyPicks extends React.Component {
     const numUsers = Object.keys(users).length;
     const bracketMap = this.mappedByRound();
 
-    console.log(bracketMap)
     return (
       <Card.Container>
         <Card.Header>Picks Table</Card.Header>
@@ -99,7 +95,7 @@ class MyPicks extends React.Component {
                                 {picks.map(pick => {
                                   const winner = getWinner(series);
                                   const isTeamCorrect = pick.team === winner.team;
-                                  const areGamesCorrect = pick.winIn === winner.games;
+                                  const areGamesCorrect = pick.wins === winner.games;
 
                                   return (
                                     <Table.Col
@@ -109,7 +105,7 @@ class MyPicks extends React.Component {
                                     >
                                       <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect })}>{pick.team}</span>
                                       <span> in </span>
-                                      <span className={cx('games', { highlightBox: series.isSeriesCompleted && isTeamCorrect && areGamesCorrect })}>{pick.winIn}</span>
+                                      <span className={cx('games', { highlightBox: series.isSeriesCompleted && isTeamCorrect && areGamesCorrect })}>{pick.wins}</span>
                                     </Table.Col>
                                   );
                                 })}
@@ -138,4 +134,8 @@ MyPicks.propTypes = {
 
 export default compose(
   graphql(NBA_BRACKETS_QUERY),
+  graphql(PICKS_QUERY, { options: { variables: {
+    userIds: ["cjsqfhjj9000507508nq6dgt4"],
+    groupId: "cjsqlg8fm00260750m91vebsi"
+  } }, name: 'picksQuery' }),
 )(MyPicks);

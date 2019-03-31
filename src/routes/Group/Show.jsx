@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Query } from "react-apollo";
+import { Query, graphql, compose } from "react-apollo";
 
 import MyPicks from './MyPicks';
 import AllPicks from './AllPicks';
@@ -13,75 +13,68 @@ import Card from '../../components/Card';
 import { getWinner } from '../../utils';
 
 // import { readMatchups, readGroup, getUserProfile } from '../../firebase';
-import { CURRENT_USER_QUERY, GROUP_QUERY, PICKS_QUERY } from '../../queries';
+import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY, PICKS_QUERY } from '../../queries';
 
 class TeamRow extends React.Component {
-  state = {
-    round1: 0,
-    round2: 0,
-    round3: 0,
-    round4: 0,
-  };
-
-  // componentDidMount() {
-  //   const { group, uid, brackets } = this.props;
-  //   const { teamPoints, gamePoints } = group;
-
-  //   readMatchups({
-  //     uid: uid,
-  //     groupId: group.id,
-  //   }).then((picks) => {
-  //     if (picks) {
-  //       const picksMap = picks.reduce((acc, pick) => {
-  //         return { ...acc, ...{ [pick.seriesId]: pick } };
-  //       }, {});
-
-  //       const pointsMap = brackets.reduce((acc, series) => {
-  //         let points = 0;
-  //         let myPick = picksMap[series.seriesId];
-  //         let winner = getWinner(series);
-
-  //         if (myPick) {
-  //           if (winner.team === myPick.team) {
-  //             points += teamPoints;
-
-  //             // console.log(winner.games, myPick.winIn);
-  //             if (winner.games === myPick.winIn) {
-  //               points += gamePoints;
-  //             }
-  //           }
-
-  //           return { ...acc, [`round${series.roundNum}`]: acc[`round${series.roundNum}`] + points }
-  //         }
-
-  //         return acc;
-  //       }, {
-  //         round1: 0,
-  //         round2: 0,
-  //         round3: 0,
-  //         round4: 0,
-  //       });
-
-  //       this.setState({ ...pointsMap });
-  //     }
-  //   })
-  // }
-
   render() {
-    const { uid, users } = this.props;
-    const { round1, round2, round3, round4 } = this.state;
-    const totalPoints = round1 + round2 + round3 + round4;
+    const { group, user, brackets, users } = this.props;
+    const { teamPoints, gamePoints } = group;
 
     return(
-      <Table.Row key={uid}>
-        <Table.Header>1</Table.Header>
-        <Table.Col>{users[uid] ? users[uid].name : uid}</Table.Col>
-        <Table.Col>{this.state.round1}</Table.Col>
-        <Table.Col>{this.state.round2}</Table.Col>
-        <Table.Col>{this.state.round3}</Table.Col>
-        <Table.Col>{this.state.round4}</Table.Col>
-        <Table.Col>{totalPoints}</Table.Col>
-      </Table.Row>
+      <Query query={PICKS_QUERY} variables={{
+        userIds: [user.id],
+        groupId: group.id,
+      }}>
+        {({ loading, error, data }) => {
+          const { picks } = data;
+
+          if (picks) {
+            const picksMap = picks.reduce((acc, pick) => {
+              return { ...acc, ...{ [pick.seriesId]: pick } };
+            }, {});
+
+            const pointsMap = brackets.reduce((acc, series) => {
+              let points = 0;
+              let myPick = picksMap[series.seriesId];
+              let winner = getWinner(series);
+
+              if (myPick) {
+                if (winner.team === myPick.team) {
+                  points += teamPoints;
+
+                  if (winner.games === myPick.winIn) {
+                    points += gamePoints;
+                  }
+                }
+                return { ...acc, [`round${series.roundNum}`]: acc[`round${series.roundNum}`] + points }
+              }
+
+              return acc;
+            }, {
+              round1: 0,
+              round2: 0,
+              round3: 0,
+              round4: 0,
+            });
+
+            const totalPoints = pointsMap.round1 + pointsMap.round2 + pointsMap.round3 + pointsMap.round4;
+
+            return (
+              <Table.Row key={user.id}>
+                <Table.Header>1</Table.Header>
+                <Table.Col>{user.username}</Table.Col>
+                <Table.Col>{pointsMap.round1}</Table.Col>
+                <Table.Col>{pointsMap.round2}</Table.Col>
+                <Table.Col>{pointsMap.round3}</Table.Col>
+                <Table.Col>{pointsMap.round4}</Table.Col>
+                <Table.Col>{totalPoints}</Table.Col>
+              </Table.Row>
+            );
+          }
+
+          return null;
+        }}
+      </Query>
     );
   }
 }
@@ -105,7 +98,7 @@ const TeamTable = ({ group, users, brackets }) => (
         {group.users.map(user => (
           <TeamRow
             key={user.id}
-            uid={user.id}
+            user={user}
             group={group}
             users={users}
             brackets={brackets}
@@ -119,16 +112,15 @@ const TeamTable = ({ group, users, brackets }) => (
 class Show extends React.Component {
 
   render() {
-    const { groupId } = this.props.match.params;
+    const { bracketQuery, match } = this.props;
+    const { groupId } = match.params;
 
-
-    console.log(this.props)
     return (
       <Query query={GROUP_QUERY} variables={{ id: groupId }}>
         {({ loading, error, data }) => {
 
           if (!error && !loading) {
-            console.log('data - group', data.group, data.group.users);
+            // console.log('data - group', data.group, data.group.users);
             const { group } = data;
             // const isUserInGroup = currentUser && !!users[currentUser.uid];
 
@@ -154,7 +146,7 @@ class Show extends React.Component {
                       <TeamTable
                         users={group.users}
                         group={group}
-                        brackets={[]}
+                        brackets={bracketQuery.NBABracket}
                       />
                     }
                   </Card.Body>
@@ -162,7 +154,7 @@ class Show extends React.Component {
                 <br />
                 <div className="row">
                   <div className="col-lg-6">
-                    {<AllPicks {...{ ...this.props, group, users: group.users }} />}
+                    {<AllPicks {...{ group, users: group.users }} />}
                     <br />
                   </div>
                   {/* <div className="col-lg-6">
@@ -184,4 +176,6 @@ Show.propTypes = {
   children: PropTypes.node,
 };
 
-export default withRouter(Show);
+export default compose(
+  graphql(NBA_BRACKETS_QUERY, { name: 'bracketQuery' }),
+)(withRouter(Show));
