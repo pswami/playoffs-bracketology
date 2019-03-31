@@ -95,7 +95,7 @@ const TeamTable = ({ group, users, brackets }) => (
         </Table.Row>
       </Table.Head>
       <tbody>
-        {group.users.map(user => (
+        {users.map(user => (
           <TeamRow
             key={user.id}
             user={user}
@@ -112,18 +112,18 @@ const TeamTable = ({ group, users, brackets }) => (
 class Show extends React.Component {
 
   render() {
-    const { bracketQuery, match } = this.props;
+    const { currentUserQuery, bracketQuery, match } = this.props;
     const { groupId } = match.params;
 
     return (
       <Query query={GROUP_QUERY} variables={{ id: groupId }}>
         {({ loading, error, data }) => {
-
           if (!error && !loading) {
-            // console.log('data - group', data.group, data.group.users);
             const { group } = data;
-            // const isUserInGroup = currentUser && !!users[currentUser.uid];
+            const { users } = group;
+            const isUserInGroup = currentUserQuery.currentUser && users.some(user => user.email == currentUserQuery.currentUser.email);
 
+            console.log(' isUserInGroup', isUserInGroup);
             return (
               <React.Fragment>
                 <AddMemberModal group={group} />
@@ -142,9 +142,9 @@ class Show extends React.Component {
                     } */}
                   </Card.Header>
                   <Card.Body>
-                    {Object.keys(group.users).length > 0 &&
+                    {Object.keys(users).length > 0 &&
                       <TeamTable
-                        users={group.users}
+                        users={users}
                         group={group}
                         brackets={bracketQuery.NBABracket}
                       />
@@ -154,7 +154,7 @@ class Show extends React.Component {
                 <br />
                 <div className="row">
                   <div className="col-lg-6">
-                    {<AllPicks {...{ group, users: group.users }} />}
+                    {<AllPicks {...{ group, users: users }} />}
                     <br />
                   </div>
                   {/* <div className="col-lg-6">
@@ -177,5 +177,6 @@ Show.propTypes = {
 };
 
 export default compose(
+  graphql(CURRENT_USER_QUERY, { name: 'currentUserQuery' }),
   graphql(NBA_BRACKETS_QUERY, { name: 'bracketQuery' }),
 )(withRouter(Show));
