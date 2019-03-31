@@ -46,6 +46,39 @@ export const GROUPS_QUERY = gql`
   }
 `;
 
+export const GROUP_QUERY = gql`
+  query group($id: ID!) {
+    group(id: $id) {
+      id
+      name
+      gamePoints
+      teamPoints
+      users {
+        id
+        username
+        email
+      }
+
+    }
+  }
+`;
+
+export const PICKS_QUERY = gql`
+  query picks($userId: ID!, $groupId: ID!) {
+    picks(userId: $userId, groupId: $groupId) {
+      id
+      wins
+      team
+    }
+  }
+`;
+
+export const NBA_BRACKETS_QUERY = gql`
+  query {
+    NBABracket
+  }
+`;
+
 // export const resolvers = {
 //   Query: {
 //     currentUser: (_, { text }, { cache }) => {

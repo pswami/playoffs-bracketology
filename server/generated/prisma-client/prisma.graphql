@@ -415,6 +415,7 @@ type Pick {
   group: Group!
   team: String!
   wins: Int!
+  round: Int
 }
 
 type PickConnection {
@@ -428,6 +429,7 @@ input PickCreateInput {
   group: GroupCreateOneInput!
   team: String!
   wins: Int!
+  round: Int
 }
 
 type PickEdge {
@@ -446,6 +448,8 @@ enum PickOrderByInput {
   team_DESC
   wins_ASC
   wins_DESC
+  round_ASC
+  round_DESC
 }
 
 type PickPreviousValues {
@@ -454,6 +458,7 @@ type PickPreviousValues {
   updatedAt: DateTime!
   team: String!
   wins: Int!
+  round: Int
 }
 
 type PickSubscriptionPayload {
@@ -479,11 +484,13 @@ input PickUpdateInput {
   group: GroupUpdateOneRequiredInput
   team: String
   wins: Int
+  round: Int
 }
 
 input PickUpdateManyMutationInput {
   team: String
   wins: Int
+  round: Int
 }
 
 input PickWhereInput {
@@ -541,6 +548,14 @@ input PickWhereInput {
   wins_lte: Int
   wins_gt: Int
   wins_gte: Int
+  round: Int
+  round_not: Int
+  round_in: [Int!]
+  round_not_in: [Int!]
+  round_lt: Int
+  round_lte: Int
+  round_gt: Int
+  round_gte: Int
   AND: [PickWhereInput!]
   OR: [PickWhereInput!]
   NOT: [PickWhereInput!]

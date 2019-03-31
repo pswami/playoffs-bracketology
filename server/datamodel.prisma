@@ -6,6 +6,7 @@ type Pick {
   group: Group!
   team: String!
   wins: Int!
+  round: Int
 }
 
 type Group {

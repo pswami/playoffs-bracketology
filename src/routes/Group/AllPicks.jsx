@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { graphql, compose } from 'react-apollo';
 
 import { readMatchups } from '../../firebase';
 
@@ -9,6 +10,7 @@ import Table from '../../components/Table';
 import { checkSeriesLocked, getWinner, roundNames } from '../../utils';
 
 import teams_by_tri from '../../data/teams_by_tri.json';
+import { NBA_BRACKETS_QUERY } from '../../queries';
 
 import './style.scss';
 
@@ -39,25 +41,28 @@ class MyPicks extends React.Component {
   }
 
   mappedByRound = () => {
-    const { appState: { brackets } } = this.props;
+    const { NBABracket } = this.props.data;
 
-    return brackets.reduce((acc, series) => {
-      if (checkSeriesLocked(series)) {
-        acc[series.roundNum].push(series);
-      }
+    if (NBABracket) {
+      return NBABracket.reduce((acc, series) => {
+        if (checkSeriesLocked(series)) {
+          acc[series.roundNum].push(series);
+        }
+        // console.log(series, roundNames[series.roundNum]);
+        return acc;
+      }, { 1: [], 2: [], 3: [], 4: [] });
+    }
 
-      // console.log(series, roundNames[series.roundNum]);
-
-      return acc;
-    }, { 1: [], 2: [], 3: [], 4: [] });
+    return { 1: [], 2: [], 3: [], 4: [] };
   }
 
   render() {
-    const { group, users } = this.props;
+    const { users } = this.props;
     const seriesIds = Object.keys(this.state || {});
     const numUsers = Object.keys(users).length;
     const bracketMap = this.mappedByRound();
 
+    console.log(bracketMap)
     return (
       <Card.Container>
         <Card.Header>Picks Table</Card.Header>
@@ -67,8 +72,8 @@ class MyPicks extends React.Component {
               <Table.Head>
                 {numUsers > 0 &&
                   <Table.Row>
-                    {group.users.map(uid =>
-                      <Table.Header key={uid}>{users[uid].name}</Table.Header>
+                    {users.map(user =>
+                      <Table.Header key={user.id}>{user.username}</Table.Header>
                     )}
                   </Table.Row>
                 }
@@ -131,4 +136,6 @@ MyPicks.propTypes = {
   children: PropTypes.node,
 };
 
-export default MyPicks;
+export default compose(
+  graphql(NBA_BRACKETS_QUERY),
+)(MyPicks);
