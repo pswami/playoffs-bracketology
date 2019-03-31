@@ -231,7 +231,11 @@ export type PickOrderByInput =
   | "team_ASC"
   | "team_DESC"
   | "wins_ASC"
-  | "wins_DESC";
+  | "wins_DESC"
+  | "round_ASC"
+  | "round_DESC"
+  | "seriesId_ASC"
+  | "seriesId_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -636,6 +640,8 @@ export interface GroupUpdateManyWithoutUsersInput {
 export interface PickUpdateManyMutationInput {
   team?: String;
   wins?: Int;
+  round?: Int;
+  seriesId?: Int;
 }
 
 export interface UserUpdateDataInput {
@@ -700,6 +706,22 @@ export interface PickWhereInput {
   wins_lte?: Int;
   wins_gt?: Int;
   wins_gte?: Int;
+  round?: Int;
+  round_not?: Int;
+  round_in?: Int[] | Int;
+  round_not_in?: Int[] | Int;
+  round_lt?: Int;
+  round_lte?: Int;
+  round_gt?: Int;
+  round_gte?: Int;
+  seriesId?: Int;
+  seriesId_not?: Int;
+  seriesId_in?: Int[] | Int;
+  seriesId_not_in?: Int[] | Int;
+  seriesId_lt?: Int;
+  seriesId_lte?: Int;
+  seriesId_gt?: Int;
+  seriesId_gte?: Int;
   AND?: PickWhereInput[] | PickWhereInput;
   OR?: PickWhereInput[] | PickWhereInput;
   NOT?: PickWhereInput[] | PickWhereInput;
@@ -710,6 +732,8 @@ export interface PickCreateInput {
   group: GroupCreateOneInput;
   team: String;
   wins: Int;
+  round?: Int;
+  seriesId?: Int;
 }
 
 export interface GroupUpdateManyWithWhereNestedInput {
@@ -748,6 +772,8 @@ export interface PickUpdateInput {
   group?: GroupUpdateOneRequiredInput;
   team?: String;
   wins?: Int;
+  round?: Int;
+  seriesId?: Int;
 }
 
 export interface GroupCreateOneInput {
@@ -979,6 +1005,8 @@ export interface PickPreviousValues {
   updatedAt: DateTimeOutput;
   team: String;
   wins: Int;
+  round?: Int;
+  seriesId?: Int;
 }
 
 export interface PickPreviousValuesPromise
@@ -989,6 +1017,8 @@ export interface PickPreviousValuesPromise
   updatedAt: () => Promise<DateTimeOutput>;
   team: () => Promise<String>;
   wins: () => Promise<Int>;
+  round: () => Promise<Int>;
+  seriesId: () => Promise<Int>;
 }
 
 export interface PickPreviousValuesSubscription
@@ -999,6 +1029,8 @@ export interface PickPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   team: () => Promise<AsyncIterator<String>>;
   wins: () => Promise<AsyncIterator<Int>>;
+  round: () => Promise<AsyncIterator<Int>>;
+  seriesId: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface PageInfo {
@@ -1294,6 +1326,8 @@ export interface Pick {
   updatedAt: DateTimeOutput;
   team: String;
   wins: Int;
+  round?: Int;
+  seriesId?: Int;
 }
 
 export interface PickPromise extends Promise<Pick>, Fragmentable {
@@ -1304,6 +1338,8 @@ export interface PickPromise extends Promise<Pick>, Fragmentable {
   group: <T = GroupPromise>() => T;
   team: () => Promise<String>;
   wins: () => Promise<Int>;
+  round: () => Promise<Int>;
+  seriesId: () => Promise<Int>;
 }
 
 export interface PickSubscription
@@ -1316,6 +1352,8 @@ export interface PickSubscription
   group: <T = GroupSubscription>() => T;
   team: () => Promise<AsyncIterator<String>>;
   wins: () => Promise<AsyncIterator<Int>>;
+  round: () => Promise<AsyncIterator<Int>>;
+  seriesId: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface PickConnection {

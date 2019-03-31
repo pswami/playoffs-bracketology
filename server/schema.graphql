@@ -7,7 +7,7 @@ type Query {
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   groupsForUser(userId: ID!): [Group!]!
   group(id: ID!): Group
-  picks(userId: ID!, groupId: ID!): [Pick!]!
+  picks(where: PickWhereInput): [Pick!]!
   NBABracket: JSON!
   currentUser: User
 }
@@ -38,6 +38,7 @@ type User {
 input PickInput {
   team: String!
   wins: Int!
+  seriesId: Int
 }
 
 type Pick {
