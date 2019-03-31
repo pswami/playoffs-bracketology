@@ -12,7 +12,6 @@ import Card from '../../components/Card';
 
 import { getWinner } from '../../utils';
 
-// import { readMatchups, readGroup, getUserProfile } from '../../firebase';
 import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY, PICKS_QUERY } from '../../queries';
 
 class TeamRow extends React.Component {
@@ -118,7 +117,7 @@ class Show extends React.Component {
     return (
       <Query query={GROUP_QUERY} variables={{ id: groupId }}>
         {({ loading, error, data }) => {
-          if (!error && !loading) {
+          if (!error && !loading && currentUserQuery.currentUser && bracketQuery.NBABracket) {
             const { group } = data;
             const { users } = group;
             const isUserInGroup = currentUserQuery.currentUser && users.some(user => user.email == currentUserQuery.currentUser.email);
