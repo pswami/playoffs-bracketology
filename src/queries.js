@@ -27,6 +27,10 @@ export const CURRENT_USER_QUERY = gql`
   query {
     currentUser {
       email
+      groups {
+        id
+        name
+      }
     }
   }
 `;
