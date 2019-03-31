@@ -12,7 +12,7 @@ import { NBA_BRACKETS_QUERY, PICKS_QUERY } from '../../queries';
 
 import './style.scss';
 
-class MyPicks extends React.Component {
+class AllPicks extends React.Component {
   componentDidMount() {
     this.getUsersPicks();
   }
@@ -131,7 +131,7 @@ class MyPicks extends React.Component {
   }
 }
 
-MyPicks.propTypes = {
+AllPicks.propTypes = {
   children: PropTypes.node,
 };
 
@@ -141,4 +141,4 @@ export default compose(
     userIds: ["cjsqfhjj9000507508nq6dgt4", "cjsqfk6qf00110750pzasxrk5"],
     groupId: "cjsqlg8fm00260750m91vebsi"
   } }, name: 'picksQuery' }),
-)(MyPicks);
+)(AllPicks);
