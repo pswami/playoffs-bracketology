@@ -6,7 +6,7 @@ const pick = {
 
     if (userId) {
       if (pickId) {
-        return await ctx.updatePick({
+        return await ctx.prisma.updatePick({
           where: {
             id: pickId
           },

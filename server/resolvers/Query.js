@@ -18,14 +18,7 @@ const Query = {
   },
 
   picks(parent, args, ctx, info) {
-    return ctx.prisma.picks({ where: {
-      user: {
-        id: args.userId,
-      },
-      group: {
-        id: args.groupId,
-      }
-    }}, info)
+    return ctx.prisma.picks(args, info)
   },
 
   NBABracket(parent, args, ctx, info) {

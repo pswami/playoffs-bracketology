@@ -64,11 +64,12 @@ export const GROUP_QUERY = gql`
 `;
 
 export const PICKS_QUERY = gql`
-  query picks($userId: ID!, $groupId: ID!) {
-    picks(userId: $userId, groupId: $groupId) {
+  query picks($userIds: [ID!], $groupId: ID!) {
+    picks(where: { user: { id_in: $userIds }, group: { id: $groupId } }) {
       id
-      wins
       team
+      wins
+      seriesId
     }
   }
 `;
