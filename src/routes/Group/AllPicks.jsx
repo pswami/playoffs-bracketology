@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { graphql, compose } from 'react-apollo';
 
-import { readMatchups } from '../../firebase';
-
 import Card from '../../components/Card';
 import Table from '../../components/Table';
 import { checkSeriesLocked, getWinner, roundNames } from '../../utils';
@@ -20,15 +18,20 @@ class MyPicks extends React.Component {
   }
 
   getUsersPicks = () => {
-    const { group, picksQuery } = this.props;
+    const { picksQuery } = this.props;
     const picksTable = {};
 
     //TODO: fix, shouldn't refetch
     picksQuery.refetch().then(({ data }) => {
-      const picks = data.picks;
+      const { picks } = data;
 
       picks.forEach(pick => {
         if (pick) {
+          // TODO: fix, missing picks will distort the order of picks
+          // user_1 | user_2
+          //  ClE   |
+          //  LAL   |
+          // LAL belongs to user_2 (user_1 didn't make pick)
           picksTable[pick.seriesId] = (picksTable[pick.seriesId] || []).concat(pick);
         }
       });
@@ -135,7 +138,7 @@ MyPicks.propTypes = {
 export default compose(
   graphql(NBA_BRACKETS_QUERY),
   graphql(PICKS_QUERY, { options: { variables: {
-    userIds: ["cjsqfhjj9000507508nq6dgt4"],
+    userIds: ["cjsqfhjj9000507508nq6dgt4", "cjsqfk6qf00110750pzasxrk5"],
     groupId: "cjsqlg8fm00260750m91vebsi"
   } }, name: 'picksQuery' }),
 )(MyPicks);
