@@ -16,7 +16,7 @@ import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY, PICKS_QUERY } from
 
 class TeamRow extends React.Component {
   render() {
-    const { group, user, brackets, users } = this.props;
+    const { group, user, brackets } = this.props;
     const { teamPoints, gamePoints } = group;
 
     return(
@@ -157,7 +157,7 @@ class Show extends React.Component {
                     <br />
                   </div>
                   <div className="col-lg-6">
-                    {isUserInGroup && <MyPicks  {...{ group, currentUser: currentUserQuery.currentUser }} />}
+                    {isUserInGroup && <MyPicks  {...{ group, users, currentUser: currentUserQuery.currentUser }} />}
                   </div>
                 </div>
               </React.Fragment>

@@ -139,7 +139,11 @@ class MyPicks extends React.Component {
         data: matchups
       },
     })
-    .then(() => swal('Sucessfully Updated', '', 'success'))
+    .then(() => {
+      this.props.picksQuery.refetch();
+
+      swal('Sucessfully Updated', '', 'success');
+    })
     .catch(() => swal('Failed', 'Please try again', 'error'))
   }
 
@@ -234,4 +238,8 @@ MyPicks.propTypes = {
 export default compose(
   graphql(NBA_BRACKETS_QUERY, { name: 'bracketQuery' }),
   graphql(PICK_MUTATION, { name: 'setPick' }),
+  graphql(PICKS_QUERY, { options: (props) => ({ variables: {
+    userIds: props.users.map(user => user.id),
+    groupId: props.group.id,
+  } }), name: 'picksQuery' }),
 )(MyPicks);

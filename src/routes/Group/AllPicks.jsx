@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, Query } from 'react-apollo';
 
 import Card from '../../components/Card';
 import Table from '../../components/Table';
@@ -13,31 +13,22 @@ import { NBA_BRACKETS_QUERY, PICKS_QUERY } from '../../queries';
 import './style.scss';
 
 class AllPicks extends React.Component {
-  componentDidMount() {
-    this.getUsersPicks();
-  }
-
-  getUsersPicks = () => {
-    const { picksQuery } = this.props;
+  getUsersPicks = (picks) => {
     const picksTable = {};
 
     //TODO: fix, shouldn't refetch
-    picksQuery.refetch().then(({ data }) => {
-      const { picks } = data;
+    picks.forEach(pick => {
+      if (pick) {
+        // TODO: fix, missing picks will distort the order of picks
+        // user_1 | user_2
+        //  ClE   |
+        //  LAL   |
+        // LAL belongs to user_2 (user_1 didn't make pick)
+        picksTable[pick.seriesId] = (picksTable[pick.seriesId] || []).concat(pick);
+      }
+    });
 
-      picks.forEach(pick => {
-        if (pick) {
-          // TODO: fix, missing picks will distort the order of picks
-          // user_1 | user_2
-          //  ClE   |
-          //  LAL   |
-          // LAL belongs to user_2 (user_1 didn't make pick)
-          picksTable[pick.seriesId] = (picksTable[pick.seriesId] || []).concat(pick);
-        }
-      });
-
-      this.setState({ ...picksTable })
-    })
+    return picksTable;
   }
 
   mappedByRound = () => {
@@ -57,8 +48,7 @@ class AllPicks extends React.Component {
   }
 
   render() {
-    const { users } = this.props;
-    const seriesIds = Object.keys(this.state || {});
+    const { users, group } = this.props;
     const numUsers = Object.keys(users).length;
     const bracketMap = this.mappedByRound();
 
@@ -77,52 +67,65 @@ class AllPicks extends React.Component {
                   </Table.Row>
                 }
               </Table.Head>
-              {seriesIds.length > 0 &&
-                <tbody>
-                  {Object.keys(bracketMap).map(roundNum => {
-                    const seriesArr = bracketMap[roundNum];
-
+              <Query query={PICKS_QUERY} variables={{ userIds: users.map(user => user.id), groupId: group.id }}>
+                {({ loading, error, data }) => {
+                  if (data.picks) {
+                    console.log('data.picks', data.picks);
+                    const picksTable = this.getUsersPicks(data.picks);
+                    const seriesIds = Object.keys(picksTable || {});
+                    console.log('seriesIds', seriesIds)
                     return (
-                      <React.Fragment key={`round-${roundNum}`}>
-                        {seriesArr.length > 0 &&
-                          <Table.Row>
-                            <Table.Header colSpan={numUsers}>{roundNames[roundNum]}</Table.Header>
-                          </Table.Row>
-                        }
-                        {seriesArr.map(series => {
-                          const picks = this.state[series.seriesId];
+                      seriesIds.length > 0 &&
+                        <tbody>
+                          {Object.keys(bracketMap).map(roundNum => {
+                            const seriesArr = bracketMap[roundNum];
 
-                          if (checkSeriesLocked(series) && picks) {
                             return (
-                              <Table.Row key={series.seriesId}>
-                                {picks.map(pick => {
-                                  const winner = getWinner(series);
-                                  const isTeamCorrect = pick.team === winner.team;
-                                  const areGamesCorrect = pick.wins == winner.games;
+                              <React.Fragment key={`round-${roundNum}`}>
+                                {seriesArr.length > 0 &&
+                                  <Table.Row>
+                                    <Table.Header colSpan={numUsers}>{roundNames[roundNum]}</Table.Header>
+                                  </Table.Row>
+                                }
+                                {seriesArr.map(series => {
+                                  const picks = picksTable[series.seriesId];
 
-                                  return (
-                                    <Table.Col
-                                      key={pick.id}
-                                      className="pickColumn"
-                                      style={{ background: teams_by_tri[pick.team].teamColor }}
-                                    >
-                                      <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect })}>{pick.team}</span>
-                                      <span> in </span>
-                                      <span className={cx('games', { highlightBox: series.isSeriesCompleted && isTeamCorrect && areGamesCorrect })}>{pick.wins}</span>
-                                    </Table.Col>
-                                  );
+                                  if (checkSeriesLocked(series) && picks) {
+                                    return (
+                                      <Table.Row key={series.seriesId}>
+                                        {picks.map(pick => {
+                                          const winner = getWinner(series);
+                                          const isTeamCorrect = pick.team === winner.team;
+                                          const areGamesCorrect = pick.wins == winner.games;
+
+                                          return (
+                                            <Table.Col
+                                              key={pick.id}
+                                              className="pickColumn"
+                                              style={{ background: teams_by_tri[pick.team].teamColor }}
+                                            >
+                                              <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect })}>{pick.team}</span>
+                                              <span> in </span>
+                                              <span className={cx('games', { highlightBox: series.isSeriesCompleted && isTeamCorrect && areGamesCorrect })}>{pick.wins}</span>
+                                            </Table.Col>
+                                          );
+                                        })}
+                                      </Table.Row>
+                                    );
+                                  }
+
+                                  return null;
                                 })}
-                              </Table.Row>
+                              </React.Fragment>
                             );
-                          }
-
-                          return null;
-                        })}
-                      </React.Fragment>
+                          })}
+                        </tbody>
                     );
-                  })}
-                </tbody>
-              }
+                  }
+
+                  return null;
+                }}
+              </Query>
             </Table.Container>
           </div>
         </Card.Body>
@@ -137,8 +140,4 @@ AllPicks.propTypes = {
 
 export default compose(
   graphql(NBA_BRACKETS_QUERY),
-  graphql(PICKS_QUERY, { options: (props) => ({ variables: {
-    userIds: props.users.map(user => user.id),
-    groupId: props.group.id,
-  } }), name: 'picksQuery' }),
 )(AllPicks);
