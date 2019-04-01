@@ -34,8 +34,6 @@ class Search extends React.Component {
         </Card.Header>
         <Query query={GROUPS_QUERY}>
           {({ loading, error, data }) => {
-            console.log('data - groups', loading)
-
             if (!error && !loading) {
               const filteredGroups = this.filterGroups(data.groups);
 

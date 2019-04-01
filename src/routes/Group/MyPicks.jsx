@@ -28,7 +28,6 @@ class TeamOption extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { pick } = nextProps;
 
-    console.log('componentWillReceiveProps', pick);
     if (pick) {
       this.setState({
         id: pick ? pick.id : undefined,
@@ -209,7 +208,6 @@ class MyPicks extends React.Component {
         {({ loading, error, data }) => {
           const { picks } = data;
 
-          console.log('picks', picks)
           if (picks) {
             return (
               <Card.Container>

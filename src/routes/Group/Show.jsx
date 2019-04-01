@@ -122,7 +122,6 @@ class Show extends React.Component {
             const { users } = group;
             const isUserInGroup = currentUserQuery.currentUser && users.some(user => user.email == currentUserQuery.currentUser.email);
 
-            console.log(' isUserInGroup', isUserInGroup);
             return (
               <React.Fragment>
                 <AddMemberModal group={group} />

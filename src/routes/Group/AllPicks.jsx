@@ -39,7 +39,6 @@ class AllPicks extends React.Component {
         if (checkSeriesLocked(series)) {
           acc[series.roundNum].push(series);
         }
-        // console.log(series, roundNames[series.roundNum]);
         return acc;
       }, { 1: [], 2: [], 3: [], 4: [] });
     }
@@ -70,10 +69,9 @@ class AllPicks extends React.Component {
               <Query query={PICKS_QUERY} variables={{ userIds: users.map(user => user.id), groupId: group.id }}>
                 {({ loading, error, data }) => {
                   if (data.picks) {
-                    console.log('data.picks', data.picks);
                     const picksTable = this.getUsersPicks(data.picks);
                     const seriesIds = Object.keys(picksTable || {});
-                    console.log('seriesIds', seriesIds)
+
                     return (
                       seriesIds.length > 0 &&
                         <tbody>
