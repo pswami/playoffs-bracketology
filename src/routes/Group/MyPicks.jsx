@@ -120,15 +120,6 @@ class MyPicks extends React.Component {
     this.options = [];
   }
 
-  setStateAndHide = (startState, endState, time) => {
-    const callback = () => setTimeout(() => this.setState(endState), time);
-
-    this.setState(
-      startState,
-      callback,
-    );
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -178,12 +169,13 @@ class MyPicks extends React.Component {
 
   render() {
     const { message, error } = this.state;
+    const { group, currentUser } = this.props;
     const bracketMap = this.mappedByRound();
 
     return (
       <Query query={PICKS_QUERY} variables={{
-        userIds: ["cjsqfk6qf00110750pzasxrk5"],
-        groupId: "cjsqlg8fm00260750m91vebsi"}}
+        userIds: [currentUser.id],
+        groupId: group.id }}
       >
         {({ loading, error, data }) => {
           const { picks } = data;

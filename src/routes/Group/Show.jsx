@@ -153,11 +153,11 @@ class Show extends React.Component {
                 <br />
                 <div className="row">
                   <div className="col-lg-6">
-                    {<AllPicks {...{ group, users: users }} />}
+                    {<AllPicks {...{ group, users }} />}
                     <br />
                   </div>
                   <div className="col-lg-6">
-                    {isUserInGroup && <MyPicks  {...{ ...this.props, group }} />}
+                    {isUserInGroup && <MyPicks  {...{ group, currentUser: currentUserQuery.currentUser }} />}
                   </div>
                 </div>
               </React.Fragment>

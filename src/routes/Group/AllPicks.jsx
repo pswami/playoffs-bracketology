@@ -137,8 +137,8 @@ AllPicks.propTypes = {
 
 export default compose(
   graphql(NBA_BRACKETS_QUERY),
-  graphql(PICKS_QUERY, { options: { variables: {
-    userIds: ["cjsqfhjj9000507508nq6dgt4", "cjsqfk6qf00110750pzasxrk5"],
-    groupId: "cjsqlg8fm00260750m91vebsi"
-  } }, name: 'picksQuery' }),
+  graphql(PICKS_QUERY, { options: (props) => ({ variables: {
+    userIds: props.users.map(user => user.id),
+    groupId: props.group.id,
+  } }), name: 'picksQuery' }),
 )(AllPicks);
