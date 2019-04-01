@@ -25,6 +25,19 @@ class TeamOption extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { pick } = nextProps;
+
+    console.log('componentWillReceiveProps', pick);
+    if (pick) {
+      this.setState({
+        id: pick ? pick.id : undefined,
+        team: pick ? pick.team : undefined,
+        wins: pick ? pick.wins : undefined,
+      });
+    }
+  }
+
   mapData = () => ({
     id: this.state.id,
     team: this.state.team,
@@ -45,7 +58,7 @@ class TeamOption extends React.Component {
 
   render() {
     const { series } = this.props;
-    const isSeriesLocked = checkSeriesLocked(series);
+    const isSeriesLocked = false;
     const classNames = cx(
       'form-group',
       'form-row',
@@ -123,7 +136,7 @@ class MyPicks extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { group, setPick } = this.props;
+    const { users, group, setPick, currentUser } = this.props;
 
     const matchups = Object.keys(this.options).reduce((acc, seriesID) => {
       if (this.options[seriesID].isFilled()) {
@@ -138,9 +151,22 @@ class MyPicks extends React.Component {
         groupId: group.id,
         data: matchups
       },
+      refetchQueries: [{
+        query: PICKS_QUERY,
+        variables: {
+          userIds: [currentUser.id],
+          groupId: group.id,
+        },
+      }, {
+        query: PICKS_QUERY,
+        variables: {
+          userIds: users.map(user => user.id),
+          groupId: group.id,
+        },
+      }]
     })
     .then(() => {
-      this.props.picksQuery.refetch();
+      // this.props.picksQuery.refetch();
 
       swal('Sucessfully Updated', '', 'success');
     })
@@ -155,7 +181,6 @@ class MyPicks extends React.Component {
         if (checkSeriesLocked(series)) {
           acc[series.roundNum].push(series);
         }
-        // console.log(series, roundNames[series.roundNum]);
         return acc;
       }, { 1: [], 2: [], 3: [], 4: [] });
     }
@@ -179,11 +204,12 @@ class MyPicks extends React.Component {
     return (
       <Query query={PICKS_QUERY} variables={{
         userIds: [currentUser.id],
-        groupId: group.id }}
-      >
+        groupId: group.id
+      }}>
         {({ loading, error, data }) => {
           const { picks } = data;
 
+          console.log('picks', picks)
           if (picks) {
             return (
               <Card.Container>
@@ -196,7 +222,6 @@ class MyPicks extends React.Component {
                       const seriesArr = bracketMap[roundNum];
                       const pickBySeries = this.getPickBySeries(picks);
 
-                      console.log('pickBySeries', pickBySeries);
                       return (
                         <React.Fragment key={`round-${roundNum}`}>
                           {seriesArr.length > 0 && <h2 className="roundHeader text-center">{roundNames[roundNum]}</h2>}
@@ -238,8 +263,4 @@ MyPicks.propTypes = {
 export default compose(
   graphql(NBA_BRACKETS_QUERY, { name: 'bracketQuery' }),
   graphql(PICK_MUTATION, { name: 'setPick' }),
-  graphql(PICKS_QUERY, { options: (props) => ({ variables: {
-    userIds: props.users.map(user => user.id),
-    groupId: props.group.id,
-  } }), name: 'picksQuery' }),
 )(MyPicks);
