@@ -57,7 +57,7 @@ class TeamOption extends React.Component {
 
   render() {
     const { series } = this.props;
-    const isSeriesLocked = false;
+    const isSeriesLocked = checkSeriesLocked(series);
     const classNames = cx(
       'form-group',
       'form-row',
