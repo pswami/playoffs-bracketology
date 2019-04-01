@@ -98,7 +98,7 @@ class AllPicks extends React.Component {
                                 {picks.map(pick => {
                                   const winner = getWinner(series);
                                   const isTeamCorrect = pick.team === winner.team;
-                                  const areGamesCorrect = pick.wins === winner.games;
+                                  const areGamesCorrect = pick.wins == winner.games;
 
                                   return (
                                     <Table.Col

@@ -41,7 +41,7 @@ class TeamRow extends React.Component {
                 if (winner.team === myPick.team) {
                   points += teamPoints;
 
-                  if (winner.games === myPick.winIn) {
+                  if (winner.games == myPick.wins) {
                     points += gamePoints;
                   }
                 }
@@ -156,9 +156,9 @@ class Show extends React.Component {
                     {<AllPicks {...{ group, users: users }} />}
                     <br />
                   </div>
-                  {/* <div className="col-lg-6">
+                  <div className="col-lg-6">
                     {isUserInGroup && <MyPicks  {...{ ...this.props, group }} />}
-                  </div> */}
+                  </div>
                 </div>
               </React.Fragment>
             );

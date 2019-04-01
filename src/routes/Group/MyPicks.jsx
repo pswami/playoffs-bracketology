@@ -2,14 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Query, graphql, compose } from "react-apollo";
 
 import { iconNBALink, roundNames } from '../../utils';
-import { readMatchups, setMatchups } from '../../firebase';
+import { setMatchups } from '../../firebase';
 
 import Card from '../../components/Card';
 
 import teams from '../../data/teams.json';
 import { checkSeriesLocked } from '../../utils';
+import { NBA_BRACKETS_QUERY, PICKS_QUERY, PICK_MUTATION } from '../../queries';
 
 import './style.scss';
 
@@ -18,37 +20,28 @@ class TeamOption extends React.Component {
     super(props);
 
     this.state = {
-      team: undefined,
-      winIn: undefined,
+      id: props.pick ? props.pick.id : undefined,
+      team: props.pick ? props.pick.team : undefined,
+      wins: props.pick ? props.pick.wins : undefined,
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { pick } = nextProps;
-
-    if (pick) {
-      this.setState({
-        team: pick.team,
-        winIn: pick.winIn,
-      });
-    }
-  }
-
   mapData = () => ({
+    id: this.state.id,
     team: this.state.team,
-    winIn: this.state.winIn,
-    seriesId: this.props.series.seriesId,
-    roundNum: this.props.series.roundNum,
+    wins: parseInt(this.state.wins),
+    seriesId: parseInt(this.props.series.seriesId),
+    round: parseInt(this.props.series.roundNum),
   })
 
-  isFilled = () => !!(this.state.team && this.state.winIn)
+  isFilled = () => !!(this.state.team && this.state.wins)
 
   handleTeamChange = (e) => {
     this.setState({ team: e.target.value });
   }
 
   handleWinChange = (e) => {
-    this.setState({ winIn: e.target.value });
+    this.setState({ wins: e.target.value });
   }
 
   render() {
@@ -98,11 +91,11 @@ class TeamOption extends React.Component {
         </fieldset>
         <span> in <br /></span>
         {isSeriesLocked ?
-          <div className="form-control gamesSelect"> {this.state.winIn}</div> :
+          <div className="form-control gamesSelect"> {this.state.wins}</div> :
           <select
             className="form-control gamesSelect"
             onChange={this.handleWinChange}
-            value={this.state.winIn}
+            value={this.state.wins}
           >
             <option disabled selected>_</option>
             <option value={4}>4</option>
@@ -121,33 +114,11 @@ class MyPicks extends React.Component {
     super(props);
 
     this.state = {
-      picks: {},
       message: undefined,
       error: undefined,
     };
 
     this.options = [];
-  }
-
-  componentDidMount() {
-    const { appState: { currentUser }, group } = this.props;
-
-    if (currentUser) {
-      readMatchups({
-        uid: currentUser.uid,
-        groupId: group.id,
-      }).then((myPicks) => {
-        if (myPicks) {
-          const picks = myPicks.reduce((acc, pick) => {
-            acc[pick.seriesId] = pick;
-
-            return acc;
-          }, {});
-
-          this.setState({ picks });
-        }
-      })
-    }
   }
 
   setStateAndHide = (startState, endState, time) => {
@@ -162,7 +133,7 @@ class MyPicks extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { appState, group } = this.props;
+    const { group, setPick } = this.props;
 
     const matchups = Object.keys(this.options).reduce((acc, seriesID) => {
       if (this.options[seriesID].isFilled()) {
@@ -172,26 +143,38 @@ class MyPicks extends React.Component {
       return acc;
     }, [])
 
-
-    setMatchups({
-      uid: appState.currentUser.uid,
-      groupId: group.id,
-      matchups,
+    setPick({
+      variables: {
+        groupId: group.id,
+        data: matchups
+      },
     })
     .then(() => swal('Sucessfully Updated', '', 'success'))
     .catch(() => swal('Failed', 'Please try again', 'error'))
   }
 
   mappedByRound = () => {
-    const { appState: { brackets } } = this.props;
+    const { NBABracket } = this.props.bracketQuery;
 
-    return brackets.reduce((acc, series) => {
-      if (!checkSeriesLocked(series)) {
-        acc[series.roundNum].push(series);
-      }
+    if (NBABracket) {
+      return NBABracket.reduce((acc, series) => {
+        if (checkSeriesLocked(series)) {
+          acc[series.roundNum].push(series);
+        }
+        // console.log(series, roundNames[series.roundNum]);
+        return acc;
+      }, { 1: [], 2: [], 3: [], 4: [] });
+    }
+
+    return { 1: [], 2: [], 3: [], 4: [] };
+  }
+
+  getPickBySeries = picks => {
+    return picks.reduce((acc, pick) => {
+      acc[pick.seriesId] = pick;
 
       return acc;
-    }, { 1: [], 2: [], 3: [], 4: [] });
+    }, {});
   }
 
   render() {
@@ -199,39 +182,56 @@ class MyPicks extends React.Component {
     const bracketMap = this.mappedByRound();
 
     return (
-      <Card.Container>
-        <Card.Header>My Picks</Card.Header>
-        <Card.Body>
-          {message && <div className="alert alert-primary" role="alert">{message}</div>}
-          {error && <div className="alert alert-danger" role="alert">{error}</div>}
-          <form onSubmit={this.handleSubmit}>
-            {Object.keys(bracketMap).map(roundNum => {
-              const seriesArr = bracketMap[roundNum];
+      <Query query={PICKS_QUERY} variables={{
+        userIds: ["cjsqfk6qf00110750pzasxrk5"],
+        groupId: "cjsqlg8fm00260750m91vebsi"}}
+      >
+        {({ loading, error, data }) => {
+          const { picks } = data;
 
-              return (
-                <React.Fragment key={`round-${roundNum}`}>
-                  {seriesArr.length > 0 && <h2 className="roundHeader text-center">{roundNames[roundNum]}</h2>}
-                  {seriesArr.map(series => (
-                    series.isScheduleAvailable &&
-                      <TeamOption
-                        key={series.seriesId}
-                        ref={option => (this.options[series.seriesId] = option)}
-                        series={series}
-                        pick={this.state.picks[series.seriesId]}
-                      />
-                  ))}
-                </React.Fragment>
-              );
-            })}
-            <button
-              type="submit"
-              className="btn btn-primary btn-lg btn-block mt-5"
-            >
-              Update
-            </button>
-          </form>
-        </Card.Body>
-      </Card.Container>
+          if (picks) {
+            return (
+              <Card.Container>
+                <Card.Header>My Picks</Card.Header>
+                <Card.Body>
+                  {message && <div className="alert alert-primary" role="alert">{message}</div>}
+                  {error && <div className="alert alert-danger" role="alert">{error}</div>}
+                  <form onSubmit={this.handleSubmit}>
+                    {Object.keys(bracketMap).map(roundNum => {
+                      const seriesArr = bracketMap[roundNum];
+                      const pickBySeries = this.getPickBySeries(picks);
+
+                      console.log('pickBySeries', pickBySeries);
+                      return (
+                        <React.Fragment key={`round-${roundNum}`}>
+                          {seriesArr.length > 0 && <h2 className="roundHeader text-center">{roundNames[roundNum]}</h2>}
+                          {seriesArr.map(series => (
+                            series.isScheduleAvailable &&
+                              <TeamOption
+                                key={series.seriesId}
+                                ref={option => (this.options[series.seriesId] = option)}
+                                series={series}
+                                pick={pickBySeries[series.seriesId]}
+                              />
+                          ))}
+                        </React.Fragment>
+                      );
+                    })}
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-lg btn-block mt-5"
+                    >
+                      Update
+                    </button>
+                  </form>
+                </Card.Body>
+              </Card.Container>
+            );
+          }
+
+          return null;
+        }}
+      </Query>
     );
   }
 }
@@ -240,4 +240,7 @@ MyPicks.propTypes = {
   children: PropTypes.node,
 };
 
-export default MyPicks;
+export default compose(
+  graphql(NBA_BRACKETS_QUERY, { name: 'bracketQuery' }),
+  graphql(PICK_MUTATION, { name: 'setPick' }),
+)(MyPicks);

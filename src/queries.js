@@ -26,6 +26,7 @@ export const SIGNUP_MUTATION = gql`
 export const CURRENT_USER_QUERY = gql`
   query {
     currentUser {
+      id
       email
       groups {
         id
@@ -63,6 +64,20 @@ export const GROUP_QUERY = gql`
         email
       }
 
+    }
+  }
+`;
+
+export const PICK_MUTATION = gql`
+  mutation upsertPick($groupId: ID!, $data: [PickInput!]!) {
+    upsertPick(
+      groupId: $groupId,
+      data: $data
+    ) {
+      id
+      seriesId
+      team
+      wins
     }
   }
 `;
