@@ -39,14 +39,12 @@ class App extends Component {
   };
 
   render() {
-    const { actions, appState } = this.props;
-    const RouteProps = RouteWithProps({ actions, appState });
+    const RouteProps = RouteWithProps({ });
 
-    // console.log('this.props', this.props.currentUser);
     return (
       <BrowserRouter>
         <div className="App bg-secondary">
-          <Navbar {...{ actions, appState }} />
+          <Navbar />
           <Switch>
             <Layout.Container>
               <RouteProps exact path='/' Component={Home} />
@@ -63,4 +61,4 @@ class App extends Component {
 }
 
 // export default App;
-export default connect((state) => ({ appState: state }))((graphql(CURRENT_USER_QUERY))(App))
+export default (graphql(CURRENT_USER_QUERY)(App));

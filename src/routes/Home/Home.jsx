@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const Home = ({ children, appState }) => (
+const Home = () => (
   <div className="jumbotron">
     <h1 className="display-4">Welcome!</h1>
     <p className="lead">App is currently in beta...</p>

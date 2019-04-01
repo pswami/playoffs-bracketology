@@ -5,7 +5,6 @@ import cx from 'classnames';
 import { Query, graphql, compose } from "react-apollo";
 
 import { iconNBALink, roundNames } from '../../utils';
-import { setMatchups } from '../../firebase';
 
 import Card from '../../components/Card';
 
