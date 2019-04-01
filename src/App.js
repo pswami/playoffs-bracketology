@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 
-import { connect } from './store';
-
 import Home from './routes/Home/Home';
 import Me from './routes/Account/Me';
 // import Landing from './routes/Bracket/Landing';

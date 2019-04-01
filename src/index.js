@@ -8,8 +8,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
 
-import { Provider } from './store';
-
 import 'react-select/dist/react-select.css';
 import './index.css';
 
@@ -44,11 +42,9 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <Provider>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </Provider>,
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
   document.getElementById('root')
 );
 registerServiceWorker();
