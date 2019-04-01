@@ -19,7 +19,7 @@ type Mutation {
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group!
   addUserToGroup(groupId: ID!, userId: ID!): Group!
   deleteGroup(id: ID!): Group!
-  upsertPick(groupId: ID, pickId: ID, data: PickInput!): Pick!
+  upsertPick(groupId: ID!, data: [PickInput!]!): [Pick]!
   deletePick(id: ID!): Pick
 }
 
@@ -36,9 +36,11 @@ type User {
 }
 
 input PickInput {
+  id: ID
+  round: Int
+  seriesId: Int
   team: String!
   wins: Int!
-  seriesId: Int
 }
 
 type Pick {

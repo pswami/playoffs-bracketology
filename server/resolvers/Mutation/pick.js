@@ -1,40 +1,43 @@
 const { getUserId } = require('../../utils')
 
 const pick = {
-  async upsertPick(parent, { groupId, pickId, data }, ctx, info) {
+  async upsertPick(parent, { groupId, data }, ctx, info) {
     const userId = getUserId(ctx);
 
-    if (userId) {
-      if (pickId) {
-        return await ctx.prisma.updatePick({
-          where: {
-            id: pickId
-          },
-          data
-        });
-      } else {
-        const groupExists = await ctx.prisma.$exists.group({ id: groupId });
+    return data.map(async(pick) => {
+      const { id, ...pickData } = pick;
 
-        if (!groupExists) {
-          throw new Error(`Group not found`)
-        }
+      if (userId) {
+        if (id) {
+          return await ctx.prisma.updatePick({
+            where: {
+              id,
+            },
+            data: pickData
+          });
+        } else {
+          const groupExists = await ctx.prisma.$exists.group({ id: groupId });
 
-        return await ctx.prisma.createPick({
-          ...data,
-          user: {
-            connect: {
-              id: userId
-            }
-          },
-          group: {
-            connect: {
-              id: groupId
-            }
+          if (!groupExists) {
+            throw new Error(`Group not found`)
           }
-        });
-      }
 
-    }
+          return await ctx.prisma.createPick({
+            ...pickData,
+            user: {
+              connect: {
+                id: userId
+              }
+            },
+            group: {
+              connect: {
+                id: groupId
+              }
+            }
+          });
+        }
+      }
+    })
   },
 
   async deletePick(parent, { id }, ctx, info) {
