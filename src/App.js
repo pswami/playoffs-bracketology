@@ -29,6 +29,7 @@ class App extends Component {
   devInfo = () => {
     return (
       <Terminal>
+        <li>Logged ID: {this.props.data.currentUser ? this.props.data.currentUser.id : ''}</li>
         <li>Logged IN: {this.props.data.currentUser ? this.props.data.currentUser.email : ''}</li>
         <li>user loading: {this.props.data.loading.toString()}</li>
         <li>environment: {process.env && process.env.NODE_ENV}</li>
