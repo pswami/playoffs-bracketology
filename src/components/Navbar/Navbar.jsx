@@ -69,7 +69,7 @@ class Navbar extends React.Component {
                 <Link className="nav-link" to="/me">My Stuff</Link>
               </li>
             </ul>
-            <Query query={CURRENT_USER_QUERY} fetchPolicy="network-only">
+            <Query query={CURRENT_USER_QUERY}>
               {({ loading, error, data, client }) => {
                 let cachedData;
 
