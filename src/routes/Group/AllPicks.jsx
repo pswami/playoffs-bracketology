@@ -14,22 +14,29 @@ import './style.scss';
 
 class AllPicks extends React.Component {
   getUsersPicks = (picks) => {
+    const { users } = this.props;
     const picksTable = {};
+    const userOrder = this.mapById(users);
 
-    //TODO: fix, shouldn't refetch
     picks.forEach(pick => {
       if (pick) {
-        // TODO: fix, missing picks will distort the order of picks
-        // user_1 | user_2
-        //  ClE   |
-        //  LAL   |
-        // LAL belongs to user_2 (user_1 didn't make pick)
-        picksTable[pick.seriesId] = (picksTable[pick.seriesId] || []).concat(pick);
+        if (!picksTable[pick.seriesId]) {
+          picksTable[pick.seriesId] = Array(users.length).fill(0);
+        }
+        picksTable[pick.seriesId][userOrder[pick.user.id]] = pick;
       }
     });
 
     return picksTable;
   }
+
+  mapById = (items) => (
+    items.reduce((acc, item, idx) => {
+      acc[item.id] = idx;
+
+      return acc;
+    }, {})
+  )
 
   mappedByRound = () => {
     const { NBABracket } = this.props.data;
@@ -91,22 +98,33 @@ class AllPicks extends React.Component {
                                   if (checkSeriesLocked(series) && picks) {
                                     return (
                                       <Table.Row key={series.seriesId}>
-                                        {picks.map(pick => {
-                                          const winner = getWinner(series);
-                                          const isTeamCorrect = pick.team === winner.team;
-                                          const areGamesCorrect = pick.wins == winner.games;
+                                        {picks.map((pick, idx) => {
+                                          if (pick) {
+                                            const winner = getWinner(series);
+                                            const isTeamCorrect = pick.team === winner.team;
+                                            const areGamesCorrect = pick.wins == winner.games;
 
-                                          return (
-                                            <Table.Col
-                                              key={pick.id}
-                                              className="pickColumn"
-                                              style={{ background: teams_by_tri[pick.team].teamColor }}
-                                            >
-                                              <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect })}>{pick.team}</span>
-                                              <span> in </span>
-                                              <span className={cx('games', { highlightBox: series.isSeriesCompleted && isTeamCorrect && areGamesCorrect })}>{pick.wins}</span>
-                                            </Table.Col>
-                                          );
+                                            return (
+                                              <Table.Col
+                                                key={pick.id}
+                                                className="pickColumn"
+                                                style={{ background: teams_by_tri[pick.team].teamColor }}
+                                              >
+                                                <span className={cx('team', { highlightBox: series.isSeriesCompleted && isTeamCorrect })}>{pick.team}</span>
+                                                <span> in </span>
+                                                <span className={cx('games', { highlightBox: series.isSeriesCompleted && isTeamCorrect && areGamesCorrect })}>{pick.wins}</span>
+                                              </Table.Col>
+                                            );
+                                          } else {
+                                            return (
+                                              <Table.Col
+                                                key={`pick-${idx}`}
+                                                className="pickColumn"
+                                              >
+                                                -
+                                              </Table.Col>
+                                            );
+                                          }
                                         })}
                                       </Table.Row>
                                     );

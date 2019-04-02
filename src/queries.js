@@ -89,6 +89,10 @@ export const PICKS_QUERY = gql`
       team
       wins
       seriesId
+      user {
+        id
+        username
+      }
     }
   }
 `;
