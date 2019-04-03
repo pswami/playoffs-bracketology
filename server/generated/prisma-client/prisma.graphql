@@ -22,7 +22,7 @@ type Group {
   updatedAt: DateTime!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   name: String!
-  publicAccess: Boolean!
+  private: Boolean!
   gamePoints: Int!
   teamPoints: Int!
   type: String!
@@ -37,7 +37,7 @@ type GroupConnection {
 input GroupCreateInput {
   users: UserCreateManyWithoutGroupsInput
   name: String!
-  publicAccess: Boolean
+  private: Boolean
   gamePoints: Int!
   teamPoints: Int!
   type: String!
@@ -55,7 +55,7 @@ input GroupCreateOneInput {
 
 input GroupCreateWithoutUsersInput {
   name: String!
-  publicAccess: Boolean
+  private: Boolean
   gamePoints: Int!
   teamPoints: Int!
   type: String!
@@ -75,8 +75,8 @@ enum GroupOrderByInput {
   updatedAt_DESC
   name_ASC
   name_DESC
-  publicAccess_ASC
-  publicAccess_DESC
+  private_ASC
+  private_DESC
   gamePoints_ASC
   gamePoints_DESC
   teamPoints_ASC
@@ -90,7 +90,7 @@ type GroupPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
-  publicAccess: Boolean!
+  private: Boolean!
   gamePoints: Int!
   teamPoints: Int!
   type: String!
@@ -141,8 +141,8 @@ input GroupScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  publicAccess: Boolean
-  publicAccess_not: Boolean
+  private: Boolean
+  private_not: Boolean
   gamePoints: Int
   gamePoints_not: Int
   gamePoints_in: [Int!]
@@ -199,7 +199,7 @@ input GroupSubscriptionWhereInput {
 input GroupUpdateDataInput {
   users: UserUpdateManyWithoutGroupsInput
   name: String
-  publicAccess: Boolean
+  private: Boolean
   gamePoints: Int
   teamPoints: Int
   type: String
@@ -208,7 +208,7 @@ input GroupUpdateDataInput {
 input GroupUpdateInput {
   users: UserUpdateManyWithoutGroupsInput
   name: String
-  publicAccess: Boolean
+  private: Boolean
   gamePoints: Int
   teamPoints: Int
   type: String
@@ -216,7 +216,7 @@ input GroupUpdateInput {
 
 input GroupUpdateManyDataInput {
   name: String
-  publicAccess: Boolean
+  private: Boolean
   gamePoints: Int
   teamPoints: Int
   type: String
@@ -224,7 +224,7 @@ input GroupUpdateManyDataInput {
 
 input GroupUpdateManyMutationInput {
   name: String
-  publicAccess: Boolean
+  private: Boolean
   gamePoints: Int
   teamPoints: Int
   type: String
@@ -256,7 +256,7 @@ input GroupUpdateOneRequiredInput {
 
 input GroupUpdateWithoutUsersDataInput {
   name: String
-  publicAccess: Boolean
+  private: Boolean
   gamePoints: Int
   teamPoints: Int
   type: String
@@ -326,8 +326,8 @@ input GroupWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  publicAccess: Boolean
-  publicAccess_not: Boolean
+  private: Boolean
+  private_not: Boolean
   gamePoints: Int
   gamePoints_not: Int
   gamePoints_in: [Int!]

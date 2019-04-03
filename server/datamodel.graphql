@@ -16,7 +16,7 @@ type Group {
   updatedAt: DateTime!
   users: [User!]! @relation(name: "GroupUser")
   name: String!
-  publicAccess: Boolean! @default(value: "true")
+  private: Boolean! @default(value: "false")
   gamePoints: Int!
   teamPoints: Int!
   type: String!

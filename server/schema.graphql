@@ -61,7 +61,7 @@ type Group {
   updatedAt: DateTime!
   users: [User!]!
   name: String!
-  publicAccess: Boolean!
+  private: Boolean!
   gamePoints: Int!
   teamPoints: Int!
   type: String!
