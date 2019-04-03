@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import Jumbotron from '../../components/Jumbotron';
 
-console.log('Jumbotron', Jumbotron);
 const Home = () => (
   <Jumbotron>
     <div className="display-4 mb-3">Create a Bracket</div>

@@ -68,6 +68,9 @@ class Navbar extends React.Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/me">My Stuff</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/group/create">Create Group</Link>
+              </li>
             </ul>
             <Query query={CURRENT_USER_QUERY}>
               {({ loading, error, data, client }) => {

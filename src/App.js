@@ -8,6 +8,7 @@ import Me from './routes/Account/Me';
 import Search from './routes/Search';
 // import Create from './routes/Group/Create';
 import Show from './routes/Group/Show';
+import GroupCreate from './routes/Group/Create';
 
 import Terminal from './components/Terminal';
 import Navbar from './components/Navbar';
@@ -48,6 +49,7 @@ class App extends Component {
               <RouteProps exact path='/' Component={Home} />
               <RouteProps path='/me' Component={Me} />
               <RouteProps path='/search' Component={Search} />
+              <RouteProps path='/groupd/create' Component={GroupCreate} />
               <RouteProps path='/group/:groupId' Component={Show} />
             </Layout.Container>
           </Switch>
