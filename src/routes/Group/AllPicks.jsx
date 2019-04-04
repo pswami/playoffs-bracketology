@@ -11,6 +11,7 @@ import teams_by_tri from '../../data/teams_by_tri.json';
 import { NBA_BRACKETS_QUERY, PICKS_QUERY } from '../../queries';
 
 import './style.scss';
+import { networkFirst } from 'sw-toolbox';
 
 class AllPicks extends React.Component {
   getUsersPicks = (picks) => {
@@ -73,7 +74,7 @@ class AllPicks extends React.Component {
                   </Table.Row>
                 }
               </Table.Head>
-              <Query query={PICKS_QUERY} variables={{
+              <Query query={PICKS_QUERY} fetchPolicy="network-only" variables={{
                 userIds: users.map(user => user.id),
                 type: "round-by-round",
                 sport: "nba",

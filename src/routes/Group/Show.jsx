@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Query, graphql, compose } from "react-apollo";
 
-import MyPicks from './MyPicks';
 import AllPicks from './AllPicks';
 import AddMemberModal from './AddMemberModal';
 
@@ -158,7 +157,6 @@ class Show extends React.Component {
                     <br />
                   </div>
                   <div className="col-lg-6">
-                    {isUserInGroup && <MyPicks  {...{ group, users, currentUser: currentUserQuery.currentUser }} />}
                   </div>
                 </div>
               </React.Fragment>

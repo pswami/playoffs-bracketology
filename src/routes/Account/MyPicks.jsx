@@ -138,7 +138,7 @@ class MyPicks extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { users, group, setPick, currentUser } = this.props;
+    const { setPick, currentUser } = this.props;
 
     const matchups = Object.keys(this.options).reduce((acc, seriesID) => {
       if (this.options[seriesID].isFilled()) {
@@ -156,14 +156,6 @@ class MyPicks extends React.Component {
         query: PICKS_QUERY,
         variables: {
           userIds: [currentUser.id],
-          type: "round-by-round",
-          sport: "nba",
-          year: 2019,
-        },
-      }, {
-        query: PICKS_QUERY,
-        variables: {
-          userIds: users.map(user => user.id),
           type: "round-by-round",
           sport: "nba",
           year: 2019,
@@ -203,7 +195,7 @@ class MyPicks extends React.Component {
 
   render() {
     const { message, error } = this.state;
-    const { group, currentUser } = this.props;
+    const { currentUser } = this.props;
     const bracketMap = this.mappedByRound();
 
     return (
