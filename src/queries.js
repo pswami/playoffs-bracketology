@@ -82,9 +82,8 @@ export const GROUP_QUERY = gql`
 `;
 
 export const PICK_MUTATION = gql`
-  mutation upsertPick($groupId: ID!, $data: [PickInput!]!) {
+  mutation upsertPick($data: [PickInput!]!) {
     upsertPick(
-      groupId: $groupId,
       data: $data
     ) {
       id
@@ -96,8 +95,8 @@ export const PICK_MUTATION = gql`
 `;
 
 export const PICKS_QUERY = gql`
-  query picks($userIds: [ID!], $groupId: ID!) {
-    picks(where: { user: { id_in: $userIds }, group: { id: $groupId } }) {
+  query picks($userIds: [ID!], $type: String!, $sport: String!, $year: Int!) {
+    picks(where: { user: { id_in: $userIds }, type: $type, sport: $sport, year: $year,  }) {
       id
       team
       wins

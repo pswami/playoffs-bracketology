@@ -43,6 +43,9 @@ class TeamOption extends React.Component {
     wins: parseInt(this.state.wins),
     seriesId: parseInt(this.props.series.seriesId),
     round: parseInt(this.props.series.roundNum),
+    type: 'round-by-round',
+    sport: 'nba',
+    year: 2019,
   })
 
   isFilled = () => !!(this.state.team && this.state.wins)
@@ -57,7 +60,7 @@ class TeamOption extends React.Component {
 
   render() {
     const { series } = this.props;
-    const isSeriesLocked = checkSeriesLocked(series);
+    const isSeriesLocked = false;
     const classNames = cx(
       'form-group',
       'form-row',
@@ -147,20 +150,23 @@ class MyPicks extends React.Component {
 
     setPick({
       variables: {
-        groupId: group.id,
         data: matchups
       },
       refetchQueries: [{
         query: PICKS_QUERY,
         variables: {
           userIds: [currentUser.id],
-          groupId: group.id,
+          type: "round-by-round",
+          sport: "nba",
+          year: 2019,
         },
       }, {
         query: PICKS_QUERY,
         variables: {
           userIds: users.map(user => user.id),
-          groupId: group.id,
+          type: "round-by-round",
+          sport: "nba",
+          year: 2019,
         },
       }]
     })
@@ -203,7 +209,9 @@ class MyPicks extends React.Component {
     return (
       <Query query={PICKS_QUERY} variables={{
         userIds: [currentUser.id],
-        groupId: group.id
+        type: "round-by-round",
+        sport: "nba",
+        year: 2019,
       }}>
         {({ loading, error, data }) => {
           const { picks } = data;

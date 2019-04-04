@@ -22,7 +22,9 @@ class TeamRow extends React.Component {
     return(
       <Query query={PICKS_QUERY} variables={{
         userIds: [user.id],
-        groupId: group.id,
+        type: "round-by-round",
+        sport: "nba",
+        year: 2019,
       }}>
         {({ loading, error, data }) => {
           const { picks } = data;

@@ -73,7 +73,12 @@ class AllPicks extends React.Component {
                   </Table.Row>
                 }
               </Table.Head>
-              <Query query={PICKS_QUERY} variables={{ userIds: users.map(user => user.id), groupId: group.id }}>
+              <Query query={PICKS_QUERY} variables={{
+                userIds: users.map(user => user.id),
+                type: "round-by-round",
+                sport: "nba",
+                year: 2019
+              }}>
                 {({ loading, error, data }) => {
                   if (data.picks) {
                     const picksTable = this.getUsersPicks(data.picks);
