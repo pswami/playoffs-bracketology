@@ -219,7 +219,11 @@ export type GroupOrderByInput =
   | "teamPoints_ASC"
   | "teamPoints_DESC"
   | "type_ASC"
-  | "type_DESC";
+  | "type_DESC"
+  | "sport_ASC"
+  | "sport_DESC"
+  | "year_ASC"
+  | "year_DESC";
 
 export type PickOrderByInput =
   | "id_ASC"
@@ -235,38 +239,30 @@ export type PickOrderByInput =
   | "round_ASC"
   | "round_DESC"
   | "seriesId_ASC"
-  | "seriesId_DESC";
+  | "seriesId_DESC"
+  | "type_ASC"
+  | "type_DESC"
+  | "sport_ASC"
+  | "sport_DESC"
+  | "year_ASC"
+  | "year_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
+export interface UserUpsertWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutGroupsDataInput;
+  create: UserCreateWithoutGroupsInput;
 }
 
 export type GroupWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface GroupCreateInput {
-  users?: UserCreateManyWithoutGroupsInput;
-  name: String;
-  private?: Boolean;
-  gamePoints: Int;
-  teamPoints: Int;
-  type: String;
-}
-
-export interface UserUpdateOneRequiredInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface UserCreateManyWithoutGroupsInput {
-  create?: UserCreateWithoutGroupsInput[] | UserCreateWithoutGroupsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface UserUpdateManyDataInput {
+  email?: String;
+  password?: String;
+  username?: String;
 }
 
 export interface GroupWhereInput {
@@ -349,35 +345,57 @@ export interface GroupWhereInput {
   type_not_starts_with?: String;
   type_ends_with?: String;
   type_not_ends_with?: String;
+  sport?: String;
+  sport_not?: String;
+  sport_in?: String[] | String;
+  sport_not_in?: String[] | String;
+  sport_lt?: String;
+  sport_lte?: String;
+  sport_gt?: String;
+  sport_gte?: String;
+  sport_contains?: String;
+  sport_not_contains?: String;
+  sport_starts_with?: String;
+  sport_not_starts_with?: String;
+  sport_ends_with?: String;
+  sport_not_ends_with?: String;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
   AND?: GroupWhereInput[] | GroupWhereInput;
   OR?: GroupWhereInput[] | GroupWhereInput;
   NOT?: GroupWhereInput[] | GroupWhereInput;
 }
 
-export interface UserCreateWithoutGroupsInput {
-  email: String;
-  password: String;
-  username: String;
+export interface GroupCreateManyWithoutUsersInput {
+  create?: GroupCreateWithoutUsersInput[] | GroupCreateWithoutUsersInput;
+  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
 }
 
-export interface PickSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: PickWhereInput;
-  AND?: PickSubscriptionWhereInput[] | PickSubscriptionWhereInput;
-  OR?: PickSubscriptionWhereInput[] | PickSubscriptionWhereInput;
-  NOT?: PickSubscriptionWhereInput[] | PickSubscriptionWhereInput;
-}
-
-export interface GroupUpdateInput {
-  users?: UserUpdateManyWithoutGroupsInput;
+export interface GroupUpdateManyMutationInput {
   name?: String;
   private?: Boolean;
   gamePoints?: Int;
   teamPoints?: Int;
   type?: String;
+  sport?: String;
+  year?: Int;
+}
+
+export interface GroupCreateInput {
+  users?: UserCreateManyWithoutGroupsInput;
+  name: String;
+  private?: Boolean;
+  gamePoints: Int;
+  teamPoints: Int;
+  type?: String;
+  sport?: String;
+  year?: Int;
 }
 
 export interface UserWhereInput {
@@ -445,6 +463,56 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
+export interface UserCreateManyWithoutGroupsInput {
+  create?: UserCreateWithoutGroupsInput[] | UserCreateWithoutGroupsInput;
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+}
+
+export interface GroupSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: GroupWhereInput;
+  AND?: GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput;
+  OR?: GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput;
+  NOT?: GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput;
+}
+
+export interface UserCreateWithoutGroupsInput {
+  email: String;
+  password: String;
+  username: String;
+}
+
+export interface UserUpdateInput {
+  email?: String;
+  password?: String;
+  username?: String;
+  groups?: GroupUpdateManyWithoutUsersInput;
+}
+
+export interface GroupUpdateInput {
+  users?: UserUpdateManyWithoutGroupsInput;
+  name?: String;
+  private?: Boolean;
+  gamePoints?: Int;
+  teamPoints?: Int;
+  type?: String;
+  sport?: String;
+  year?: Int;
+}
+
+export interface PickUpdateManyMutationInput {
+  team?: String;
+  wins?: Int;
+  round?: Int;
+  seriesId?: Int;
+  type?: String;
+  sport?: String;
+  year?: Int;
+}
+
 export interface UserUpdateManyWithoutGroupsInput {
   create?: UserCreateWithoutGroupsInput[] | UserCreateWithoutGroupsInput;
   delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
@@ -463,11 +531,9 @@ export interface UserUpdateManyWithoutGroupsInput {
     | UserUpdateManyWithWhereNestedInput;
 }
 
-export interface UserUpdateInput {
-  email?: String;
-  password?: String;
-  username?: String;
-  groups?: GroupUpdateManyWithoutUsersInput;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
 export interface UserUpdateWithWhereUniqueWithoutGroupsInput {
@@ -475,9 +541,9 @@ export interface UserUpdateWithWhereUniqueWithoutGroupsInput {
   data: UserUpdateWithoutGroupsDataInput;
 }
 
-export interface GroupUpsertNestedInput {
-  update: GroupUpdateDataInput;
-  create: GroupCreateInput;
+export interface GroupUpdateManyWithWhereNestedInput {
+  where: GroupScalarWhereInput;
+  data: GroupUpdateManyDataInput;
 }
 
 export interface UserUpdateWithoutGroupsDataInput {
@@ -486,26 +552,37 @@ export interface UserUpdateWithoutGroupsDataInput {
   username?: String;
 }
 
-export interface GroupUpdateDataInput {
-  users?: UserUpdateManyWithoutGroupsInput;
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+  email?: String;
+}>;
+
+export interface GroupUpdateManyWithoutUsersInput {
+  create?: GroupCreateWithoutUsersInput[] | GroupCreateWithoutUsersInput;
+  delete?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
+  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
+  set?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
+  disconnect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
+  update?:
+    | GroupUpdateWithWhereUniqueWithoutUsersInput[]
+    | GroupUpdateWithWhereUniqueWithoutUsersInput;
+  upsert?:
+    | GroupUpsertWithWhereUniqueWithoutUsersInput[]
+    | GroupUpsertWithWhereUniqueWithoutUsersInput;
+  deleteMany?: GroupScalarWhereInput[] | GroupScalarWhereInput;
+  updateMany?:
+    | GroupUpdateManyWithWhereNestedInput[]
+    | GroupUpdateManyWithWhereNestedInput;
+}
+
+export interface GroupUpdateWithoutUsersDataInput {
   name?: String;
   private?: Boolean;
   gamePoints?: Int;
   teamPoints?: Int;
   type?: String;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutGroupsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutGroupsDataInput;
-  create: UserCreateWithoutGroupsInput;
-}
-
-export interface GroupUpdateOneRequiredInput {
-  create?: GroupCreateInput;
-  update?: GroupUpdateDataInput;
-  upsert?: GroupUpsertNestedInput;
-  connect?: GroupWhereUniqueInput;
+  sport?: String;
+  year?: Int;
 }
 
 export interface UserScalarWhereInput {
@@ -570,78 +647,26 @@ export interface UserScalarWhereInput {
   NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
 }
 
-export interface GroupUpdateManyDataInput {
-  name?: String;
-  private?: Boolean;
-  gamePoints?: Int;
-  teamPoints?: Int;
-  type?: String;
-}
-
-export interface GroupUpdateWithWhereUniqueWithoutUsersInput {
-  where: GroupWhereUniqueInput;
-  data: GroupUpdateWithoutUsersDataInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  email?: String;
-}>;
-
-export interface UserUpdateManyDataInput {
-  email?: String;
-  password?: String;
-  username?: String;
-}
-
-export interface GroupUpsertWithWhereUniqueWithoutUsersInput {
-  where: GroupWhereUniqueInput;
-  update: GroupUpdateWithoutUsersDataInput;
-  create: GroupCreateWithoutUsersInput;
-}
-
-export interface GroupUpdateManyMutationInput {
-  name?: String;
-  private?: Boolean;
-  gamePoints?: Int;
-  teamPoints?: Int;
-  type?: String;
-}
-
-export interface GroupSubscriptionWhereInput {
+export interface UserSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
   updatedFields_contains_every?: String[] | String;
   updatedFields_contains_some?: String[] | String;
-  node?: GroupWhereInput;
-  AND?: GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput;
-  OR?: GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput;
-  NOT?: GroupSubscriptionWhereInput[] | GroupSubscriptionWhereInput;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
 
-export interface GroupUpdateManyWithoutUsersInput {
-  create?: GroupCreateWithoutUsersInput[] | GroupCreateWithoutUsersInput;
-  delete?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
-  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
-  set?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
-  disconnect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
-  update?:
-    | GroupUpdateWithWhereUniqueWithoutUsersInput[]
-    | GroupUpdateWithWhereUniqueWithoutUsersInput;
-  upsert?:
-    | GroupUpsertWithWhereUniqueWithoutUsersInput[]
-    | GroupUpsertWithWhereUniqueWithoutUsersInput;
-  deleteMany?: GroupScalarWhereInput[] | GroupScalarWhereInput;
-  updateMany?:
-    | GroupUpdateManyWithWhereNestedInput[]
-    | GroupUpdateManyWithWhereNestedInput;
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
 }
 
-export interface PickUpdateManyMutationInput {
-  team?: String;
-  wins?: Int;
-  round?: Int;
-  seriesId?: Int;
+export interface UserUpdateManyMutationInput {
+  email?: String;
+  password?: String;
+  username?: String;
 }
 
 export interface UserUpdateDataInput {
@@ -683,7 +708,6 @@ export interface PickWhereInput {
   updatedAt_gt?: DateTimeInput;
   updatedAt_gte?: DateTimeInput;
   user?: UserWhereInput;
-  group?: GroupWhereInput;
   team?: String;
   team_not?: String;
   team_in?: String[] | String;
@@ -722,91 +746,52 @@ export interface PickWhereInput {
   seriesId_lte?: Int;
   seriesId_gt?: Int;
   seriesId_gte?: Int;
+  type?: String;
+  type_not?: String;
+  type_in?: String[] | String;
+  type_not_in?: String[] | String;
+  type_lt?: String;
+  type_lte?: String;
+  type_gt?: String;
+  type_gte?: String;
+  type_contains?: String;
+  type_not_contains?: String;
+  type_starts_with?: String;
+  type_not_starts_with?: String;
+  type_ends_with?: String;
+  type_not_ends_with?: String;
+  sport?: String;
+  sport_not?: String;
+  sport_in?: String[] | String;
+  sport_not_in?: String[] | String;
+  sport_lt?: String;
+  sport_lte?: String;
+  sport_gt?: String;
+  sport_gte?: String;
+  sport_contains?: String;
+  sport_not_contains?: String;
+  sport_starts_with?: String;
+  sport_not_starts_with?: String;
+  sport_ends_with?: String;
+  sport_not_ends_with?: String;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
   AND?: PickWhereInput[] | PickWhereInput;
   OR?: PickWhereInput[] | PickWhereInput;
   NOT?: PickWhereInput[] | PickWhereInput;
 }
 
-export interface PickCreateInput {
-  user: UserCreateOneInput;
-  group: GroupCreateOneInput;
-  team: String;
-  wins: Int;
-  round?: Int;
-  seriesId?: Int;
-}
-
-export interface GroupUpdateManyWithWhereNestedInput {
-  where: GroupScalarWhereInput;
-  data: GroupUpdateManyDataInput;
-}
-
-export interface UserCreateOneInput {
+export interface UserUpdateOneRequiredInput {
   create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
   connect?: UserWhereUniqueInput;
-}
-
-export interface GroupUpdateWithoutUsersDataInput {
-  name?: String;
-  private?: Boolean;
-  gamePoints?: Int;
-  teamPoints?: Int;
-  type?: String;
-}
-
-export interface UserCreateInput {
-  email: String;
-  password: String;
-  username: String;
-  groups?: GroupCreateManyWithoutUsersInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  email?: String;
-  password?: String;
-  username?: String;
-}
-
-export interface PickUpdateInput {
-  user?: UserUpdateOneRequiredInput;
-  group?: GroupUpdateOneRequiredInput;
-  team?: String;
-  wins?: Int;
-  round?: Int;
-  seriesId?: Int;
-}
-
-export interface GroupCreateOneInput {
-  create?: GroupCreateInput;
-  connect?: GroupWhereUniqueInput;
-}
-
-export interface GroupCreateWithoutUsersInput {
-  name: String;
-  private?: Boolean;
-  gamePoints: Int;
-  teamPoints: Int;
-  type: String;
-}
-
-export interface GroupCreateManyWithoutUsersInput {
-  create?: GroupCreateWithoutUsersInput[] | GroupCreateWithoutUsersInput;
-  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput;
-}
-
-export type PickWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
 
 export interface GroupScalarWhereInput {
@@ -886,51 +871,115 @@ export interface GroupScalarWhereInput {
   type_not_starts_with?: String;
   type_ends_with?: String;
   type_not_ends_with?: String;
+  sport?: String;
+  sport_not?: String;
+  sport_in?: String[] | String;
+  sport_not_in?: String[] | String;
+  sport_lt?: String;
+  sport_lte?: String;
+  sport_gt?: String;
+  sport_gte?: String;
+  sport_contains?: String;
+  sport_not_contains?: String;
+  sport_starts_with?: String;
+  sport_not_starts_with?: String;
+  sport_ends_with?: String;
+  sport_not_ends_with?: String;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
   AND?: GroupScalarWhereInput[] | GroupScalarWhereInput;
   OR?: GroupScalarWhereInput[] | GroupScalarWhereInput;
   NOT?: GroupScalarWhereInput[] | GroupScalarWhereInput;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface PickUpdateInput {
+  user?: UserUpdateOneRequiredInput;
+  team?: String;
+  wins?: Int;
+  round?: Int;
+  seriesId?: Int;
+  type?: String;
+  sport?: String;
+  year?: Int;
 }
+
+export interface GroupUpdateWithWhereUniqueWithoutUsersInput {
+  where: GroupWhereUniqueInput;
+  data: GroupUpdateWithoutUsersDataInput;
+}
+
+export interface UserCreateInput {
+  email: String;
+  password: String;
+  username: String;
+  groups?: GroupCreateManyWithoutUsersInput;
+}
+
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface PickCreateInput {
+  user: UserCreateOneInput;
+  team: String;
+  wins: Int;
+  round?: Int;
+  seriesId?: Int;
+  type?: String;
+  sport?: String;
+  year?: Int;
+}
+
+export interface GroupCreateWithoutUsersInput {
+  name: String;
+  private?: Boolean;
+  gamePoints: Int;
+  teamPoints: Int;
+  type?: String;
+  sport?: String;
+  year?: Int;
+}
+
+export interface PickSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: PickWhereInput;
+  AND?: PickSubscriptionWhereInput[] | PickSubscriptionWhereInput;
+  OR?: PickSubscriptionWhereInput[] | PickSubscriptionWhereInput;
+  NOT?: PickSubscriptionWhereInput[] | PickSubscriptionWhereInput;
+}
+
+export interface GroupUpsertWithWhereUniqueWithoutUsersInput {
+  where: GroupWhereUniqueInput;
+  update: GroupUpdateWithoutUsersDataInput;
+  create: GroupCreateWithoutUsersInput;
+}
+
+export interface GroupUpdateManyDataInput {
+  name?: String;
+  private?: Boolean;
+  gamePoints?: Int;
+  teamPoints?: Int;
+  type?: String;
+  sport?: String;
+  year?: Int;
+}
+
+export type PickWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface GroupEdge {
-  node: Group;
-  cursor: String;
-}
-
-export interface GroupEdgePromise extends Promise<GroupEdge>, Fragmentable {
-  node: <T = GroupPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface GroupEdgeSubscription
-  extends Promise<AsyncIterator<GroupEdge>>,
-    Fragmentable {
-  node: <T = GroupSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserPreviousValues {
@@ -958,20 +1007,46 @@ export interface UserPreviousValuesSubscription
   username: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateGroup {
-  count: Int;
+export interface PickConnection {
+  pageInfo: PageInfo;
+  edges: PickEdge[];
 }
 
-export interface AggregateGroupPromise
-  extends Promise<AggregateGroup>,
+export interface PickConnectionPromise
+  extends Promise<PickConnection>,
     Fragmentable {
-  count: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PickEdge>>() => T;
+  aggregate: <T = AggregatePickPromise>() => T;
 }
 
-export interface AggregateGroupSubscription
-  extends Promise<AsyncIterator<AggregateGroup>>,
+export interface PickConnectionSubscription
+  extends Promise<AsyncIterator<PickConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PickEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePickSubscription>() => T;
+}
+
+export interface GroupConnection {
+  pageInfo: PageInfo;
+  edges: GroupEdge[];
+}
+
+export interface GroupConnectionPromise
+  extends Promise<GroupConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<GroupEdge>>() => T;
+  aggregate: <T = AggregateGroupPromise>() => T;
+}
+
+export interface GroupConnectionSubscription
+  extends Promise<AsyncIterator<GroupConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<GroupEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateGroupSubscription>() => T;
 }
 
 export interface PickSubscriptionPayload {
@@ -999,7 +1074,7 @@ export interface PickSubscriptionPayloadSubscription
   previousValues: <T = PickPreviousValuesSubscription>() => T;
 }
 
-export interface PickPreviousValues {
+export interface Pick {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -1007,272 +1082,55 @@ export interface PickPreviousValues {
   wins: Int;
   round?: Int;
   seriesId?: Int;
+  type: String;
+  sport: String;
+  year: Int;
 }
 
-export interface PickPreviousValuesPromise
-  extends Promise<PickPreviousValues>,
-    Fragmentable {
+export interface PickPromise extends Promise<Pick>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
+  user: <T = UserPromise>() => T;
   team: () => Promise<String>;
   wins: () => Promise<Int>;
   round: () => Promise<Int>;
   seriesId: () => Promise<Int>;
+  type: () => Promise<String>;
+  sport: () => Promise<String>;
+  year: () => Promise<Int>;
 }
 
-export interface PickPreviousValuesSubscription
-  extends Promise<AsyncIterator<PickPreviousValues>>,
+export interface PickSubscription
+  extends Promise<AsyncIterator<Pick>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  user: <T = UserSubscription>() => T;
   team: () => Promise<AsyncIterator<String>>;
   wins: () => Promise<AsyncIterator<Int>>;
   round: () => Promise<AsyncIterator<Int>>;
   seriesId: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface GroupConnection {
-  pageInfo: PageInfo;
-  edges: GroupEdge[];
-}
-
-export interface GroupConnectionPromise
-  extends Promise<GroupConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<GroupEdge>>() => T;
-  aggregate: <T = AggregateGroupPromise>() => T;
-}
-
-export interface GroupConnectionSubscription
-  extends Promise<AsyncIterator<GroupConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<GroupEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateGroupSubscription>() => T;
-}
-
-export interface PickEdge {
-  node: Pick;
-  cursor: String;
-}
-
-export interface PickEdgePromise extends Promise<PickEdge>, Fragmentable {
-  node: <T = PickPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PickEdgeSubscription
-  extends Promise<AsyncIterator<PickEdge>>,
-    Fragmentable {
-  node: <T = PickSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface GroupPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  name: String;
-  private: Boolean;
-  gamePoints: Int;
-  teamPoints: Int;
-  type: String;
-}
-
-export interface GroupPreviousValuesPromise
-  extends Promise<GroupPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  private: () => Promise<Boolean>;
-  gamePoints: () => Promise<Int>;
-  teamPoints: () => Promise<Int>;
-  type: () => Promise<String>;
-}
-
-export interface GroupPreviousValuesSubscription
-  extends Promise<AsyncIterator<GroupPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
-  private: () => Promise<AsyncIterator<Boolean>>;
-  gamePoints: () => Promise<AsyncIterator<Int>>;
-  teamPoints: () => Promise<AsyncIterator<Int>>;
   type: () => Promise<AsyncIterator<String>>;
+  sport: () => Promise<AsyncIterator<String>>;
+  year: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface GroupSubscriptionPayload {
-  mutation: MutationType;
-  node: Group;
-  updatedFields: String[];
-  previousValues: GroupPreviousValues;
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface GroupSubscriptionPayloadPromise
-  extends Promise<GroupSubscriptionPayload>,
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = GroupPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = GroupPreviousValuesPromise>() => T;
+  count: () => Promise<Long>;
 }
 
-export interface GroupSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<GroupSubscriptionPayload>>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = GroupSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = GroupPreviousValuesSubscription>() => T;
-}
-
-export interface Group {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  name: String;
-  private: Boolean;
-  gamePoints: Int;
-  teamPoints: Int;
-  type: String;
-}
-
-export interface GroupPromise extends Promise<Group>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  users: <T = FragmentableArray<User>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  name: () => Promise<String>;
-  private: () => Promise<Boolean>;
-  gamePoints: () => Promise<Int>;
-  teamPoints: () => Promise<Int>;
-  type: () => Promise<String>;
-}
-
-export interface GroupSubscription
-  extends Promise<AsyncIterator<Group>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  users: <T = Promise<AsyncIterator<UserSubscription>>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  name: () => Promise<AsyncIterator<String>>;
-  private: () => Promise<AsyncIterator<Boolean>>;
-  gamePoints: () => Promise<AsyncIterator<Int>>;
-  teamPoints: () => Promise<AsyncIterator<Int>>;
-  type: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface User {
@@ -1320,61 +1178,270 @@ export interface UserSubscription
   ) => T;
 }
 
-export interface Pick {
+export interface AggregateGroup {
+  count: Int;
+}
+
+export interface AggregateGroupPromise
+  extends Promise<AggregateGroup>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateGroupSubscription
+  extends Promise<AsyncIterator<AggregateGroup>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface GroupEdge {
+  node: Group;
+  cursor: String;
+}
+
+export interface GroupEdgePromise extends Promise<GroupEdge>, Fragmentable {
+  node: <T = GroupPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface GroupEdgeSubscription
+  extends Promise<AsyncIterator<GroupEdge>>,
+    Fragmentable {
+  node: <T = GroupSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface PickEdge {
+  node: Pick;
+  cursor: String;
+}
+
+export interface PickEdgePromise extends Promise<PickEdge>, Fragmentable {
+  node: <T = PickPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PickEdgeSubscription
+  extends Promise<AsyncIterator<PickEdge>>,
+    Fragmentable {
+  node: <T = PickSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface GroupPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  team: String;
-  wins: Int;
-  round?: Int;
-  seriesId?: Int;
+  name: String;
+  private: Boolean;
+  gamePoints: Int;
+  teamPoints: Int;
+  type: String;
+  sport: String;
+  year: Int;
 }
 
-export interface PickPromise extends Promise<Pick>, Fragmentable {
+export interface GroupPreviousValuesPromise
+  extends Promise<GroupPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  user: <T = UserPromise>() => T;
-  group: <T = GroupPromise>() => T;
-  team: () => Promise<String>;
-  wins: () => Promise<Int>;
-  round: () => Promise<Int>;
-  seriesId: () => Promise<Int>;
+  name: () => Promise<String>;
+  private: () => Promise<Boolean>;
+  gamePoints: () => Promise<Int>;
+  teamPoints: () => Promise<Int>;
+  type: () => Promise<String>;
+  sport: () => Promise<String>;
+  year: () => Promise<Int>;
 }
 
-export interface PickSubscription
-  extends Promise<AsyncIterator<Pick>>,
+export interface GroupPreviousValuesSubscription
+  extends Promise<AsyncIterator<GroupPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  user: <T = UserSubscription>() => T;
-  group: <T = GroupSubscription>() => T;
-  team: () => Promise<AsyncIterator<String>>;
-  wins: () => Promise<AsyncIterator<Int>>;
-  round: () => Promise<AsyncIterator<Int>>;
-  seriesId: () => Promise<AsyncIterator<Int>>;
+  name: () => Promise<AsyncIterator<String>>;
+  private: () => Promise<AsyncIterator<Boolean>>;
+  gamePoints: () => Promise<AsyncIterator<Int>>;
+  teamPoints: () => Promise<AsyncIterator<Int>>;
+  type: () => Promise<AsyncIterator<String>>;
+  sport: () => Promise<AsyncIterator<String>>;
+  year: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PickConnection {
-  pageInfo: PageInfo;
-  edges: PickEdge[];
+export interface GroupSubscriptionPayload {
+  mutation: MutationType;
+  node: Group;
+  updatedFields: String[];
+  previousValues: GroupPreviousValues;
 }
 
-export interface PickConnectionPromise
-  extends Promise<PickConnection>,
+export interface GroupSubscriptionPayloadPromise
+  extends Promise<GroupSubscriptionPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PickEdge>>() => T;
-  aggregate: <T = AggregatePickPromise>() => T;
+  mutation: () => Promise<MutationType>;
+  node: <T = GroupPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = GroupPreviousValuesPromise>() => T;
 }
 
-export interface PickConnectionSubscription
-  extends Promise<AsyncIterator<PickConnection>>,
+export interface GroupSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<GroupSubscriptionPayload>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PickEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePickSubscription>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = GroupSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = GroupPreviousValuesSubscription>() => T;
+}
+
+export interface Group {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  name: String;
+  private: Boolean;
+  gamePoints: Int;
+  teamPoints: Int;
+  type: String;
+  sport: String;
+  year: Int;
+}
+
+export interface GroupPromise extends Promise<Group>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  users: <T = FragmentableArray<User>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  name: () => Promise<String>;
+  private: () => Promise<Boolean>;
+  gamePoints: () => Promise<Int>;
+  teamPoints: () => Promise<Int>;
+  type: () => Promise<String>;
+  sport: () => Promise<String>;
+  year: () => Promise<Int>;
+}
+
+export interface GroupSubscription
+  extends Promise<AsyncIterator<Group>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  users: <T = Promise<AsyncIterator<UserSubscription>>>(
+    args?: {
+      where?: UserWhereInput;
+      orderBy?: UserOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  name: () => Promise<AsyncIterator<String>>;
+  private: () => Promise<AsyncIterator<Boolean>>;
+  gamePoints: () => Promise<AsyncIterator<Int>>;
+  teamPoints: () => Promise<AsyncIterator<Int>>;
+  type: () => Promise<AsyncIterator<String>>;
+  sport: () => Promise<AsyncIterator<String>>;
+  year: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface AggregatePick {
@@ -1410,7 +1477,65 @@ export interface UserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface PickPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  team: String;
+  wins: Int;
+  round?: Int;
+  seriesId?: Int;
+  type: String;
+  sport: String;
+  year: Int;
+}
+
+export interface PickPreviousValuesPromise
+  extends Promise<PickPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  team: () => Promise<String>;
+  wins: () => Promise<Int>;
+  round: () => Promise<Int>;
+  seriesId: () => Promise<Int>;
+  type: () => Promise<String>;
+  sport: () => Promise<String>;
+  year: () => Promise<Int>;
+}
+
+export interface PickPreviousValuesSubscription
+  extends Promise<AsyncIterator<PickPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  team: () => Promise<AsyncIterator<String>>;
+  wins: () => Promise<AsyncIterator<Int>>;
+  round: () => Promise<AsyncIterator<Int>>;
+  seriesId: () => Promise<AsyncIterator<Int>>;
+  type: () => Promise<AsyncIterator<String>>;
+  sport: () => Promise<AsyncIterator<String>>;
+  year: () => Promise<AsyncIterator<Int>>;
+}
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
+
 export type Long = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -1427,21 +1552,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /**
  * Model Metadata

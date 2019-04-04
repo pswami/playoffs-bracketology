@@ -26,9 +26,6 @@ module.exports = {
     user(parent, args, ctx, info) {
       return ctx.prisma.pick({ id: parent.id }).user();
     },
-    group(parent, args, ctx, info) {
-      return ctx.prisma.pick({ id: parent.id }).group();
-    },
   },
   // Subscription,
   AuthPayload,

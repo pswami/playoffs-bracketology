@@ -1,7 +1,7 @@
 const { getUserId } = require('../../utils')
 
 const pick = {
-  async upsertPick(parent, { groupId, data }, ctx, info) {
+  async upsertPick(parent, { data }, ctx, info) {
     const userId = getUserId(ctx);
 
     return data.map(async(pick) => {
@@ -16,12 +16,6 @@ const pick = {
             data: pickData
           });
         } else {
-          const groupExists = await ctx.prisma.$exists.group({ id: groupId });
-
-          if (!groupExists) {
-            throw new Error(`Group not found`)
-          }
-
           return await ctx.prisma.createPick({
             ...pickData,
             user: {
@@ -29,11 +23,6 @@ const pick = {
                 id: userId
               }
             },
-            group: {
-              connect: {
-                id: groupId
-              }
-            }
           });
         }
       }

@@ -31,6 +31,8 @@ type Group {
   gamePoints: Int!
   teamPoints: Int!
   type: String!
+  sport: String!
+  year: Int!
 }
 
 type GroupConnection {
@@ -45,7 +47,9 @@ input GroupCreateInput {
   private: Boolean
   gamePoints: Int!
   teamPoints: Int!
-  type: String!
+  type: String
+  sport: String
+  year: Int
 }
 
 input GroupCreateManyWithoutUsersInput {
@@ -53,17 +57,14 @@ input GroupCreateManyWithoutUsersInput {
   connect: [GroupWhereUniqueInput!]
 }
 
-input GroupCreateOneInput {
-  create: GroupCreateInput
-  connect: GroupWhereUniqueInput
-}
-
 input GroupCreateWithoutUsersInput {
   name: String!
   private: Boolean
   gamePoints: Int!
   teamPoints: Int!
-  type: String!
+  type: String
+  sport: String
+  year: Int
 }
 
 type GroupEdge {
@@ -88,6 +89,10 @@ enum GroupOrderByInput {
   teamPoints_DESC
   type_ASC
   type_DESC
+  sport_ASC
+  sport_DESC
+  year_ASC
+  year_DESC
 }
 
 type GroupPreviousValues {
@@ -99,6 +104,8 @@ type GroupPreviousValues {
   gamePoints: Int!
   teamPoints: Int!
   type: String!
+  sport: String!
+  year: Int!
 }
 
 input GroupScalarWhereInput {
@@ -178,6 +185,28 @@ input GroupScalarWhereInput {
   type_not_starts_with: String
   type_ends_with: String
   type_not_ends_with: String
+  sport: String
+  sport_not: String
+  sport_in: [String!]
+  sport_not_in: [String!]
+  sport_lt: String
+  sport_lte: String
+  sport_gt: String
+  sport_gte: String
+  sport_contains: String
+  sport_not_contains: String
+  sport_starts_with: String
+  sport_not_starts_with: String
+  sport_ends_with: String
+  sport_not_ends_with: String
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
   AND: [GroupScalarWhereInput!]
   OR: [GroupScalarWhereInput!]
   NOT: [GroupScalarWhereInput!]
@@ -201,15 +230,6 @@ input GroupSubscriptionWhereInput {
   NOT: [GroupSubscriptionWhereInput!]
 }
 
-input GroupUpdateDataInput {
-  users: UserUpdateManyWithoutGroupsInput
-  name: String
-  private: Boolean
-  gamePoints: Int
-  teamPoints: Int
-  type: String
-}
-
 input GroupUpdateInput {
   users: UserUpdateManyWithoutGroupsInput
   name: String
@@ -217,6 +237,8 @@ input GroupUpdateInput {
   gamePoints: Int
   teamPoints: Int
   type: String
+  sport: String
+  year: Int
 }
 
 input GroupUpdateManyDataInput {
@@ -225,6 +247,8 @@ input GroupUpdateManyDataInput {
   gamePoints: Int
   teamPoints: Int
   type: String
+  sport: String
+  year: Int
 }
 
 input GroupUpdateManyMutationInput {
@@ -233,6 +257,8 @@ input GroupUpdateManyMutationInput {
   gamePoints: Int
   teamPoints: Int
   type: String
+  sport: String
+  year: Int
 }
 
 input GroupUpdateManyWithoutUsersInput {
@@ -252,29 +278,19 @@ input GroupUpdateManyWithWhereNestedInput {
   data: GroupUpdateManyDataInput!
 }
 
-input GroupUpdateOneRequiredInput {
-  create: GroupCreateInput
-  update: GroupUpdateDataInput
-  upsert: GroupUpsertNestedInput
-  connect: GroupWhereUniqueInput
-}
-
 input GroupUpdateWithoutUsersDataInput {
   name: String
   private: Boolean
   gamePoints: Int
   teamPoints: Int
   type: String
+  sport: String
+  year: Int
 }
 
 input GroupUpdateWithWhereUniqueWithoutUsersInput {
   where: GroupWhereUniqueInput!
   data: GroupUpdateWithoutUsersDataInput!
-}
-
-input GroupUpsertNestedInput {
-  update: GroupUpdateDataInput!
-  create: GroupCreateInput!
 }
 
 input GroupUpsertWithWhereUniqueWithoutUsersInput {
@@ -363,6 +379,28 @@ input GroupWhereInput {
   type_not_starts_with: String
   type_ends_with: String
   type_not_ends_with: String
+  sport: String
+  sport_not: String
+  sport_in: [String!]
+  sport_not_in: [String!]
+  sport_lt: String
+  sport_lte: String
+  sport_gt: String
+  sport_gte: String
+  sport_contains: String
+  sport_not_contains: String
+  sport_starts_with: String
+  sport_not_starts_with: String
+  sport_ends_with: String
+  sport_not_ends_with: String
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
   AND: [GroupWhereInput!]
   OR: [GroupWhereInput!]
   NOT: [GroupWhereInput!]
@@ -417,11 +455,13 @@ type Pick {
   createdAt: DateTime!
   updatedAt: DateTime!
   user: User!
-  group: Group!
   team: String!
   wins: Int!
   round: Int
   seriesId: Int
+  type: String!
+  sport: String!
+  year: Int!
 }
 
 type PickConnection {
@@ -432,11 +472,13 @@ type PickConnection {
 
 input PickCreateInput {
   user: UserCreateOneInput!
-  group: GroupCreateOneInput!
   team: String!
   wins: Int!
   round: Int
   seriesId: Int
+  type: String
+  sport: String
+  year: Int
 }
 
 type PickEdge {
@@ -459,6 +501,12 @@ enum PickOrderByInput {
   round_DESC
   seriesId_ASC
   seriesId_DESC
+  type_ASC
+  type_DESC
+  sport_ASC
+  sport_DESC
+  year_ASC
+  year_DESC
 }
 
 type PickPreviousValues {
@@ -469,6 +517,9 @@ type PickPreviousValues {
   wins: Int!
   round: Int
   seriesId: Int
+  type: String!
+  sport: String!
+  year: Int!
 }
 
 type PickSubscriptionPayload {
@@ -491,11 +542,13 @@ input PickSubscriptionWhereInput {
 
 input PickUpdateInput {
   user: UserUpdateOneRequiredInput
-  group: GroupUpdateOneRequiredInput
   team: String
   wins: Int
   round: Int
   seriesId: Int
+  type: String
+  sport: String
+  year: Int
 }
 
 input PickUpdateManyMutationInput {
@@ -503,6 +556,9 @@ input PickUpdateManyMutationInput {
   wins: Int
   round: Int
   seriesId: Int
+  type: String
+  sport: String
+  year: Int
 }
 
 input PickWhereInput {
@@ -537,7 +593,6 @@ input PickWhereInput {
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
   user: UserWhereInput
-  group: GroupWhereInput
   team: String
   team_not: String
   team_in: [String!]
@@ -576,6 +631,42 @@ input PickWhereInput {
   seriesId_lte: Int
   seriesId_gt: Int
   seriesId_gte: Int
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  sport: String
+  sport_not: String
+  sport_in: [String!]
+  sport_not_in: [String!]
+  sport_lt: String
+  sport_lte: String
+  sport_gt: String
+  sport_gte: String
+  sport_contains: String
+  sport_not_contains: String
+  sport_starts_with: String
+  sport_not_starts_with: String
+  sport_ends_with: String
+  sport_not_ends_with: String
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
   AND: [PickWhereInput!]
   OR: [PickWhereInput!]
   NOT: [PickWhereInput!]

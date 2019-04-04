@@ -3,11 +3,14 @@ type Pick {
   createdAt: DateTime!
   updatedAt: DateTime!
   user: User!
-  group: Group!
   team: String!
   wins: Int!
   round: Int
   seriesId: Int
+
+  type: String! @default(value: "round-by-round")
+  sport: String! @default(value: "nba")
+  year: Int! @default(value: 2019)
 }
 
 type Group {
@@ -19,7 +22,10 @@ type Group {
   private: Boolean! @default(value: "false")
   gamePoints: Int!
   teamPoints: Int!
-  type: String!
+
+  type: String! @default(value: "round-by-round")
+  sport: String! @default(value: "nba")
+  year: Int! @default(value: 2019)
 }
 
 type User {
