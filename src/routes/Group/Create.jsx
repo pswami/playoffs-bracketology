@@ -1,5 +1,10 @@
+/* global swal */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { graphql, compose } from 'react-apollo';
+
+import { CURRENT_USER_QUERY, CREATE_GROUP_MUTATION } from '../../queries';
 
 import Card from '../../components/Card';
 
@@ -8,22 +13,53 @@ class Create extends React.Component {
     groupName: undefined,
     type: 'round-by-round',
     gamePoints: 1,
-    winPoints: 1,
+    teamPoints: 1,
     private: false,
   };
 
-  handleNameChange       = (e) => this.setState({ name: e.target.value })
+  handleNameChange       = (e) => this.setState({ groupName: e.target.value })
   handleTypeChange       = (e) => this.setState({ type: e.target.value })
   handleGamePointsChange = (e) => this.setState({ gamePoints: e.target.value })
-  handleWinPointsChange  = (e) => this.setState({ winPoints: e.target.value })
+  handleTeamPointsChange  = (e) => this.setState({ teamPoints: e.target.value })
   handleAccessChange     = (e) => this.setState({ private: e.target.value })
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { createGroup, currentUserQuery } = this.props;
+
+    if (currentUserQuery.currentUser) {
+      createGroup({
+        variables: {
+          data: {
+            name: this.state.groupName,
+            private: this.state.private,
+            gamePoints: this.state.gamePoints,
+            teamPoints: this.state.teamPoints,
+            type: this.state.type,
+            users: {
+              connect: [{
+                id: currentUserQuery.currentUser.id
+              }]
+            }
+          }
+        }
+      }).then(({ data }) => {
+        const { createGroup: group } = data;
+
+        swal('Sucessfully Created Group', group.name, 'success');
+
+        currentUserQuery.refetch();
+      })
+    }
+  }
 
   render() {
     return(
       <Card.Container>
         <Card.Header>Create Group</Card.Header>
         <Card.Body>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label htmlFor="group-name-input">Group Name</label>
               <input
@@ -72,8 +108,8 @@ class Create extends React.Component {
                   type="number"
                   className="form-control"
                   id="validationDefault02"
-                  value={this.state.winPoints}
-                  onChange={this.handleWinPointsChange}
+                  value={this.state.teamPoints}
+                  onChange={this.handleTeamPointsChange}
                   required
                 />
               </div>
@@ -101,7 +137,13 @@ class Create extends React.Component {
                 All groups are public currently
               </small>
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={this.handleSubmit}
+            >
+              Submit
+            </button>
           </form>
         </Card.Body>
       </Card.Container>
@@ -113,4 +155,7 @@ Create.propTypes = {
   children: PropTypes.node,
 };
 
-export default Create;
+export default compose(
+  graphql(CREATE_GROUP_MUTATION, { name: 'createGroup' }),
+  graphql(CURRENT_USER_QUERY, { name: 'currentUserQuery' }),
+)(withRouter(Create));;

@@ -23,6 +23,19 @@ export const SIGNUP_MUTATION = gql`
   }
 `;
 
+export const CREATE_GROUP_MUTATION = gql`
+  mutation createGroup($data: GroupCreateInput!) {
+    createGroup(data: $data) {
+      id
+      name
+      private
+      gamePoints
+      teamPoints
+      type
+    }
+  }
+`;
+
 export const CURRENT_USER_QUERY = gql`
   query {
     currentUser {
