@@ -36,6 +36,19 @@ export const CREATE_GROUP_MUTATION = gql`
   }
 `;
 
+export const JOIN_GROUP_MUTATION = gql`
+  mutation joinGroup($groupId: ID!, $userId: ID!) {
+    joinGroup(groupId: $groupId, userId: $userId) {
+      id
+      name
+      private
+      gamePoints
+      teamPoints
+      type
+    }
+  }
+`;
+
 export const CURRENT_USER_QUERY = gql`
   query {
     currentUser {

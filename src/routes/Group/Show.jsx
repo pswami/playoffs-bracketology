@@ -117,7 +117,9 @@ class Show extends React.Component {
 
     return (
       <Query query={GROUP_QUERY} variables={{ id: groupId }}>
-        {({ loading, error, data }) => {
+        {(groupQuery) => {
+          const { loading, error, data } = groupQuery;
+
           if (!error && !loading && currentUserQuery.currentUser && bracketQuery.NBABracket) {
             const { group } = data;
             const { users } = group;
@@ -125,11 +127,11 @@ class Show extends React.Component {
 
             return (
               <React.Fragment>
-                <AddMemberModal group={group} />
+                <AddMemberModal currentUser={currentUserQuery.currentUser} groupQuery={groupQuery} />
                 <Card.Container>
                   <Card.Header>
                     {group.name}
-                    {/* {isUserInGroup &&
+                    {!isUserInGroup &&
                       <button
                         type="button"
                         className="badge btn btn-primary btn-sm float-right"
@@ -138,7 +140,7 @@ class Show extends React.Component {
                       >
                         <span>+ Add</span>
                       </button>
-                    } */}
+                    }
                   </Card.Header>
                   <Card.Body>
                     {Object.keys(users).length > 0 &&

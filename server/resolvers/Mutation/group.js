@@ -19,7 +19,7 @@ const group = {
     }
   },
 
-  async addUserToGroup(parent, { groupId, userId }, ctx, info) {
+  async joinGroup(parent, { groupId, userId }, ctx, info) {
     const groupExists = await ctx.prisma.$exists.group({ id: groupId });
 
     if (!userId) {

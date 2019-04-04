@@ -1,56 +1,33 @@
 /* global $ */
 
 import React from 'react';
-import Select from 'react-select';
+import { graphql, compose } from "react-apollo";
 
-import { findUsers, addUsersToGroup } from '../../firebase';
+import { CURRENT_USER_QUERY, JOIN_GROUP_MUTATION, GROUP_QUERY } from '../../queries';
 
 class AddMemberModal extends React.Component {
-  state = {
-    users: [],
-    selectedUsers: [],
-  };
 
-  handleChange = user => {
-    this.setState(curState =>({
-      selectedUsers: [...curState.users, ...user]
-    }))
-  };
-
-  getUsers(input, callback) {
-    if (input){
-      findUsers(input).then(users => {
-        if (users) {
-          var data = {
-            options: users,
-            complete: users.length <= 10,
-          };
-          callback(null, data);
-        }
-      });
-    } else {
-      callback(null, {});
-    }
-  }
+  toggleModal = () => $('#addMemberModal').modal('toggle');
 
   handleSubmit = () => {
-    const { group } = this.props;
+    const { currentUser, joinGroup, groupQuery } = this.props;
+    const { data } = groupQuery;
 
-    addUsersToGroup({
-      groupId: group.id,
-      users: this.state.selectedUsers.map(user => (user.uid)),
-    }).then(success => {
-      if (success) {
-        $('#addMemberModal').modal('toggle')
-      } else {
-        console.error('Failed');
+    joinGroup({
+      variables: {
+        groupId: data.group.id,
+        userId: currentUser.id,
       }
+    }).then(() => {
+      this.toggleModal();
+
+      groupQuery.refetch();
+    }).catch((error) => {
+      console.error(error);
     })
   }
 
   render() {
-    const isDisabled = this.state.selectedUsers.length === 0;
-
     return (
       <div
         className="modal fade"
@@ -63,35 +40,23 @@ class AddMemberModal extends React.Component {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="addMemberModalLabel">Add Member</h5>
+              <h5 className="modal-title" id="addMemberModalLabel">Join Group</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">
-              <div className="form-group">
-                <label>Username</label>
-                <Select.Async
-                  multi={true}
-                  value={this.state.selectedUsers}
-                  onChange={this.handleChange}
-                  onValueClick={this.gotoContributor}
-                  valueKey="uid"
-                  labelKey="name"
-                  loadOptions={this.getUsers}
-                />
-                <small id="emailHelp" className="form-text text-muted">User must already be signed up</small>
-              </div>
+              Are you sure?
             </div>
             <div className="modal-footer">
               <button
                 onClick={this.handleSubmit}
                 type="button"
                 className="btn btn-primary"
-                disabled={isDisabled}
               >
-                Add
+                Yes
               </button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
             </div>
           </div>
         </div>
@@ -100,4 +65,8 @@ class AddMemberModal extends React.Component {
   }
 };
 
-export default AddMemberModal;
+
+export default compose(
+  graphql(JOIN_GROUP_MUTATION, { name: 'joinGroup' }),
+  graphql(CURRENT_USER_QUERY)
+)(AddMemberModal);

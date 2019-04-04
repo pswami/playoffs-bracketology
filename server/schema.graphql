@@ -17,7 +17,7 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload!
   createGroup(data: GroupCreateInput!): Group!
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group!
-  addUserToGroup(groupId: ID!, userId: ID!): Group!
+  joinGroup(groupId: ID!, userId: ID!): Group!
   deleteGroup(id: ID!): Group!
   upsertPick(data: [PickInput!]!): [Pick]!
   deletePick(id: ID!): Pick
