@@ -1,10 +1,11 @@
 ## TODO
 - https://data.nba.net/prod/v1/2016/playoffsBracket.json
 - [ ] private groups
-- [ ] invite users
+- [ ] ~invite users~
 - [ ] fill in secrets
-- [ ] create groups
+- [X] create groups
 - [ ] notifications
 - [ ] lots of refactor
 - [ ] Error States
 - [ ] Empty States
+- [ ] Loading States

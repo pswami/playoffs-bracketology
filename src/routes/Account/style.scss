@@ -1,0 +1,80 @@
+.icon {
+  width: 4rem;
+  height: 4rem;
+  border: 3px dotted #f1f1f1;
+  transition: all .3s ease-in;
+
+  &:hover {
+    border: 3px dotted #ff0000;
+  }
+}
+
+.team-option {
+  cursor: pointer;
+
+  input:checked + .icon {
+    transition: all .1s ease-in;
+    border: 3px dashed #ff0000;
+  }
+}
+
+.form-control {
+  &.gamesSelect {
+    text-align: center;
+    height: 4rem !important;
+    padding: 0;
+    flex-basis: 4rem;
+    font-size: 41px;
+    -webkit-appearance: none;
+    text-align-last: center;
+  }
+}
+
+.disabled {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.5;
+
+  .form-control {
+    &.gamesSelect {
+      color: white;
+      background: #343a40;
+    }
+  }
+}
+
+.roundHeader {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+  font-size: 1.7rem;
+  padding: 14px 14px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+  color: #fff;
+  letter-spacing: .05em;
+  text-shadow: 4px 4px 0px #191919;
+}
+
+.picksTable {
+  th {
+    width: 105px;
+    white-space: normal;
+    word-wrap: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.highlightBox {
+  position: relative;
+  background: #ffd400;
+  color: black;
+  box-shadow: inset 0px 0px 0px 2px #ffd400;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+
+.pickColumn {
+  font-size: 0.75rem
+}
