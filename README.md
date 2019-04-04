@@ -6,3 +6,5 @@
 - [ ] create groups
 - [ ] notifications
 - [ ] lots of refactor
+- [ ] Error States
+- [ ] Empty States
