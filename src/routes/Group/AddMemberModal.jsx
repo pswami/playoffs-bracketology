@@ -10,18 +10,20 @@ class AddMemberModal extends React.Component {
   toggleModal = () => $('#addMemberModal').modal('toggle');
 
   handleSubmit = () => {
-    const { currentUser, joinGroup, groupQuery } = this.props;
-    const { data } = groupQuery;
+    const { currentUserQuery, joinGroup, groupQuery } = this.props;
+    const { currentUser } = currentUserQuery;
+    const { data: groupOptions } = groupQuery;
 
     joinGroup({
       variables: {
-        groupId: data.group.id,
+        groupId: groupOptions.group.id,
         userId: currentUser.id,
       }
     }).then(() => {
       this.toggleModal();
 
       groupQuery.refetch();
+      currentUserQuery.refetch();
     }).catch((error) => {
       console.error(error);
     })
@@ -68,5 +70,5 @@ class AddMemberModal extends React.Component {
 
 export default compose(
   graphql(JOIN_GROUP_MUTATION, { name: 'joinGroup' }),
-  graphql(CURRENT_USER_QUERY)
+  graphql(CURRENT_USER_QUERY, { name: 'currentUserQuery' })
 )(AddMemberModal);

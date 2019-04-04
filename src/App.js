@@ -49,7 +49,7 @@ class App extends Component {
               <RouteProps exact path='/' Component={Home} />
               <RouteProps path='/me' Component={Me} />
               <RouteProps path='/search' Component={Search} />
-              <RouteProps path='/groupd/create' Component={GroupCreate} />
+              <RouteProps path='/group/create' Component={GroupCreate} />
               <RouteProps path='/group/:groupId' Component={Show} />
             </Layout.Container>
           </Switch>

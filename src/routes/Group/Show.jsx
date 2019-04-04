@@ -127,7 +127,7 @@ class Show extends React.Component {
 
             return (
               <React.Fragment>
-                <AddMemberModal currentUser={currentUserQuery.currentUser} groupQuery={groupQuery} />
+                <AddMemberModal groupQuery={groupQuery} />
                 <Card.Container>
                   <Card.Header>
                     {group.name}
