@@ -19,3 +19,19 @@
     text-align: center;
   }
 }
+
+.table-sticky-header {
+  overflow-y: auto;
+  height: 340px;
+}
+
+.table-sticky-header  table {
+  // border-collapse: collapse;
+  width: 100%;
+}
+
+.table-sticky-header  th {
+  position: sticky;
+  top: 0;
+  background: #6c757c;
+}

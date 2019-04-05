@@ -61,7 +61,7 @@ class TeamRow extends React.Component {
 
             return (
               <Table.Row key={user.id}>
-                <Table.Header>1</Table.Header>
+                <Table.Col>1</Table.Col>
                 <Table.Col>{user.username}</Table.Col>
                 <Table.Col>{pointsMap.round1}</Table.Col>
                 <Table.Col>{pointsMap.round2}</Table.Col>
@@ -81,7 +81,7 @@ class TeamRow extends React.Component {
 
 
 const TeamTable = ({ group, users, brackets }) => (
-  <div className="table-responsive">
+  <div className="table-responsive table-sticky-header">
     <Table.Container>
       <Table.Head>
         <Table.Row>

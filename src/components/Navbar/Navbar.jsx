@@ -36,6 +36,8 @@ class Navbar extends React.Component {
     history.push('/');
   }
 
+  // toggleModal = () => $('#addMemberModal').modal('toggle');
+
   render() {
     return (
       <React.Fragment>
@@ -58,40 +60,49 @@ class Navbar extends React.Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/search">Search</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/me">My Stuff</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/group/create">Create Group</Link>
-              </li>
-            </ul>
             <Query query={CURRENT_USER_QUERY}>
               {({ loading, error, data, client }) => {
-                let cachedData;
+                let cachedUser;
 
                 try {
                   // const { currentUser } = client.readQuery({ query: CURRENT_USER_QUERY })
 
                   // console.log('data', data)
-                  cachedData = data.currentUser;
+                  // cachedData = currentUser;
+                  cachedUser = data.currentUser;
                 } catch(e) {
-                  cachedData = undefined;
+                  cachedUser = undefined;
                 }
 
                 return (
-                  <div className="form-inline my-2 my-lg-0">
-                    {cachedData ?
-                      <a className="btn btn-danger text-white" onClick={this.logout(client)}>Logout</a> :
-                      <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-modal">Login/Register</a>
-                    }
-                  </div>
+                  <React.Fragment>
+                    <ul className="navbar-nav mr-auto">
+                      <li className="nav-item">
+                        <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link className="nav-link" to="/search">Search</Link>
+                      </li>
+                      <li className="nav-item">
+                        {cachedUser ?
+                          <Link className="nav-link" to="/me">My Picks</Link> :
+                          <a className="nav-link"  href="#login-form" data-toggle="modal" data-target="#login-register-modal">My Picks</a>
+                        }
+                      </li>
+                      <li className="nav-item">
+                        {cachedUser ?
+                          <Link className="nav-link" to="/group/create">Create Group</Link> :
+                          <a className="nav-link"  href="#login-form" data-toggle="modal" data-target="#login-register-modal">Create Group</a>
+                        }
+                      </li>
+                    </ul>
+                    <div className="form-inline my-2 my-lg-0">
+                      {cachedUser ?
+                        <a className="btn btn-danger text-white" onClick={this.logout(client)}>Logout</a> :
+                        <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-modal">Login/Register</a>
+                      }
+                    </div>
+                  </React.Fragment>
                 );
               }}
             </Query>

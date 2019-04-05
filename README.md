@@ -9,5 +9,11 @@
 - [ ] Error States
 - [ ] Empty States
 - [ ] Loading States
+
+
+MVP
 - [ ] Landing page
 - [ ] Intefering Routes (/group/create)
+- [ ] Fixing login
+- [ ] Show game rules
+- [ ] Leaderboard
