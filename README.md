@@ -9,7 +9,7 @@
 - [ ] Error States
 - [ ] Empty States
 - [ ] Loading States
-
+- [ ] Group Settings
 
 MVP
 - [ ] Landing page
@@ -18,6 +18,6 @@ MVP
 - [ ] Show game rules
 - [ ] Leaderboard (order rows)
 - [ ] Insights
-- [ ] Leave Group
-- [ ] Group Settings
+- [X] Leave Group
 - [ ] AllPicks Rounder Headers
+- [X] Join/Leave sometimes not changing live

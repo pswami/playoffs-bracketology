@@ -60,7 +60,7 @@ class AddMemberModal extends React.Component {
               >
                 Yes
               </button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">No</button>
             </div>
           </div>
         </div>
