@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import Jumbotron from '../../components/Jumbotron';
 
@@ -14,7 +14,7 @@ const Home = () => (
         <div>Join the ...</div>
       </p>
       <div>
-        <img style={{
+        <img alt="chip" style={{
           bottom: '65px',
           right: '85px',
           height: '100px',

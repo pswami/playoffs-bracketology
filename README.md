@@ -13,7 +13,7 @@
 
 MVP
 - [ ] Landing page
-- [ ] Intefering Routes (/group/create)
+- [X] Intefering Routes (/group/create)
 - [ ] Fixing login
 - [ ] Show game rules
 - [ ] Leaderboard (order rows)

@@ -11,7 +11,6 @@ import teams_by_tri from '../../data/teams_by_tri.json';
 import { NBA_BRACKETS_QUERY, PICKS_QUERY } from '../../queries';
 
 import './style.scss';
-import { networkFirst } from 'sw-toolbox';
 
 class AllPicks extends React.Component {
   getUsersPicks = (picks) => {
@@ -55,7 +54,7 @@ class AllPicks extends React.Component {
   }
 
   render() {
-    const { users, group } = this.props;
+    const { users } = this.props;
     const numUsers = Object.keys(users).length;
     const bracketMap = this.mappedByRound();
 

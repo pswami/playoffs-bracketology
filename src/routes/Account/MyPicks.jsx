@@ -40,9 +40,9 @@ class TeamOption extends React.Component {
   mapData = () => ({
     id: this.state.id,
     team: this.state.team,
-    wins: parseInt(this.state.wins),
-    seriesId: parseInt(this.props.series.seriesId),
-    round: parseInt(this.props.series.roundNum),
+    wins: parseInt(this.state.wins, 10),
+    seriesId: parseInt(this.props.series.seriesId, 10),
+    round: parseInt(this.props.series.roundNum, 10),
     type: 'round-by-round',
     sport: 'nba',
     year: 2019,
@@ -127,11 +127,6 @@ class MyPicks extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      message: undefined,
-      error: undefined,
-    };
-
     this.options = [];
   }
 
@@ -194,7 +189,6 @@ class MyPicks extends React.Component {
   }
 
   render() {
-    const { message, error } = this.state;
     const { currentUser } = this.props;
     const bracketMap = this.mappedByRound();
 
@@ -213,7 +207,7 @@ class MyPicks extends React.Component {
               <Card.Container>
                 <Card.Header><span className="h4">My Picks</span></Card.Header>
                 <Card.Body>
-                  {message && <div className="alert alert-primary" role="alert">{message}</div>}
+                  {/* {message && <div className="alert alert-primary" role="alert">{message}</div>} */}
                   {error && <div className="alert alert-danger" role="alert">{error}</div>}
                   <form onSubmit={this.handleSubmit}>
                     {Object.keys(bracketMap).map(roundNum => {

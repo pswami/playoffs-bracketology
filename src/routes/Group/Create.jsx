@@ -34,8 +34,8 @@ class Create extends React.Component {
           data: {
             name: this.state.groupName,
             private: this.state.private,
-            gamePoints: parseInt(this.state.gamePoints),
-            teamPoints: parseInt(this.state.teamPoints),
+            gamePoints: parseInt(this.state.gamePoints, 10),
+            teamPoints: parseInt(this.state.teamPoints, 10),
             type: this.state.type,
             users: {
               connect: [{

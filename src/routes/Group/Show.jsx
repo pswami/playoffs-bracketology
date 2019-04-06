@@ -123,7 +123,7 @@ class Show extends React.Component {
           if (!error && !loading && currentUserQuery.currentUser && bracketQuery.NBABracket) {
             const { group } = data;
             const { users } = group;
-            const isUserInGroup = currentUserQuery.currentUser && users.some(user => user.email == currentUserQuery.currentUser.email);
+            const isUserInGroup = currentUserQuery.currentUser && users.some(user => user.email === currentUserQuery.currentUser.email);
 
             return (
               <React.Fragment>
