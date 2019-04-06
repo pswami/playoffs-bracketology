@@ -21,3 +21,4 @@ MVP
 - [X] Leave Group
 - [ ] AllPicks Rounder Headers
 - [X] Join/Leave sometimes not changing live
+- [ ] More fields on browse groups table (# of users, etc)

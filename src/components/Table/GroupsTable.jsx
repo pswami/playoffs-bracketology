@@ -6,7 +6,7 @@ import Table from '../../components/Table';
 
 const GroupsTable = ({ groups, history }) => {
   const handleSubmit = groupId => () => {
-    history.push(`group/${groupId}`);
+    history.push(`/group/${groupId}`);
   };
 
   return (

@@ -46,11 +46,13 @@ class App extends Component {
           <Navbar />
           <Switch>
             <Layout.Container>
-              <RouteProps exact path='/' Component={Home} />
-              <RouteProps path='/me' Component={Me} />
-              <RouteProps path='/search' Component={Search} />
-              <RouteProps path='/group/create' Component={GroupCreate} />
-              <RouteProps path='/group/:groupId' Component={Show} />
+              <Switch>
+                <RouteProps exact path='/' Component={Home} />
+                <RouteProps path='/me' Component={Me} />
+                <RouteProps path='/search' Component={Search} />
+                <RouteProps path='/group/create' Component={GroupCreate} />
+                <RouteProps path='/group/:groupId' Component={Show} />
+              </Switch>
             </Layout.Container>
           </Switch>
           {this.devInfo()}

@@ -26,7 +26,7 @@ class Create extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { createGroup, currentUserQuery } = this.props;
+    const { createGroup, currentUserQuery, history } = this.props;
 
     if (currentUserQuery.currentUser) {
       createGroup({
@@ -34,8 +34,8 @@ class Create extends React.Component {
           data: {
             name: this.state.groupName,
             private: this.state.private,
-            gamePoints: this.state.gamePoints,
-            teamPoints: this.state.teamPoints,
+            gamePoints: parseInt(this.state.gamePoints),
+            teamPoints: parseInt(this.state.teamPoints),
             type: this.state.type,
             users: {
               connect: [{
@@ -47,9 +47,9 @@ class Create extends React.Component {
       }).then(({ data }) => {
         const { createGroup: group } = data;
 
-        swal('Sucessfully Created Group', group.name, 'success');
-
         currentUserQuery.refetch();
+        swal('Sucessfully Created Group', group.name, 'success');
+        history.push(`/group/${group.id}`);
       })
     }
   }
