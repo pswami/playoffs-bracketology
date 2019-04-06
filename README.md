@@ -16,4 +16,8 @@ MVP
 - [ ] Intefering Routes (/group/create)
 - [ ] Fixing login
 - [ ] Show game rules
-- [ ] Leaderboard
+- [ ] Leaderboard (order rows)
+- [ ] Insights
+- [ ] Leave Group
+- [ ] Group Settings
+- [ ] AllPicks Rounder Headers

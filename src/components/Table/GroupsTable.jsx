@@ -19,7 +19,7 @@ const GroupsTable = ({ groups, history }) => {
       <tbody>
         {groups.map(group =>
           <Table.Row key={group.id} onClick={handleSubmit(group.id)}>
-            <Table.Header>{group.name}</Table.Header>
+            <Table.Col>{group.name}</Table.Col>
           </Table.Row>
         )}
       </tbody>

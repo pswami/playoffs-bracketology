@@ -16,7 +16,7 @@ export const Container = ({
   className,
   ...rest
 }) => (
-  <table  {...rest} className={cx('table table-dark', className, {
+  <table  {...rest} className={cx('table table-dark  table-striped', className, {
     'table-hover': hoverable,
     'table-fixed': fixed,
     'table-bordered': bordered,
