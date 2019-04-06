@@ -8,11 +8,11 @@ const Home = () => (
   <Jumbotron>
     <div className="display-4 mb-3">Create a Bracket</div>
     <div>
-      <p className="lead">
+      <div className="lead">
         <div>Finally, a ...</div>
         <div>All the features ...</div>
         <div>Join the ...</div>
-      </p>
+      </div>
       <div>
         <img alt="chip" style={{
           bottom: '65px',

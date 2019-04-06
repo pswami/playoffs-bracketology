@@ -17,7 +17,8 @@ MVP
 - [ ] Fixing login
 - [ ] Show game rules
 - [ ] Leaderboard (order rows)
-- [ ] Insights
+- [X] Insights
+  - [ ] Hide until series starts
 - [X] Leave Group
 - [ ] AllPicks Rounder Headers
 - [X] Join/Leave sometimes not changing live

@@ -12,32 +12,31 @@ import { NBA_BRACKETS_QUERY, PICKS_QUERY } from '../../queries';
 
 import './style.scss';
 
-class AllPicks extends React.Component {
-  getUsersPicks = (picks) => {
-    const { users } = this.props;
-    const picksTable = {};
-    const userOrder = this.mapById(users);
+const getUsersPicks = (picks, users) => {
+  const picksTable = {};
+  const userOrder = mapById(users);
 
-    picks.forEach(pick => {
-      if (pick) {
-        if (!picksTable[pick.seriesId]) {
-          picksTable[pick.seriesId] = Array(users.length).fill(0);
-        }
-        picksTable[pick.seriesId][userOrder[pick.user.id]] = pick;
+  picks.forEach(pick => {
+    if (pick) {
+      if (!picksTable[pick.seriesId]) {
+        picksTable[pick.seriesId] = Array(users.length).fill(0);
       }
-    });
+      picksTable[pick.seriesId][userOrder[pick.user.id]] = pick;
+    }
+  });
 
-    return picksTable;
-  }
+  return picksTable;
+};
 
-  mapById = (items) => (
-    items.reduce((acc, item, idx) => {
-      acc[item.id] = idx;
+const mapById = (items) => (
+  items.reduce((acc, item, idx) => {
+    acc[item.id] = idx;
 
-      return acc;
-    }, {})
-  )
+    return acc;
+  }, {})
+);
 
+class AllPicks extends React.Component {
   mappedByRound = () => {
     const { NBABracket } = this.props.data;
 
@@ -81,7 +80,7 @@ class AllPicks extends React.Component {
               }}>
                 {({ loading, error, data }) => {
                   if (data.picks) {
-                    const picksTable = this.getUsersPicks(data.picks);
+                    const picksTable = getUsersPicks(data.picks, users);
                     const seriesIds = Object.keys(picksTable || {});
 
                     return (

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Query, graphql, compose } from "react-apollo";
 
 import AllPicks from './AllPicks';
+import Insights from './Insights';
 import AddMemberModal from './AddMemberModal';
 
 import Table from '../../components/Table';
@@ -153,10 +154,11 @@ class Show extends React.Component {
                 <br />
                 <div className="row">
                   <div className="col-lg-6">
-                    {<AllPicks {...{ group, users }} />}
+                    <AllPicks {...{ group, users }} />
                     <br />
                   </div>
                   <div className="col-lg-6">
+                    {<Insights  {...{ users }} />}
                   </div>
                 </div>
               </React.Fragment>

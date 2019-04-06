@@ -127,6 +127,7 @@ export const PICKS_QUERY = gql`
       team
       wins
       seriesId
+      round
       user {
         id
         username

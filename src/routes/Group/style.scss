@@ -1,3 +1,18 @@
 .team-table {
   max-height: 340px;
 }
+
+.pick-meter-container {
+  &:not(:last-child) {
+    margin-bottom: 23px;
+  }
+}
+
+.insights-container {
+  &:not(:first-child) {
+    .roundTitle {
+      margin-top: 34px;
+      margin-bottom: 14px;
+    }
+  }
+}
