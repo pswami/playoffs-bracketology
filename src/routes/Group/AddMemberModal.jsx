@@ -13,9 +13,9 @@ class AddMemberModal extends React.Component {
     const { currentUserQuery, joinGroup, leaveGroup, groupQuery, isUserInGroup } = this.props;
     const { currentUser } = currentUserQuery;
     const { data: groupOptions } = groupQuery;
-    const toggleMethod = isUserInGroup ? leaveGroup : joinGroup;
+    const toggleGroup = isUserInGroup ? leaveGroup : joinGroup;
 
-    toggleMethod({
+    toggleGroup({
       variables: {
         groupId: groupOptions.group.id,
         userId: currentUser.id,

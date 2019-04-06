@@ -57,7 +57,7 @@ class Create extends React.Component {
   render() {
     return(
       <Card.Container>
-        <Card.Header>Create Group</Card.Header>
+        <Card.Header><span className="h4">Create Group</span></Card.Header>
         <Card.Body>
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">

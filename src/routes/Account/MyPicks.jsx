@@ -211,7 +211,7 @@ class MyPicks extends React.Component {
           if (picks) {
             return (
               <Card.Container>
-                <Card.Header>My Picks</Card.Header>
+                <Card.Header><span className="h4">My Picks</span></Card.Header>
                 <Card.Body>
                   {message && <div className="alert alert-primary" role="alert">{message}</div>}
                   {error && <div className="alert alert-danger" role="alert">{error}</div>}

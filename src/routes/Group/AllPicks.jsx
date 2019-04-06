@@ -61,7 +61,7 @@ class AllPicks extends React.Component {
 
     return (
       <Card.Container>
-        <Card.Header>Picks Table</Card.Header>
+        <Card.Header><span className="h4">Picks Table</span></Card.Header>
         <Card.Body>
           <div className="table-responsive">
             <Table.Container className="picksTable" centered bordered fixed hoverable>

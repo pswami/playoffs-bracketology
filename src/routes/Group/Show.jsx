@@ -130,10 +130,10 @@ class Show extends React.Component {
                 <AddMemberModal isUserInGroup={isUserInGroup} groupQuery={groupQuery} />
                 <Card.Container>
                   <Card.Header>
-                    {group.name}
+                    <span className="h4">{group.name}</span>
                     <button
                       type="button"
-                      className="badge btn btn-primary btn-sm float-right"
+                      className="btn btn-primary btn-sm float-right"
                       data-toggle="modal"
                       data-target="#addMemberModal"
                     >
