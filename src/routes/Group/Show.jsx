@@ -81,7 +81,7 @@ class TeamRow extends React.Component {
 
 
 const TeamTable = ({ group, users, brackets }) => (
-  <div className="table-responsive table-sticky-header">
+  <div className="team-table table-responsive table-sticky-header">
     <Table.Container>
       <Table.Head>
         <Table.Row>
@@ -127,20 +127,18 @@ class Show extends React.Component {
 
             return (
               <React.Fragment>
-                <AddMemberModal groupQuery={groupQuery} />
+                <AddMemberModal isUserInGroup={isUserInGroup} groupQuery={groupQuery} />
                 <Card.Container>
                   <Card.Header>
                     {group.name}
-                    {!isUserInGroup &&
-                      <button
-                        type="button"
-                        className="badge btn btn-primary btn-sm float-right"
-                        data-toggle="modal"
-                        data-target="#addMemberModal"
-                      >
-                        <span>+ Add</span>
-                      </button>
-                    }
+                    <button
+                      type="button"
+                      className="badge btn btn-primary btn-sm float-right"
+                      data-toggle="modal"
+                      data-target="#addMemberModal"
+                    >
+                      {isUserInGroup ? <span>Leave</span> : <span>+ Add</span>}
+                    </button>
                   </Card.Header>
                   <Card.Body>
                     {Object.keys(users).length > 0 &&

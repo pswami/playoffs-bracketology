@@ -3,18 +3,19 @@
 import React from 'react';
 import { graphql, compose } from "react-apollo";
 
-import { CURRENT_USER_QUERY, JOIN_GROUP_MUTATION, GROUP_QUERY } from '../../queries';
+import { CURRENT_USER_QUERY, JOIN_GROUP_MUTATION, LEAVE_GROUP_MUTATION } from '../../queries';
 
 class AddMemberModal extends React.Component {
 
   toggleModal = () => $('#addMemberModal').modal('toggle');
 
   handleSubmit = () => {
-    const { currentUserQuery, joinGroup, groupQuery } = this.props;
+    const { currentUserQuery, joinGroup, leaveGroup, groupQuery, isUserInGroup } = this.props;
     const { currentUser } = currentUserQuery;
     const { data: groupOptions } = groupQuery;
+    const toggleMethod = isUserInGroup ? leaveGroup : joinGroup;
 
-    joinGroup({
+    toggleMethod({
       variables: {
         groupId: groupOptions.group.id,
         userId: currentUser.id,
@@ -22,8 +23,9 @@ class AddMemberModal extends React.Component {
     }).then(() => {
       this.toggleModal();
 
-      groupQuery.refetch();
-      currentUserQuery.refetch();
+      groupQuery.refetch().then(() => {
+        currentUserQuery.refetch();
+      });
     }).catch((error) => {
       console.error(error);
     })
@@ -70,5 +72,6 @@ class AddMemberModal extends React.Component {
 
 export default compose(
   graphql(JOIN_GROUP_MUTATION, { name: 'joinGroup' }),
+  graphql(LEAVE_GROUP_MUTATION, { name: 'leaveGroup' }),
   graphql(CURRENT_USER_QUERY, { name: 'currentUserQuery' })
 )(AddMemberModal);

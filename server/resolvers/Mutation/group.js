@@ -42,6 +42,29 @@ const group = {
     }, info);
   },
 
+  async leaveGroup(parent, { groupId, userId }, ctx, info) {
+    const groupExists = await ctx.prisma.$exists.group({ id: groupId });
+
+    if (!userId) {
+      throw new Error(`User not found`)
+    }
+
+    if (!groupExists) {
+      throw new Error(`Group not found`)
+    }
+
+    return ctx.prisma.updateGroup({
+      where: { id: groupId },
+      data: {
+        users: {
+          disconnect: {
+            id: userId
+          }
+        }
+      },
+    }, info);
+  },
+
   async deleteGroup(parent, { id }, ctx, info) {
     const userId = getUserId(ctx);
 

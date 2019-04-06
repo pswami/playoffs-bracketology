@@ -18,6 +18,7 @@ type Mutation {
   createGroup(data: GroupCreateInput!): Group!
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group!
   joinGroup(groupId: ID!, userId: ID!): Group!
+  leaveGroup(groupId: ID!, userId: ID!): Group!
   deleteGroup(id: ID!): Group!
   upsertPick(data: [PickInput!]!): [Pick]!
   deletePick(id: ID!): Pick

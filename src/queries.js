@@ -49,6 +49,19 @@ export const JOIN_GROUP_MUTATION = gql`
   }
 `;
 
+export const LEAVE_GROUP_MUTATION = gql`
+  mutation leaveGroup($groupId: ID!, $userId: ID!) {
+    leaveGroup(groupId: $groupId, userId: $userId) {
+      id
+      name
+      private
+      gamePoints
+      teamPoints
+      type
+    }
+  }
+`;
+
 export const CURRENT_USER_QUERY = gql`
   query {
     currentUser {
