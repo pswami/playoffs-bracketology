@@ -42,7 +42,7 @@ class TeamRow extends React.Component {
                 if (winner.team === myPick.team) {
                   points += teamPoints;
 
-                  if (winner.games == myPick.wins) {
+                  if (parseInt(winner.games, 10) === parseInt(myPick.wins, 10)) {
                     points += gamePoints;
                   }
                 }

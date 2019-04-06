@@ -107,7 +107,7 @@ class AllPicks extends React.Component {
                                           if (pick) {
                                             const winner = getWinner(series);
                                             const isTeamCorrect = pick.team === winner.team;
-                                            const areGamesCorrect = pick.wins == winner.games;
+                                            const areGamesCorrect = parseInt(pick.wins, 10) === parseInt(winner.games, 10);
 
                                             return (
                                               <Table.Col
