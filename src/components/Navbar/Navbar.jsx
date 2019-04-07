@@ -81,7 +81,7 @@ class Navbar extends React.Component {
                         <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
                       </li>
                       <li className="nav-item">
-                        <Link className="nav-link" to="/search">Search</Link>
+                        <Link className="nav-link" to="/browse">Browse</Link>
                       </li>
                       <li className="nav-item">
                         {cachedUser ?

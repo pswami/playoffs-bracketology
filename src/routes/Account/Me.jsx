@@ -17,7 +17,12 @@ class Me extends React.Component {
           <div className="row">
             <div className="col-lg-6">
               <Card.Container>
-                <Card.Header><span className="h4">My Groups</span></Card.Header>
+                <Card.Header>
+                  <span className="h4">
+                    <i class="fas fa-home mr-3" />
+                    My Groups
+                  </span>
+                </Card.Header>
                 <Card.Body>
                   <React.Fragment>
                     {currentUser ? <GroupsTable groups={currentUser.groups} /> : null}

@@ -76,7 +76,12 @@ class Insights extends React.Component {
 
     return(
       <Card.Container>
-        <Card.Header><span className="h4">Insights</span></Card.Header>
+        <Card.Header>
+          <span className="h4">
+            <i class="fas fa-chart-bar mr-3" />
+            Insights
+          </span>
+        </Card.Header>
         <Card.Body>
           <Query query={PICKS_QUERY} fetchPolicy="network-only" variables={{
             userIds: users.map(user => user.id),

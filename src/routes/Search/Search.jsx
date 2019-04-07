@@ -23,7 +23,10 @@ class Search extends React.Component {
     return (
       <Card.Container>
         <Card.Header>
-          <span className="h4">Browse Groups</span>
+          <span className="h4">
+            <i class="fas fa-search mr-3" />
+            Browse Groups
+          </span>
           <div className="form-group m-0 float-right">
             <input
               onChange={this.handleQueryChange}

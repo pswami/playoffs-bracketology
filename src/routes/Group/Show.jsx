@@ -146,7 +146,10 @@ class Show extends React.Component {
                 <AddMemberModal isUserInGroup={isUserInGroup} groupQuery={groupQuery} />
                 <Card.Container>
                   <Card.Header>
-                    <span className="h4">{group.name}</span>
+                    <span className="h4">
+                      <i class="fas fa-users mr-3"></i>
+                      {group.name}
+                    </span>
                     <button
                       type="button"
                       className="btn btn-primary btn-sm float-right"
