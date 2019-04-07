@@ -19,7 +19,7 @@ class Me extends React.Component {
               <Card.Container>
                 <Card.Header>
                   <span className="h4">
-                    <i class="fas fa-home mr-3" />
+                    <i className="fas fa-home mr-3" />
                     My Groups
                   </span>
                 </Card.Header>

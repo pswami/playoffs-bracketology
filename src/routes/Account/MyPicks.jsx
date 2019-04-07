@@ -207,7 +207,7 @@ class MyPicks extends React.Component {
               <Card.Container>
                 <Card.Header>
                   <span className="h4">
-                    <i class="far fa-hand-pointer mr-3"></i>
+                    <i className="far fa-hand-pointer mr-3"></i>
                     My Picks
                   </span>
                 </Card.Header>

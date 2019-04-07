@@ -147,7 +147,7 @@ class Show extends React.Component {
                 <Card.Container>
                   <Card.Header>
                     <span className="h4">
-                      <i class="fas fa-users mr-3"></i>
+                      <i className="fas fa-users mr-3"></i>
                       {group.name}
                     </span>
                     <button

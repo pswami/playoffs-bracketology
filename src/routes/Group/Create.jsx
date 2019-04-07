@@ -59,7 +59,7 @@ class Create extends React.Component {
       <Card.Container>
         <Card.Header>
           <span className="h4">
-            <i class="far fa-sticky-note mr-3" />
+            <i className="far fa-sticky-note mr-3" />
             Create Group
           </span>
         </Card.Header>

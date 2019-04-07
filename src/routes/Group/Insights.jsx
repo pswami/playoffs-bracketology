@@ -78,7 +78,7 @@ class Insights extends React.Component {
       <Card.Container>
         <Card.Header>
           <span className="h4">
-            <i class="fas fa-chart-bar mr-3" />
+            <i className="fas fa-chart-bar mr-3" />
             Insights
           </span>
         </Card.Header>
@@ -107,9 +107,10 @@ class Insights extends React.Component {
                         <React.Fragment>
                           {seriesArr.map(series => {
                             const percentItem = percentTable[series.seriesId];
-                            const namesArr = Object.keys(percentItem);
 
-                            if (checkSeriesLocked(series)) {
+                            if (percentItem && checkSeriesLocked(series)) {
+                              const namesArr = Object.keys(percentItem);
+
                               return (
                                 <div className="pick-meter-container" key={`pick-${series.seriesId}`}>
                                   <div className="d-flex justify-content-between">

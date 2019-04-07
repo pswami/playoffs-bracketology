@@ -24,7 +24,7 @@ class Search extends React.Component {
       <Card.Container>
         <Card.Header>
           <span className="h4">
-            <i class="fas fa-search mr-3" />
+            <i className="fas fa-search mr-3" />
             Browse Groups
           </span>
           <div className="form-group m-0 float-right">
