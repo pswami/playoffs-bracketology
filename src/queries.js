@@ -67,6 +67,7 @@ export const CURRENT_USER_QUERY = gql`
     currentUser {
       id
       email
+      username
       groups {
         id
         name

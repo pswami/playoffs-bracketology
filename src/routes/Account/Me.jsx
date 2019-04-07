@@ -8,6 +8,32 @@ import Card from '../../components/Card';
 import { GroupsTable } from '../../components/Table';
 import { CURRENT_USER_QUERY } from '../../queries';
 
+const MyProfile = ({ currentUser }) => (
+  <Card.Container>
+    <Card.Header>
+      <span className="h4">
+        <i className="fas fa-user mr-3" />
+        Me
+      </span>
+    </Card.Header>
+    <Card.Body>
+      <React.Fragment>
+        <div className="form-group">
+          <label className="font-weight-bolder">Email</label>
+          <div className="ml-1">
+            {currentUser.email}
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="font-weight-bolder">Username</label>
+          <div className="ml-1">
+            {currentUser.username}
+          </div>
+        </div>
+      </React.Fragment>
+    </Card.Body>
+  </Card.Container>
+);
 
 class Me extends React.Component {
   render() {
@@ -16,6 +42,10 @@ class Me extends React.Component {
         {({ loading, error, data: { currentUser } }) => (
           <div className="row">
             <div className="col-lg-6">
+              {currentUser &&
+                <MyProfile currentUser={currentUser} />
+              }
+              <br />
               <Card.Container>
                 <Card.Header>
                   <span className="h4">
