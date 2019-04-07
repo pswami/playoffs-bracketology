@@ -8,12 +8,18 @@ import Insights from './Insights';
 import AddMemberModal from './AddMemberModal';
 import SettingsModal from './SettingsModal';
 
+import Alert from '../../components/Alert';
 import Table from '../../components/Table';
 import Card from '../../components/Card';
 
 import { checkSeriesLocked, getWinner } from '../../utils';
 
 import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY, PICKS_QUERY } from '../../queries';
+
+
+const i18n = {
+  private_group_message: <div>To share private group (Temporary Solution): Send <a href={window.location}>group URL</a> to friends and click "Join"</div>,
+};
 
 class TeamRow extends React.Component {
   render() {
@@ -146,6 +152,11 @@ class Show extends React.Component {
               <React.Fragment>
                 <AddMemberModal isUserInGroup={isUserInGroup} groupQuery={groupQuery} />
                 <SettingsModal group={group} />
+                {group.private &&
+                  <Alert>
+                    {i18n.private_group_message}
+                  </Alert>
+                }
                 <Card.Container>
                   <Card.Header>
                     <span className="h4">
@@ -159,7 +170,7 @@ class Show extends React.Component {
                         data-toggle="modal"
                         data-target="#addMemberModal"
                       >
-                        {isUserInGroup ? <span>Leave</span> : <span>+ Add</span>}
+                        {isUserInGroup ? <span>Leave</span> : <span>+ Join</span>}
                       </button>
                       <button
                         type="button"
