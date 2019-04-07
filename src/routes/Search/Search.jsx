@@ -42,7 +42,10 @@ class Search extends React.Component {
 
               return (
                 <Card.Body>
-                  <GroupsTable groups={filteredGroups} />
+                  <GroupsTable
+                    groups={filteredGroups}
+                    showCount
+                  />
                 </Card.Body>
               );
             }
