@@ -29,13 +29,13 @@ class SettingsModal extends React.Component {
               </h5>
             </div>
             <div className="modal-body">
-              <div class="form-group">
+              <div className="form-group">
                 <label className="font-weight-bolder">Points for Correct Team</label>
                 <div className="ml-1">
                   {group.teamPoints}
                 </div>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label className="font-weight-bolder">Points for Correct Games</label>
                 <div className="ml-1">
                   {group.gamePoints}

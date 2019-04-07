@@ -167,7 +167,7 @@ class Show extends React.Component {
                         data-toggle="modal"
                         data-target="#groupSettingsModal"
                       >
-                        <i class="fas fa-info-circle" />
+                        <i className="fas fa-info-circle" />
                       </button>
                     </div>
                   </Card.Header>
