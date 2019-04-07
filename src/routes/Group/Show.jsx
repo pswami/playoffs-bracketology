@@ -6,6 +6,7 @@ import { Query, graphql, compose } from "react-apollo";
 import AllPicks from './AllPicks';
 import Insights from './Insights';
 import AddMemberModal from './AddMemberModal';
+import SettingsModal from './SettingsModal';
 
 import Table from '../../components/Table';
 import Card from '../../components/Card';
@@ -144,20 +145,31 @@ class Show extends React.Component {
             return (
               <React.Fragment>
                 <AddMemberModal isUserInGroup={isUserInGroup} groupQuery={groupQuery} />
+                <SettingsModal group={group} />
                 <Card.Container>
                   <Card.Header>
                     <span className="h4">
                       <i className="fas fa-users mr-3"></i>
                       {group.name}
                     </span>
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-sm float-right"
-                      data-toggle="modal"
-                      data-target="#addMemberModal"
-                    >
-                      {isUserInGroup ? <span>Leave</span> : <span>+ Add</span>}
-                    </button>
+                    <div className="float-right">
+                      <button
+                        type="button"
+                        className="btn btn-primary btn-sm"
+                        data-toggle="modal"
+                        data-target="#addMemberModal"
+                      >
+                        {isUserInGroup ? <span>Leave</span> : <span>+ Add</span>}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-success btn-sm ml-2"
+                        data-toggle="modal"
+                        data-target="#groupSettingsModal"
+                      >
+                        <i class="fas fa-info-circle" />
+                      </button>
+                    </div>
                   </Card.Header>
                   <Card.Body>
                     {Object.keys(users).length > 0 &&
