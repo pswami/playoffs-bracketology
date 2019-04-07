@@ -99,6 +99,7 @@ export const GROUP_QUERY = gql`
       name
       gamePoints
       teamPoints
+      private
       users {
         id
         username
@@ -143,27 +144,3 @@ export const NBA_BRACKETS_QUERY = gql`
     NBABracket
   }
 `;
-
-// export const resolvers = {
-//   Query: {
-//     currentUser: (_, { text }, { cache }) => {
-//       const query = gql`
-//         query {
-//           currentUser {
-//             email
-//           }
-//         }
-//       `;
-//       const previous = cache.readQuery({ query });
-
-//       console.log('previous', previous)
-//       // if (previous) return previous;
-
-//       // cache.writeData({ data });
-//     }
-//   },
-//   Mutation: {
-//     login: (_, { text }, { cache }) => {
-//     },
-//   }
-// }
