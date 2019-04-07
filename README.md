@@ -18,8 +18,9 @@ MVP
 - [ ] Show game rules
 - [ ] Leaderboard (order rows)
 - [X] Insights
-  - [ ] Hide until series starts
+  - [X] Hide until series starts
 - [X] Leave Group
 - [ ] AllPicks Rounder Headers
 - [X] Join/Leave sometimes not changing live
-- [ ] More fields on browse groups table (# of users, etc)
+- [X] More fields on browse groups table (# of users, etc)
+- [ ] Hide Terminal on Prod

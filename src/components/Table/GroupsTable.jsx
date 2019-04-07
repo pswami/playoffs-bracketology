@@ -14,12 +14,14 @@ const GroupsTable = ({ groups, history }) => {
       <Table.Head>
         <Table.Row>
           <Table.Header>Name</Table.Header>
+          <Table.Header className="text-center" style={{ width: '102px' }}>Members</Table.Header>
         </Table.Row>
       </Table.Head>
       <tbody>
         {groups.map(group =>
           <Table.Row key={group.id} onClick={handleSubmit(group.id)}>
             <Table.Col>{group.name}</Table.Col>
+            <Table.Col className="text-center">{group.users.length}</Table.Col>
           </Table.Row>
         )}
       </tbody>
