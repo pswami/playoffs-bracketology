@@ -1,11 +1,10 @@
-/* global swal */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { graphql, compose, Query } from 'react-apollo';
 
 import { CURRENT_USER_QUERY, PICKS_QUERY } from '../../queries';
-import { roundNames } from '../../utils';
+import { checkSeriesLocked, roundNames } from '../../utils';
 
 import teams_by_tri from '../../data/teams_by_tri.json';
 
@@ -41,41 +40,39 @@ const mapById = (items) => (
   }, {})
 );
 
-const mapPicksByRound = (picks) => {
-  if (picks) {
-    return picks.reduce((acc, series) => {
-      acc[series.round].push(series);
-
-      return acc;
-    }, { 1: [], 2: [], 3: [], 4: [] });
-  }
-
-  return { 1: [], 2: [], 3: [], 4: [] };
-}
-
 class Insights extends React.Component {
   getPercent = (picksTable) => {
     const keys = Object.keys(picksTable);
+    let percentMap = {};
 
-    return keys.map(key => {
+    keys.forEach(key => {
       const seriesArr = picksTable[key];
 
-      return seriesArr.reduce((acc, series) => {
+      seriesArr.forEach(series => {
         if (isObject(series)) {
-          if (!acc[series.team]) {
-            acc[series.team] = 0;
+          if (!percentMap[series.seriesId]) {
+            percentMap[series.seriesId] = {};
           }
 
-          acc[series.team] += 1
-          acc.total += 1
+          if (!percentMap[series.seriesId][series.team]) {
+            percentMap[series.seriesId][series.team] = 0;
+          }
+
+          if (!percentMap[series.seriesId].total) {
+            percentMap[series.seriesId].total = 0;
+          }
+
+          percentMap[series.seriesId][series.team] += 1
+          percentMap[series.seriesId].total += 1
         }
-        return acc;
-      }, { total: 0 });
+      }, {});
     });
+
+    return percentMap;
   }
 
   render() {
-    const { users } = this.props;
+    const { users, bracketMap } = this.props;
 
     return(
       <Card.Container>
@@ -89,57 +86,67 @@ class Insights extends React.Component {
           }}>
           {({ loading, error, data }) => {
             if (data.picks) {
-              const pickRoundMap = mapPicksByRound(data.picks);
 
-              return Object.keys(pickRoundMap).map(round => {
-                const picks = pickRoundMap[round];
-                const picksTable = getUsersPicks(picks, users);
-                const seriesArr = this.getPercent(picksTable);
+              return (
+                <div className="insights-container">
+                  {Object.keys(bracketMap).map(roundNum => {
+                    const seriesArr = bracketMap[roundNum];
+                    const picksTable = getUsersPicks(data.picks, users);
+                    const percentTable = this.getPercent(picksTable);
 
-                return(
-                  <div className="insights-container">
-                    {picks.length > 0 &&
-                      <h3 className="text-center roundTitle">{roundNames[round]}</h3>
-                    }
-                    {seriesArr.map(series => {
-                      const namesArr = Object.keys(series);
-                      return (
-                        <div className="pick-meter-container">
-                          <div className="d-flex justify-content-between">
-                            {namesArr.map(name => (
-                              name !== 'total' && <div className="ml-1">{name}</div>
-                            ))}
-                          </div>
-                          <div className="progress" style={{ height: '25px' }}>
-                            {namesArr.map(name => {
-                              if (name === 'total') return;
+                    return (
+                      <React.Fragment key={`round-${roundNum}`}>
+                        {seriesArr.length > 0 &&
+                          <h3 className="text-center roundTitle">{roundNames[roundNum]}</h3>
+                        }
+                        <React.Fragment>
+                          {seriesArr.map(series => {
+                            const percentItem = percentTable[series.seriesId];
+                            const namesArr = Object.keys(percentItem);
 
-                              const total = parseInt(series['total']);
-                              const teamCount = parseInt(series[name]);
-                              const percent = (teamCount/total) * 100;
+                            if (checkSeriesLocked(series)) {
+                              return (
+                                <div className="pick-meter-container" key={`pick-${series.seriesId}`}>
+                                  <div className="d-flex justify-content-between">
+                                    {namesArr.map(name => (
+                                      name !== 'total' && <div key={name} className="ml-1">{name}</div>
+                                    ))}
+                                  </div>
+                                  <div className="progress" style={{ height: '25px' }}>
+                                    {namesArr.map(name => {
+                                      if (name === 'total') return null;
 
-                              return(
-                                <div
-                                  className="progress-bar"
-                                  role="progressbar"
-                                  style={{ width: `${percent}%`, background: teams_by_tri[name].teamColor }}
-                                  aria-valuenow={percent}
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                >
-                                  {`${Math.round(percent)}%`}
+                                      const total = parseInt(percentItem['total'], 10);
+                                      const teamCount = parseInt(percentItem[name], 10);
+                                      const percent = (teamCount/total) * 100;
+
+                                      return(
+                                        <div
+                                          key={`progress-${name}`}
+                                          className="progress-bar"
+                                          role="progressbar"
+                                          style={{ width: `${percent}%`, background: teams_by_tri[name].teamColor }}
+                                          aria-valuenow={percent}
+                                          aria-valuemin="0"
+                                          aria-valuemax="100"
+                                        >
+                                          {`${Math.round(percent)}%`}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
                                 </div>
                               );
-                            })}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              });
+                            }
 
-              console.log(pickRoundMap);
+                            return null;
+                          })}
+                        </React.Fragment>
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              );
             }
             return null;
           }}

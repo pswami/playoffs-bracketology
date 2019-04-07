@@ -10,7 +10,7 @@ import AddMemberModal from './AddMemberModal';
 import Table from '../../components/Table';
 import Card from '../../components/Card';
 
-import { getWinner } from '../../utils';
+import { checkSeriesLocked, getWinner } from '../../utils';
 
 import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY, PICKS_QUERY } from '../../queries';
 
@@ -111,6 +111,20 @@ const TeamTable = ({ group, users, brackets }) => (
 );
 
 class Show extends React.Component {
+  mappedByRound = () => {
+    const { NBABracket } = this.props.bracketQuery;
+
+    if (NBABracket) {
+      return NBABracket.reduce((acc, series) => {
+        if (checkSeriesLocked(series)) {
+          acc[series.roundNum].push(series);
+        }
+        return acc;
+      }, { 1: [], 2: [], 3: [], 4: [] });
+    }
+
+    return { 1: [], 2: [], 3: [], 4: [] };
+  }
 
   render() {
     const { currentUserQuery, bracketQuery, match } = this.props;
@@ -122,6 +136,7 @@ class Show extends React.Component {
           const { loading, error, data } = groupQuery;
 
           if (!error && !loading && currentUserQuery.currentUser && bracketQuery.NBABracket) {
+            const bracketMap = this.mappedByRound();
             const { group } = data;
             const { users } = group;
             const isUserInGroup = currentUserQuery.currentUser && users.some(user => user.email === currentUserQuery.currentUser.email);
@@ -154,11 +169,11 @@ class Show extends React.Component {
                 <br />
                 <div className="row">
                   <div className="col-lg-6">
-                    <AllPicks {...{ group, users }} />
+                    <AllPicks {...{ group, users, bracketMap }} />
                     <br />
                   </div>
                   <div className="col-lg-6">
-                    {<Insights  {...{ users }} />}
+                    {<Insights  {...{ users, bracketMap }} />}
                   </div>
                 </div>
               </React.Fragment>

@@ -37,29 +37,13 @@ const mapById = (items) => (
 );
 
 class AllPicks extends React.Component {
-  mappedByRound = () => {
-    const { NBABracket } = this.props.data;
-
-    if (NBABracket) {
-      return NBABracket.reduce((acc, series) => {
-        if (checkSeriesLocked(series)) {
-          acc[series.roundNum].push(series);
-        }
-        return acc;
-      }, { 1: [], 2: [], 3: [], 4: [] });
-    }
-
-    return { 1: [], 2: [], 3: [], 4: [] };
-  }
-
   render() {
-    const { users } = this.props;
+    const { users, bracketMap } = this.props;
     const numUsers = Object.keys(users).length;
-    const bracketMap = this.mappedByRound();
 
     return (
       <Card.Container>
-        <Card.Header><span className="h4">Picks Table</span></Card.Header>
+        <Card.Header><span className="h4">Picks</span></Card.Header>
         <Card.Body>
           <div className="table-responsive">
             <Table.Container className="picksTable" centered bordered fixed hoverable>
