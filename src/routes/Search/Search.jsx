@@ -15,7 +15,9 @@ class Search extends React.Component {
 
   filterGroups = (groups) => (
     groups.filter(
-      group => group.name.toLowerCase().includes(this.state.query.toLowerCase())
+      group =>
+        group.name.toLowerCase().includes(this.state.query.toLowerCase()) &&
+        !group.private
     )
   )
 

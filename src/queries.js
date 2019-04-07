@@ -80,6 +80,7 @@ export const GROUPS_QUERY = gql`
     groups {
       id
       name
+      private
       users {
         id
         username

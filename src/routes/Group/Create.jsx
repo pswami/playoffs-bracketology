@@ -21,7 +21,7 @@ class Create extends React.Component {
   handleTypeChange       = (e) => this.setState({ type: e.target.value })
   handleGamePointsChange = (e) => this.setState({ gamePoints: e.target.value })
   handleTeamPointsChange  = (e) => this.setState({ teamPoints: e.target.value })
-  handleAccessChange     = (e) => this.setState({ private: e.target.value })
+  handleAccessChange     = (e) => this.setState({ private: e.target.checked })
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ class Create extends React.Component {
         variables: {
           data: {
             name: this.state.groupName,
-            private: this.state.private,
+            private: this.state.private === true,
             gamePoints: parseInt(this.state.gamePoints, 10),
             teamPoints: parseInt(this.state.teamPoints, 10),
             type: this.state.type,
@@ -127,7 +127,6 @@ class Create extends React.Component {
                 id="private-group-input"
                 value={this.state.private}
                 onChange={this.handleAccessChange}
-                disabled
               />
               <label
                 className="form-check-label"
@@ -139,7 +138,7 @@ class Create extends React.Component {
                 id="group-access-help"
                 className="form-text text-muted"
               >
-                All groups are public currently
+                Can only view from "My Picks" page
               </small>
             </div>
             <button
