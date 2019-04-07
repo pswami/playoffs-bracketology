@@ -82,7 +82,11 @@ class AllPicks extends React.Component {
                               <React.Fragment key={`round-${roundNum}`}>
                                 {seriesArr.length > 0 &&
                                   <Table.Row>
-                                    <Table.Header colSpan={numUsers}>{roundNames[roundNum]}</Table.Header>
+                                    <Table.Header style={{ height: '42px' }} colSpan={numUsers}>
+                                      <div className="roundName">
+                                        {roundNames[roundNum]}
+                                      </div>
+                                    </Table.Header>
                                   </Table.Row>
                                 }
                                 {seriesArr.map(series => {
