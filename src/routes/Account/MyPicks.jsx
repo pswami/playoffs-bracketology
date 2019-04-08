@@ -158,8 +158,6 @@ class MyPicks extends React.Component {
       }]
     })
     .then(() => {
-      // this.props.picksQuery.refetch();
-
       swal('Sucessfully Updated', '', 'success');
     })
     .catch(() => swal('Failed', 'Please try again', 'error'))

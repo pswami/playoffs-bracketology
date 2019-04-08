@@ -9,12 +9,13 @@
 - [ ] Empty States
 - [ ] Loading States
 - [ ] Group Settings
+- [ ] Lock Series from backend
 
 MVP
 - [ ] Landing page
 - [ ] Fixing login
 - [ ] Leaderboard (order rows)
-- [ ] Update groups on create
+- [X] Update groups on create
 - [X] Hide Terminal on Prod
 - [X] private groups
 - [X] Show game rules

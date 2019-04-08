@@ -43,12 +43,15 @@ class Create extends React.Component {
               }]
             }
           }
-        }
+        },
+        refetchQueries: [{
+          query: CURRENT_USER_QUERY,
+        }]
       }).then(({ data }) => {
         const { createGroup: group } = data;
 
-        currentUserQuery.refetch()
         swal('Sucessfully Created Group', group.name, 'success');
+
         history.push(`/group/${group.id}`);
       })
     }
