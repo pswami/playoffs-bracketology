@@ -142,7 +142,7 @@ class Show extends React.Component {
         {(groupQuery) => {
           const { loading, error, data } = groupQuery;
 
-          if (!error && !loading && currentUserQuery.currentUser && bracketQuery.NBABracket) {
+          if (!error && !loading && bracketQuery.NBABracket) {
             const bracketMap = this.mappedByRound();
             const { group } = data;
             const { users } = group;
@@ -150,7 +150,9 @@ class Show extends React.Component {
 
             return (
               <React.Fragment>
-                <AddMemberModal isUserInGroup={isUserInGroup} groupQuery={groupQuery} />
+                {currentUserQuery.currentUser &&
+                  <AddMemberModal isUserInGroup={isUserInGroup} groupQuery={groupQuery} />
+                }
                 <SettingsModal group={group} />
                 {group.private &&
                   <Alert>
@@ -164,14 +166,16 @@ class Show extends React.Component {
                       {group.name}
                     </span>
                     <div className="float-right">
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm"
-                        data-toggle="modal"
-                        data-target="#addMemberModal"
-                      >
-                        {isUserInGroup ? <span>Leave</span> : <span>+ Join</span>}
-                      </button>
+                      {currentUserQuery.currentUser &&
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm"
+                          data-toggle="modal"
+                          data-target="#addMemberModal"
+                        >
+                          {isUserInGroup ? <span>Leave</span> : <span>+ Join</span>}
+                        </button>
+                      }
                       <button
                         type="button"
                         className="btn btn-success btn-sm ml-2"
