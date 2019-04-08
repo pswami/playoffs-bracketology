@@ -55,7 +55,7 @@ class App extends Component {
               </Switch>
             </Layout.Container>
           </Switch>
-          {this.devInfo()}
+          {/* {this.devInfo()} */}
         </div>
       </BrowserRouter>
     );
