@@ -26,13 +26,14 @@ const RouteWithProps = (props) => ({ Component, ...rest }) => (
 
 class App extends Component {
   devInfo = () => {
+    const { currentUserQuery } = this.props;
     return (
       <Terminal>
-        <li>Logged ID: {this.props.data.currentUser ? this.props.data.currentUser.id : ''}</li>
-        <li>Logged IN: {this.props.data.currentUser ? this.props.data.currentUser.email : ''}</li>
-        <li>user loading: {this.props.data.loading.toString()}</li>
+        <li>Logged ID: {currentUserQuery.currentUser ? currentUserQuery.currentUser.id : ''}</li>
+        <li>Logged IN: {currentUserQuery.currentUser ? currentUserQuery.currentUser.email : ''}</li>
+        <li>user loading: {currentUserQuery.loading.toString()}</li>
         <li>environment: {process.env && process.env.NODE_ENV}</li>
-        <button onClick={() => this.forceUpdate()}>Force Refresh</button>
+        <button onClick={() => currentUserQuery.refetch()}>Force Refresh</button>
       </Terminal>
     );
   };
@@ -63,4 +64,4 @@ class App extends Component {
 }
 
 // export default App;
-export default (graphql(CURRENT_USER_QUERY)(App));
+export default (App);

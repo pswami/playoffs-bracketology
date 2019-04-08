@@ -23,7 +23,10 @@ class Navbar extends React.Component {
   componentDidMount() {
     this.navbar.current.onclick = (e) => {
       if (e.target.tagName.toLowerCase() === 'a') {
-        this.collapseButton.current.click();
+        const expanded = this.collapseButton.current.getAttribute('aria-expanded');
+        if (expanded == 'true') {
+          this.collapseButton.current.click();
+        }
       }
     }
   }
@@ -60,10 +63,11 @@ class Navbar extends React.Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <Query query={CURRENT_USER_QUERY}>
+            <Query query={CURRENT_USER_QUERY} skip={!localStorage.getItem('token')}>
               {({ loading, error, data, client }) => {
                 let cachedUser;
 
+                // console.log('loading', loading, error)
                 try {
                   // const { currentUser } = client.readQuery({ query: CURRENT_USER_QUERY })
 
