@@ -33,7 +33,7 @@ class Create extends React.Component {
         variables: {
           data: {
             name: this.state.groupName,
-            private: this.state.private === true,
+            private: this.state.private == true,
             gamePoints: parseInt(this.state.gamePoints, 10),
             teamPoints: parseInt(this.state.teamPoints, 10),
             type: this.state.type,
@@ -47,7 +47,7 @@ class Create extends React.Component {
       }).then(({ data }) => {
         const { createGroup: group } = data;
 
-        currentUserQuery.refetch();
+        currentUserQuery.refetch()
         swal('Sucessfully Created Group', group.name, 'success');
         history.push(`/group/${group.id}`);
       })

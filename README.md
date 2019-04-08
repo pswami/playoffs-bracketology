@@ -14,9 +14,9 @@ MVP
 - [ ] Landing page
 - [ ] Fixing login
 - [ ] Leaderboard (order rows)
-- [ ] private groups
 - [ ] Hide Terminal on Prod
 - [ ] Update groups on create
+- [X] private groups
 - [X] Show game rules
 - [X] Intefering Routes (/group/create)
 - [X] Insights

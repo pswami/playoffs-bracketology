@@ -37,7 +37,7 @@ class Search extends React.Component {
             />
           </div>
         </Card.Header>
-        <Query query={GROUPS_QUERY}>
+        <Query query={GROUPS_QUERY} fetchPolicy="network-only">
           {({ loading, error, data }) => {
             if (!error && !loading) {
               const filteredGroups = this.filterGroups(data.groups);
