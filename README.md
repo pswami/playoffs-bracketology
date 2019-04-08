@@ -14,10 +14,10 @@
 MVP
 - [ ] Landing page
 - [ ] Fixing login
-- [X] Group show without logging in
 - [ ] Mobile-Friendly
 - [ ] Leaderboard (order rows)
   - [ ] Fixed "Total" column
+- [X] Group show without logging in
 - [X] Update groups on create
 - [X] Hide Terminal on Prod
 - [X] private groups
