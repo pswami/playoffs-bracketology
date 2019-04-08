@@ -31,6 +31,8 @@ type AuthPayload {
 
 type User {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   email: String!
   username: String!
   groups: [Group]
