@@ -12,6 +12,7 @@ import GroupCreate from './routes/Group/Create';
 
 import Terminal from './components/Terminal';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Layout from './components/Layout';
 
 import { CURRENT_USER_QUERY } from './queries';
@@ -56,6 +57,7 @@ class App extends Component {
               </Switch>
             </Layout.Container>
           </Switch>
+          <Footer />
           {/* {this.devInfo()} */}
         </div>
       </BrowserRouter>

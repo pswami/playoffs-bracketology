@@ -15,6 +15,7 @@
 MVP
 - [ ] Landing page
 - [ ] Mobile-Friendly
+  - [ ] Card header mobile
 - [X] Fixing login
 - [X] Leaderboard (order rows)
 - [X] Group show without logging in
