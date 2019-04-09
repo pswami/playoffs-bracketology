@@ -67,12 +67,7 @@ class Navbar extends React.Component {
               {({ loading, error, data, client }) => {
                 let cachedUser;
 
-                // console.log('loading', loading, error)
                 try {
-                  // const { currentUser } = client.readQuery({ query: CURRENT_USER_QUERY })
-
-                  // console.log('data', data)
-                  // cachedData = currentUser;
                   cachedUser = data.currentUser;
                 } catch(e) {
                   cachedUser = undefined;

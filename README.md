@@ -14,9 +14,9 @@
 
 MVP
 - [ ] Landing page
-- [ ] Fixing login
 - [ ] Mobile-Friendly
-- [ ] Leaderboard (order rows)
+- [X] Fixing login
+- [X] Leaderboard (order rows)
 - [X] Group show without logging in
 - [X] Update groups on create
 - [X] Hide Terminal on Prod
