@@ -104,6 +104,13 @@ export const GROUP_QUERY = gql`
         id
         username
         email
+        picks {
+          id
+          team
+          wins
+          seriesId
+          round
+        }
       }
 
     }

@@ -15,6 +15,9 @@ module.exports = {
   User: {
     groups(parent, args, ctx, info) {
       return ctx.prisma.user({ id: parent.id }).groups();
+    },
+    picks(parent, args, ctx, info) {
+      return ctx.prisma.user({ id: parent.id }).picks();
     }
   },
   Group: {
