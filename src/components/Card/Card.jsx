@@ -1,18 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Container = ({ children }) => (
-  <div className="card text-white bg-dark">{children}</div>
+export const Container = ({ children, className, variant }) => (
+  <div className={`card text-white bg-${variant}`}>{children}</div>
 );
 
-export const Body = ({ children }) => (
-  <div className="card-body">{children}</div>
+Container.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
+
+Container.defaultProps = {
+  variant: 'dark',
+};
+
+// ==============================================================
+
+export const Body = ({ children, className }) => (
+  <div className={`card-body ${className}`}>{children}</div>
 );
 
-export const Header = ({ children }) => (
+Body.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
+
+// ==============================================================
+
+export const Header = ({ children, className }) => (
   <div className="card-header text-dark bg-light">{children}</div>
 );
 
-Container.propTypes = { children: PropTypes.node };
-Body.propTypes = { children: PropTypes.node };
-Header.propTypes = { children: PropTypes.node };
+Header.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
