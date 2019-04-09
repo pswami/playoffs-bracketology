@@ -1,3 +1,4 @@
+/* global $ */
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -36,36 +37,55 @@ const MyProfile = ({ currentUser }) => (
 );
 
 class Me extends React.Component {
+  toggleModal = () => {
+    $('#login-register-modal').modal('toggle')
+  }
+
   render() {
     return (
       <Query query={CURRENT_USER_QUERY}>
-        {({ loading, error, data: { currentUser } }) => (
-          <div className="row">
-            <div className="col-lg-6">
-              {currentUser &&
-                <MyProfile currentUser={currentUser} />
-              }
-              <br />
-              <Card.Container>
-                <Card.Header>
-                  <span className="h4">
-                    <i className="fas fa-home mr-3" />
-                    My Groups
-                  </span>
-                </Card.Header>
-                <Card.Body>
-                  <React.Fragment>
-                    {currentUser ? <GroupsTable groups={currentUser.groups} /> : null}
-                  </React.Fragment>
-                </Card.Body>
-              </Card.Container>
-              <br />
-            </div>
-            <div className="col-lg-6">
-              {currentUser ? <MyPicks  {...{ currentUser }} /> : null}
-            </div>
-          </div>
-        )}
+        {({ loading, error, data }) => {
+          if (!loading && !error) {
+            const { currentUser } = data;
+
+            return (
+              <div className="row">
+                <div className="col-lg-6">
+                  {currentUser &&
+                    <MyProfile currentUser={currentUser} />
+                  }
+                  <br />
+                  <Card.Container>
+                    <Card.Header>
+                      <span className="h4">
+                        <i className="fas fa-home mr-3" />
+                        My Groups
+                      </span>
+                    </Card.Header>
+                    <Card.Body>
+                      <React.Fragment>
+                        {currentUser ? <GroupsTable groups={currentUser.groups} /> : null}
+                      </React.Fragment>
+                    </Card.Body>
+                  </Card.Container>
+                  <br />
+                </div>
+                <div className="col-lg-6">
+                  {currentUser ? <MyPicks  {...{ currentUser }} /> : null}
+                </div>
+              </div>
+            );
+          } else if (error) {
+            const { history } = this.props;
+
+            history.push('/');
+            this.toggleModal();
+
+            return null;
+          } else {
+            return null;
+          }
+        }}
       </Query>
     );
   }

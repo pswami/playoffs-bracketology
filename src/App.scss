@@ -14,3 +14,9 @@ body, html, #root, .App {
 .container {
   min-height: calc(100vh - (214px - 30px));
 }
+
+.no-underline {
+  &:hover {
+    text-decoration: none;
+  }
+}

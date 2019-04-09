@@ -65,12 +65,12 @@ class Navbar extends React.Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <Query query={CURRENT_USER_QUERY} skip={!localStorage.getItem('token')}>
               {({ loading, error, data, client }) => {
-                let cachedUser;
+                let currentUser;
 
                 try {
-                  cachedUser = data.currentUser;
+                  currentUser = data.currentUser;
                 } catch(e) {
-                  cachedUser = undefined;
+                  currentUser = undefined;
                 }
 
                 return (
@@ -83,20 +83,20 @@ class Navbar extends React.Component {
                         <Link className="nav-link" to="/browse">Browse</Link>
                       </li>
                       <li className="nav-item">
-                        {cachedUser ?
+                        {currentUser ?
                           <Link className="nav-link" to="/me">My Picks</Link> :
                           <a className="nav-link"  href="#login-form" data-toggle="modal" data-target="#login-register-modal">My Picks</a>
                         }
                       </li>
                       <li className="nav-item">
-                        {cachedUser ?
+                        {currentUser ?
                           <Link className="nav-link" to="/group/create">Create Group</Link> :
                           <a className="nav-link"  href="#login-form" data-toggle="modal" data-target="#login-register-modal">Create Group</a>
                         }
                       </li>
                     </ul>
                     <div className="form-inline my-2 my-lg-0">
-                      {cachedUser ?
+                      {currentUser ?
                         <a className="btn btn-danger text-white" onClick={this.logout(client)}>Logout</a> :
                         <a className="btn btn-primary" href="#login-form" data-toggle="modal" data-target="#login-register-modal">Login/Register</a>
                       }
