@@ -14,7 +14,7 @@ const Home = () => (
   <div>
     <div className="row">
       <div className="col-lg-4">
-        <Link to="/me" className="no-underline">
+        <Link to="/me" className="hover-grow no-underline">
           <Card.Container variant="primary">
             <Card.Body className="text-center">
               <React.Fragment>
@@ -26,7 +26,7 @@ const Home = () => (
         </Link>
       </div>
       <div className="col-lg-4">
-        <Link to="/browse" className="no-underline">
+        <Link to="/browse" className="hover-grow no-underline">
           <Card.Container variant="danger">
             <Card.Body className="text-center">
               <React.Fragment>

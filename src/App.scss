@@ -15,6 +15,13 @@ body, html, #root, .App {
   min-height: calc(100vh - (214px - 30px));
 }
 
+.hover-grow {
+  > div:hover {
+    transform: scale(1.05);
+    transition: all .2s ease-in-out;
+  }
+}
+
 .no-underline {
   &:hover {
     text-decoration: none;
