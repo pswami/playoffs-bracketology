@@ -14,108 +14,93 @@ import Card from '../../components/Card';
 
 import { checkSeriesLocked, getWinner } from '../../utils';
 
-import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY, PICKS_QUERY } from '../../queries';
+import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY } from '../../queries';
 
 
 const i18n = {
   private_group_message: <div>To share private group (Temporary Solution): Send <a href={window.location}>group URL</a> to friends and click "Join"</div>,
 };
 
-class TeamRow extends React.Component {
-  render() {
-    const { group, user, brackets } = this.props;
-    const { teamPoints, gamePoints } = group;
+const getPointsPerUser = (user, group, brackets) => {
+  const { picks } = user;
+  const { teamPoints, gamePoints } = group;
+  const initialState = {
+    user,
+    round1: 0,
+    round2: 0,
+    round3: 0,
+    round4: 0,
+    total: 0,
+  };
 
-    return(
-      <Query query={PICKS_QUERY} variables={{
-        userIds: [user.id],
-        type: "round-by-round",
-        sport: "nba",
-        year: 2019,
-      }}>
-        {({ loading, error, data }) => {
-          const { picks } = data;
+  if (picks) {
+    const picksMap = picks.reduce((acc, pick) => {
+      return { ...acc, ...{ [pick.seriesId]: pick } };
+    }, {});
 
-          if (picks) {
-            const picksMap = picks.reduce((acc, pick) => {
-              return { ...acc, ...{ [pick.seriesId]: pick } };
-            }, {});
+    return brackets.reduce((acc, series) => {
+      let points = 0;
+      let myPick = picksMap[series.seriesId];
+      let winner = getWinner(series);
 
-            const pointsMap = brackets.reduce((acc, series) => {
-              let points = 0;
-              let myPick = picksMap[series.seriesId];
-              let winner = getWinner(series);
+      if (myPick) {
+        if (winner.team === myPick.team) {
+          points += teamPoints;
 
-              if (myPick) {
-                if (winner.team === myPick.team) {
-                  points += teamPoints;
-
-                  if (parseInt(winner.games, 10) === parseInt(myPick.wins, 10)) {
-                    points += gamePoints;
-                  }
-                }
-                return { ...acc, [`round${series.roundNum}`]: acc[`round${series.roundNum}`] + points }
-              }
-
-              return acc;
-            }, {
-              round1: 0,
-              round2: 0,
-              round3: 0,
-              round4: 0,
-            });
-
-            const totalPoints = pointsMap.round1 + pointsMap.round2 + pointsMap.round3 + pointsMap.round4;
-
-            return (
-              <Table.Row key={user.id}>
-                <Table.Col>1</Table.Col>
-                <Table.Col>{user.username}</Table.Col>
-                <Table.Col>{pointsMap.round1}</Table.Col>
-                <Table.Col>{pointsMap.round2}</Table.Col>
-                <Table.Col>{pointsMap.round3}</Table.Col>
-                <Table.Col>{pointsMap.round4}</Table.Col>
-                <Table.Col>{totalPoints}</Table.Col>
-              </Table.Row>
-            );
+          if (parseInt(winner.games, 10) === parseInt(myPick.wins, 10)) {
+            points += gamePoints;
           }
+        }
+        return {
+          ...acc,
+          user,
+          [`round${series.roundNum}`]: acc[`round${series.roundNum}`] + points,
+          total: acc.total + points,
+        }
+      }
 
-          return null;
-        }}
-      </Query>
-    );
+      return acc;
+    }, initialState);
   }
-}
 
+  return { ...initialState };
+};
 
-const TeamTable = ({ group, users, brackets }) => (
-  <div className="team-table table-responsive table-sticky-header">
-    <Table.Container>
-      <Table.Head>
-        <Table.Row>
-          <Table.Header>#</Table.Header>
-          <Table.Header>Name</Table.Header>
-          <Table.Header>1st</Table.Header>
-          <Table.Header>Semi</Table.Header>
-          <Table.Header>Conf.</Table.Header>
-          <Table.Header>Finals</Table.Header>
-          <Table.Header>Total</Table.Header>
-        </Table.Row>
-      </Table.Head>
-      <tbody>
-        {users.map(user => (
-          <TeamRow
-            key={user.id}
-            user={user}
-            group={group}
-            users={users}
-            brackets={brackets}
-          />
-        ))}
-      </tbody>
-    </Table.Container>
-  </div>
-);
+const TeamTable = ({ group, users, brackets }) => {
+  const picksMap = users.map(user => getPointsPerUser(user, group, brackets));
+  const picksMapSorted = picksMap.sort((a, b) => b.total - a.total);
+
+  return (
+    <div className="team-table table-responsive table-sticky-header">
+      <Table.Container>
+        <Table.Head>
+          <Table.Row>
+            <Table.Header>#</Table.Header>
+            <Table.Header>Name</Table.Header>
+            <Table.Header>1st</Table.Header>
+            <Table.Header>Semi</Table.Header>
+            <Table.Header>Conf.</Table.Header>
+            <Table.Header>Finals</Table.Header>
+            <Table.Header>Total</Table.Header>
+          </Table.Row>
+        </Table.Head>
+        <tbody>
+          {picksMapSorted.map((row, idx) => (
+            <Table.Row key={row.user.id}>
+              <Table.Col>{idx + 1}</Table.Col>
+              <Table.Col>{row.user.username}</Table.Col>
+              <Table.Col>{row.round1}</Table.Col>
+              <Table.Col>{row.round2}</Table.Col>
+              <Table.Col>{row.round3}</Table.Col>
+              <Table.Col>{row.round4}</Table.Col>
+              <Table.Col>{row.total}</Table.Col>
+            </Table.Row>
+          ))}
+        </tbody>
+      </Table.Container>
+    </div>
+  );
+};
 
 class Show extends React.Component {
   mappedByRound = () => {

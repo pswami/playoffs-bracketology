@@ -9,6 +9,7 @@
 - [ ] Empty States
 - [ ] Loading States
 - [ ] Group Settings
+- [ ] Fixed "Total" column
 - [ ] Lock Series from backend
 
 MVP
@@ -16,7 +17,6 @@ MVP
 - [ ] Fixing login
 - [ ] Mobile-Friendly
 - [ ] Leaderboard (order rows)
-  - [ ] Fixed "Total" column
 - [X] Group show without logging in
 - [X] Update groups on create
 - [X] Hide Terminal on Prod
