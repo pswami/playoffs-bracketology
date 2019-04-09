@@ -471,7 +471,22 @@ type PickConnection {
 }
 
 input PickCreateInput {
-  user: UserCreateOneInput!
+  user: UserCreateOneWithoutPicksInput!
+  team: String!
+  wins: Int!
+  round: Int
+  seriesId: Int
+  type: String
+  sport: String
+  year: Int
+}
+
+input PickCreateManyWithoutUserInput {
+  create: [PickCreateWithoutUserInput!]
+  connect: [PickWhereUniqueInput!]
+}
+
+input PickCreateWithoutUserInput {
   team: String!
   wins: Int!
   round: Int
@@ -522,6 +537,116 @@ type PickPreviousValues {
   year: Int!
 }
 
+input PickScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  team: String
+  team_not: String
+  team_in: [String!]
+  team_not_in: [String!]
+  team_lt: String
+  team_lte: String
+  team_gt: String
+  team_gte: String
+  team_contains: String
+  team_not_contains: String
+  team_starts_with: String
+  team_not_starts_with: String
+  team_ends_with: String
+  team_not_ends_with: String
+  wins: Int
+  wins_not: Int
+  wins_in: [Int!]
+  wins_not_in: [Int!]
+  wins_lt: Int
+  wins_lte: Int
+  wins_gt: Int
+  wins_gte: Int
+  round: Int
+  round_not: Int
+  round_in: [Int!]
+  round_not_in: [Int!]
+  round_lt: Int
+  round_lte: Int
+  round_gt: Int
+  round_gte: Int
+  seriesId: Int
+  seriesId_not: Int
+  seriesId_in: [Int!]
+  seriesId_not_in: [Int!]
+  seriesId_lt: Int
+  seriesId_lte: Int
+  seriesId_gt: Int
+  seriesId_gte: Int
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  sport: String
+  sport_not: String
+  sport_in: [String!]
+  sport_not_in: [String!]
+  sport_lt: String
+  sport_lte: String
+  sport_gt: String
+  sport_gte: String
+  sport_contains: String
+  sport_not_contains: String
+  sport_starts_with: String
+  sport_not_starts_with: String
+  sport_ends_with: String
+  sport_not_ends_with: String
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  AND: [PickScalarWhereInput!]
+  OR: [PickScalarWhereInput!]
+  NOT: [PickScalarWhereInput!]
+}
+
 type PickSubscriptionPayload {
   mutation: MutationType!
   node: Pick
@@ -541,7 +666,17 @@ input PickSubscriptionWhereInput {
 }
 
 input PickUpdateInput {
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutPicksInput
+  team: String
+  wins: Int
+  round: Int
+  seriesId: Int
+  type: String
+  sport: String
+  year: Int
+}
+
+input PickUpdateManyDataInput {
   team: String
   wins: Int
   round: Int
@@ -559,6 +694,44 @@ input PickUpdateManyMutationInput {
   type: String
   sport: String
   year: Int
+}
+
+input PickUpdateManyWithoutUserInput {
+  create: [PickCreateWithoutUserInput!]
+  delete: [PickWhereUniqueInput!]
+  connect: [PickWhereUniqueInput!]
+  set: [PickWhereUniqueInput!]
+  disconnect: [PickWhereUniqueInput!]
+  update: [PickUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [PickUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [PickScalarWhereInput!]
+  updateMany: [PickUpdateManyWithWhereNestedInput!]
+}
+
+input PickUpdateManyWithWhereNestedInput {
+  where: PickScalarWhereInput!
+  data: PickUpdateManyDataInput!
+}
+
+input PickUpdateWithoutUserDataInput {
+  team: String
+  wins: Int
+  round: Int
+  seriesId: Int
+  type: String
+  sport: String
+  year: Int
+}
+
+input PickUpdateWithWhereUniqueWithoutUserInput {
+  where: PickWhereUniqueInput!
+  data: PickUpdateWithoutUserDataInput!
+}
+
+input PickUpsertWithWhereUniqueWithoutUserInput {
+  where: PickWhereUniqueInput!
+  update: PickUpdateWithoutUserDataInput!
+  create: PickCreateWithoutUserInput!
 }
 
 input PickWhereInput {
@@ -703,6 +876,7 @@ type User {
   password: String!
   username: String!
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  picks(where: PickWhereInput, orderBy: PickOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Pick!]
 }
 
 type UserConnection {
@@ -716,6 +890,7 @@ input UserCreateInput {
   password: String!
   username: String!
   groups: GroupCreateManyWithoutUsersInput
+  picks: PickCreateManyWithoutUserInput
 }
 
 input UserCreateManyWithoutGroupsInput {
@@ -723,8 +898,8 @@ input UserCreateManyWithoutGroupsInput {
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
+input UserCreateOneWithoutPicksInput {
+  create: UserCreateWithoutPicksInput
   connect: UserWhereUniqueInput
 }
 
@@ -732,6 +907,14 @@ input UserCreateWithoutGroupsInput {
   email: String!
   password: String!
   username: String!
+  picks: PickCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutPicksInput {
+  email: String!
+  password: String!
+  username: String!
+  groups: GroupCreateManyWithoutUsersInput
 }
 
 type UserEdge {
@@ -859,18 +1042,12 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  email: String
-  password: String
-  username: String
-  groups: GroupUpdateManyWithoutUsersInput
-}
-
 input UserUpdateInput {
   email: String
   password: String
   username: String
   groups: GroupUpdateManyWithoutUsersInput
+  picks: PickUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyDataInput {
@@ -902,10 +1079,10 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
+input UserUpdateOneRequiredWithoutPicksInput {
+  create: UserCreateWithoutPicksInput
+  update: UserUpdateWithoutPicksDataInput
+  upsert: UserUpsertWithoutPicksInput
   connect: UserWhereUniqueInput
 }
 
@@ -913,6 +1090,14 @@ input UserUpdateWithoutGroupsDataInput {
   email: String
   password: String
   username: String
+  picks: PickUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutPicksDataInput {
+  email: String
+  password: String
+  username: String
+  groups: GroupUpdateManyWithoutUsersInput
 }
 
 input UserUpdateWithWhereUniqueWithoutGroupsInput {
@@ -920,9 +1105,9 @@ input UserUpdateWithWhereUniqueWithoutGroupsInput {
   data: UserUpdateWithoutGroupsDataInput!
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpsertWithoutPicksInput {
+  update: UserUpdateWithoutPicksDataInput!
+  create: UserCreateWithoutPicksInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutGroupsInput {
@@ -1007,6 +1192,9 @@ input UserWhereInput {
   groups_every: GroupWhereInput
   groups_some: GroupWhereInput
   groups_none: GroupWhereInput
+  picks_every: PickWhereInput
+  picks_some: PickWhereInput
+  picks_none: PickWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

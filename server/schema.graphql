@@ -36,6 +36,7 @@ type User {
   email: String!
   username: String!
   groups: [Group]
+  picks: [Pick]
 }
 
 input PickInput {

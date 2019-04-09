@@ -36,4 +36,5 @@ type User {
   password: String!
   username: String!
   groups: [Group!]! @relation(name: "GroupUser")
+  picks: [Pick]
 }
