@@ -7,6 +7,7 @@ import { Query, graphql, compose } from "react-apollo";
 import { iconNBALink, roundNames } from '../../utils';
 
 import Card from '../../components/Card';
+import Loading from '../../components/Loading';
 
 import teams from '../../data/teams.json';
 import { checkSeriesLocked } from '../../utils';
@@ -191,62 +192,63 @@ class MyPicks extends React.Component {
     const bracketMap = this.mappedByRound();
 
     return (
-      <Query query={PICKS_QUERY} variables={{
-        userIds: [currentUser.id],
-        type: "round-by-round",
-        sport: "nba",
-        year: 2019,
-      }}>
-        {({ loading, error, data }) => {
-          const { picks } = data;
+      <Card.Container>
+        <Card.Header>
+          <span className="h4">
+            <i className="far fa-hand-pointer mr-3"></i>
+            My Picks
+          </span>
+        </Card.Header>
+        <Card.Body>
+          <Query query={PICKS_QUERY} variables={{
+            userIds: [currentUser.id],
+            type: "round-by-round",
+            sport: "nba",
+            year: 2019,
+          }}>
+            {({ loading, error, data }) => {
+              const { picks } = data;
 
-          if (picks) {
-            return (
-              <Card.Container>
-                <Card.Header>
-                  <span className="h4">
-                    <i className="far fa-hand-pointer mr-3"></i>
-                    My Picks
-                  </span>
-                </Card.Header>
-                <Card.Body>
-                  {/* {message && <div className="alert alert-primary" role="alert">{message}</div>} */}
-                  {error && <div className="alert alert-danger" role="alert">{error}</div>}
-                  <form onSubmit={this.handleSubmit}>
-                    {Object.keys(bracketMap).map(roundNum => {
-                      const seriesArr = bracketMap[roundNum];
-                      const pickBySeries = this.getPickBySeries(picks);
+                return (
+                  <Loading isLoading={loading}>
+                    {picks && (
+                      <React.Fragment>
+                        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+                          <form onSubmit={this.handleSubmit}>
+                            {Object.keys(bracketMap).map(roundNum => {
+                              const seriesArr = bracketMap[roundNum];
+                              const pickBySeries = this.getPickBySeries(picks);
 
-                      return (
-                        <React.Fragment key={`round-${roundNum}`}>
-                          {seriesArr.length > 0 && <h2 className="roundHeader text-center">{roundNames[roundNum]}</h2>}
-                          {seriesArr.map(series => (
-                            series.isScheduleAvailable &&
-                              <TeamOption
-                                key={series.seriesId}
-                                ref={option => (this.options[series.seriesId] = option)}
-                                series={series}
-                                pick={pickBySeries[series.seriesId]}
-                              />
-                          ))}
-                        </React.Fragment>
-                      );
-                    })}
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-lg btn-block mt-5"
-                    >
-                      Update
-                    </button>
-                  </form>
-                </Card.Body>
-              </Card.Container>
-            );
-          }
-
-          return null;
-        }}
-      </Query>
+                              return (
+                                <React.Fragment key={`round-${roundNum}`}>
+                                  {seriesArr.length > 0 && <h2 className="roundHeader text-center">{roundNames[roundNum]}</h2>}
+                                  {seriesArr.map(series => (
+                                    series.isScheduleAvailable &&
+                                      <TeamOption
+                                        key={series.seriesId}
+                                        ref={option => (this.options[series.seriesId] = option)}
+                                        series={series}
+                                        pick={pickBySeries[series.seriesId]}
+                                      />
+                                  ))}
+                                </React.Fragment>
+                              );
+                            })}
+                            <button
+                              type="submit"
+                              className="btn btn-primary btn-lg btn-block mt-5"
+                            >
+                              Update
+                            </button>
+                          </form>
+                      </React.Fragment>
+                    )}
+                  </Loading>
+                );
+            }}
+          </Query>
+        </Card.Body>
+      </Card.Container>
     );
   }
 }

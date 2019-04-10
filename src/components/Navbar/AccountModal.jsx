@@ -51,7 +51,7 @@ class LoginTab extends React.Component {
 
     return (
       <div id="login-form" className="tab-pane in active">
-        <Loading isLoading={loading}>
+        <Loading isLoading={loading} light>
           {errors.length > 0 &&
             <Alert>
               {errors.map(error => (
@@ -137,7 +137,7 @@ class SignupTab extends React.Component {
 
     return (
       <div id="registration-form" className="tab-pane fade">
-        <Loading isLoading={loading}>
+        <Loading isLoading={loading} light>
           {errors.length > 0 &&
             <Alert>
               {errors.map(error => (

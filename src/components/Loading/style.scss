@@ -19,8 +19,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffffffbf;
+  background: #00000033;
 
+  &.light {
+    background: #ffffffbf;
+  }
   .spinner-border {
     width: 8rem;
     height: 8rem;
