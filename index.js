@@ -17,8 +17,8 @@ const server = new GraphQLServer({
 
 server.express.get(server.options.endpoint, (req, res, done) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  server.express.use(express.static('/Users/paurasswami/Documents/Swami/playoffs-bracketology/build'));
-  res.sendFile('/Users/paurasswami/Documents/Swami/playoffs-bracketology/build/index.html');
+  server.express.use(express.static(paths.appBuild));
+  res.sendFile(paths.appBuild + '/index.html');
 })
 
 const options = {
