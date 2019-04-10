@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './style.scss';
+
 export const Container = ({ children, className, variant }) => (
   <div className={`card text-white bg-${variant}`}>{children}</div>
 );
@@ -28,7 +30,9 @@ Body.propTypes = {
 // ==============================================================
 
 export const Header = ({ children, className }) => (
-  <div className="card-header text-dark bg-light">{children}</div>
+  <div className="card-header text-dark bg-light">
+    {children}
+  </div>
 );
 
 Header.propTypes = {

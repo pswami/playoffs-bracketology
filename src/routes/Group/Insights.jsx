@@ -77,7 +77,7 @@ class Insights extends React.Component {
     return(
       <Card.Container>
         <Card.Header>
-          <span className="h4">
+          <span>
             <i className="fas fa-chart-bar mr-3" />
             Insights
           </span>

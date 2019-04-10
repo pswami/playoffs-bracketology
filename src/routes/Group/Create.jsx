@@ -61,7 +61,7 @@ class Create extends React.Component {
     return(
       <Card.Container>
         <Card.Header>
-          <span className="h4">
+          <span>
             <i className="far fa-sticky-note mr-3" />
             Create Group
           </span>

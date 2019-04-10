@@ -44,7 +44,7 @@ class AllPicks extends React.Component {
     return (
       <Card.Container>
         <Card.Header>
-          <span className="h4">
+          <span>
             <i className="far fa-hand-pointer mr-3"></i>
             Picks
           </span>

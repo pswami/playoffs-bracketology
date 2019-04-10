@@ -26,7 +26,7 @@ class Browse extends React.Component {
     return (
       <Card.Container>
         <Card.Header>
-          <span className="h4">
+          <span>
             <i className="fas fa-search mr-3" />
             Browse Groups
           </span>

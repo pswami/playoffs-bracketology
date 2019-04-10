@@ -12,7 +12,7 @@ import { CURRENT_USER_QUERY } from '../../queries';
 const MyProfile = ({ currentUser }) => (
   <Card.Container>
     <Card.Header>
-      <span className="h4">
+      <span>
         <i className="fas fa-user mr-3" />
         Me
       </span>
@@ -57,7 +57,7 @@ class Me extends React.Component {
                   <br />
                   <Card.Container>
                     <Card.Header>
-                      <span className="h4">
+                      <span>
                         <i className="fas fa-home mr-3" />
                         My Groups
                       </span>

@@ -152,7 +152,7 @@ class Show extends React.Component {
                 }
                 <Card.Container>
                   <Card.Header>
-                    <span className="h4">
+                    <span>
                       <i className="fas fa-users mr-3"></i>
                       {group.name}
                     </span>
@@ -160,7 +160,7 @@ class Show extends React.Component {
                       {currentUserQuery.currentUser &&
                         <button
                           type="button"
-                          className="btn btn-primary btn-sm"
+                          className="btn btn-outline-primary btn-sm"
                           data-toggle="modal"
                           data-target="#addMemberModal"
                         >
@@ -169,7 +169,7 @@ class Show extends React.Component {
                       }
                       <button
                         type="button"
-                        className="btn btn-success btn-sm ml-2"
+                        className="btn btn-outline-success btn-sm ml-2"
                         data-toggle="modal"
                         data-target="#groupSettingsModal"
                       >
