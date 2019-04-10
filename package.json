@@ -8,11 +8,6 @@
   "devDependencies": {
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7",
-    "bcryptjs": "^2.4.3",
-    "graphql-yoga": "^1.17.4",
-    "jsonwebtoken": "^8.5.0",
-    "prisma-client-lib": "^1.29.2",
-    "request-promise": "^4.2.4"
   },
   "scripts": {
     "start": "NODE_ENV=production node index.js",
@@ -21,6 +16,11 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "graphql-yoga": "^1.17.4",
+    "jsonwebtoken": "^8.5.0",
+    "prisma-client-lib": "^1.29.2",
+    "request-promise": "^4.2.4",
     "apollo-boost": "^0.3.1",
     "apollo-link": "^1.2.10",
     "apollo-link-context": "^1.0.17",
