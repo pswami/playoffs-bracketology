@@ -3,9 +3,23 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
 
+import Loading from '../Loading';
+import Alert from '../Alert';
+
 import { LOGIN_MUTATION, CURRENT_USER_QUERY, SIGNUP_MUTATION } from '../../queries';
 
 class LoginTab extends React.Component {
+  state = {
+    loading: false,
+    errors: [],
+  };
+
+  setLoadingOff = (errors) => {
+    setTimeout(() => (
+      this.setState({ loading: false, errors })
+    ), 500);
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -13,58 +27,84 @@ class LoginTab extends React.Component {
     const email = this.email.value;
     const password = this.password.value;
 
-    login({
-      variables: { email, password },
-    }).then(({ data }) => {
-      console.log('logged in', data);
-      console.log('token set', data.login.token);
+    this.setState({ loading: true }, () => {
+      login({
+        variables: { email, password },
+      }).then(({ data }) => {
+        // console.log('logged in', data);
+        // console.log('token set', data.login.token);
 
-      localStorage.setItem('token', data.login.token);
-      this.props.data.refetch();
-      toggleModal();
-      history.push('/me');
-    }).catch(error => {
-      console.error(error.code, error.message);
-    });
+        localStorage.setItem('token', data.login.token);
+        this.props.data.refetch();
+        this.setLoadingOff([]);
+
+        toggleModal();
+        history.push('/me');
+      }).catch(error => {
+        this.setLoadingOff(error.graphQLErrors);
+      });
+    })
   };
 
   render() {
+    const { loading, errors } = this.state;
+
     return (
       <div id="login-form" className="tab-pane in active">
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              ref={input => (this.email = input)}
-              type="email"
-              className="form-control"
-              placeholder="Enter email"
-            />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              ref={input => (this.password = input)}
-              type="password"
-              className="form-control"
-              placeholder="Enter password"
-              name="pwd"
-            />
-          </div>
-          <div className="checkbox">
-            <label>
-              <input type="checkbox" name="remember" /> Remember me</label>
-          </div>
-          <div className="modal-footer">
-            <button onSubmit={this.handleSubmit} type="submit" className="btn btn-primary">Login</button>
-          </div>
-        </form>
+        <Loading isLoading={loading}>
+          {errors.length > 0 &&
+            <Alert>
+              {errors.map(error => (
+                <div key={error.message}>{error.message}</div>
+              ))}
+            </Alert>
+          }
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                ref={input => (this.email = input)}
+                type="email"
+                className="form-control"
+                placeholder="Enter email"
+              />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                ref={input => (this.password = input)}
+                type="password"
+                className="form-control"
+                placeholder="Enter password"
+                name="pwd"
+              />
+            </div>
+            <div className="checkbox">
+              <label>
+                <input type="checkbox" name="remember" /> Remember me</label>
+            </div>
+            <div className="modal-footer">
+              <button onSubmit={this.handleSubmit} type="submit" className="btn btn-primary">Login</button>
+            </div>
+          </form>
+        </Loading>
       </div>
     );
   }
 }
 
 class SignupTab extends React.Component {
+  state = {
+    loading: false,
+    errors: [],
+  };
+
+  setLoadingOff = (errors) => {
+    setTimeout(() => (
+      this.setState({ loading: false, errors })
+    ), 500);
+  }
+
   handleSubmit = e => {
     e.preventDefault();
 
@@ -73,56 +113,71 @@ class SignupTab extends React.Component {
     const email = this.email.value;
     const password = this.password.value;
 
-    signup({
-      variables: { email, password, username },
-    }).then(({ data }) => {
-      console.log('signed up', data);
-      console.log('token set', data.signup.token);
+    this.setState({ loading: true }, () => {
+      signup({
+        variables: { email, password, username },
+      }).then(({ data }) => {
+        console.log('signed up', data);
+        console.log('token set', data.signup.token);
 
-      localStorage.setItem('token', data.signup.token);
-      this.props.data.refetch();
-      toggleModal();
-      history.push('/me');
-    }).catch(error => {
-      console.error(error.code, error.message);
+        localStorage.setItem('token', data.signup.token);
+        this.props.data.refetch();
+        this.setLoadingOff([]);
+
+        toggleModal();
+        history.push('/me');
+      }).catch(error => {
+        this.setLoadingOff(error.graphQLErrors);
+      });
     });
   }
 
   render() {
+    const { loading, errors } = this.state;
+
     return (
       <div id="registration-form" className="tab-pane fade">
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label>Username</label>
-            <input
-              ref={input => (this.username = input)}
-              type="text"
-              className="form-control"
-              placeholder="Enter username"
-            />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              ref={input => (this.email = input)}
-              type="email"
-              className="form-control"
-              placeholder="Enter new email"
-            />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              ref={input => (this.password = input)}
-              type="password"
-              className="form-control"
-              placeholder="New password"
-            />
-          </div>
-          <div className="modal-footer">
-            <button onSubmit={this.handleSubmit} type="submit" className="btn btn-primary">Register</button>
-          </div>
-        </form>
+        <Loading isLoading={loading}>
+          {errors.length > 0 &&
+            <Alert>
+              {errors.map(error => (
+                <div key={error.message}>{error.message}</div>
+              ))}
+            </Alert>
+          }
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label>Username</label>
+              <input
+                ref={input => (this.username = input)}
+                type="text"
+                className="form-control"
+                placeholder="Enter username"
+              />
+            </div>
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                ref={input => (this.email = input)}
+                type="email"
+                className="form-control"
+                placeholder="Enter new email"
+              />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                ref={input => (this.password = input)}
+                type="password"
+                className="form-control"
+                placeholder="New password"
+              />
+            </div>
+            <div className="modal-footer">
+              <button onSubmit={this.handleSubmit} type="submit" className="btn btn-primary">Register</button>
+            </div>
+          </form>
+        </Loading>
       </div>
     );
   }

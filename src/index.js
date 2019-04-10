@@ -16,6 +16,9 @@ import registerServiceWorker from './registerServiceWorker';
 
 const cache = new InMemoryCache();
 
+const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
+
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
   console.log('token', token, _.operationName);
@@ -28,7 +31,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const httpLink = createHttpLink({
-  uri: '/',
+  uri: isDev ? 'http://localhost:4000' : '/',
   credentials: 'same-origin'
 });
 
