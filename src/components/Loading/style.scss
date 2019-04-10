@@ -1,3 +1,13 @@
+.page-loading-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 184px);
+
+  .loading-inner-container {
+    background: #00000033;
+  }
+}
+
 .loading-container {
   position: relative;
 }

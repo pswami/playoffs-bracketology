@@ -11,6 +11,7 @@ import SettingsModal from './SettingsModal';
 import Alert from '../../components/Alert';
 import Table from '../../components/Table';
 import Card from '../../components/Card';
+import PageLoading from '../../components/Loading/PageLoading';
 
 import { checkSeriesLocked, getWinner } from '../../utils';
 
@@ -127,6 +128,11 @@ class Show extends React.Component {
         {(groupQuery) => {
           const { loading, error, data } = groupQuery;
 
+          if (loading) {
+            return (
+              <PageLoading isLoading={loading} />
+            );
+          }
           if (!error && !loading && bracketQuery.NBABracket) {
             const bracketMap = this.mappedByRound();
             const { group } = data;
