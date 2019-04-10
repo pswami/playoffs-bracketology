@@ -117,8 +117,8 @@ class SignupTab extends React.Component {
       signup({
         variables: { email, password, username },
       }).then(({ data }) => {
-        console.log('signed up', data);
-        console.log('token set', data.signup.token);
+        // console.log('signed up', data);
+        // console.log('token set', data.signup.token);
 
         localStorage.setItem('token', data.signup.token);
         this.props.data.refetch();

@@ -21,7 +21,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
-  console.log('token', token, _.operationName);
+  // console.log('token', token, _.operationName);
   return {
     headers: {
       ...headers,
