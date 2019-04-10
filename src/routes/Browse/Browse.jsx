@@ -28,7 +28,7 @@ class Browse extends React.Component {
         <Card.Header>
           <span>
             <i className="fas fa-search mr-3" />
-            Browse Groups
+            Groups
           </span>
           <div className="form-group m-0 float-right">
             <input

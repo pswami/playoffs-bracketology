@@ -14,8 +14,8 @@
 
 MVP
 - [ ] Landing page
-- [ ] Mobile-Friendly
-  - [ ] Card header mobile
+- [X] Mobile-Friendly
+  - [X] Card header mobile
 - [X] show page loading
 - [X] Log in loading
 - [X] Hard Refresh page
