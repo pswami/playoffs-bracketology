@@ -2,6 +2,7 @@ import React from 'react';
 import { Query } from "react-apollo";
 
 import Card from '../../components/Card';
+import Loading from '../../components/Loading';
 import { GroupsTable } from '../../components/Table';
 
 import { GROUPS_QUERY } from '../../queries';
@@ -37,24 +38,29 @@ class Search extends React.Component {
             />
           </div>
         </Card.Header>
-        <Query query={GROUPS_QUERY} fetchPolicy="network-only">
-          {({ loading, error, data }) => {
-            if (!error && !loading) {
-              const filteredGroups = this.filterGroups(data.groups);
+        <Card.Body>
+          <Query query={GROUPS_QUERY} fetchPolicy="network-only">
+            {({ loading, error, data }) => {
+              if (loading) {
+                return(
+                  <Loading isLoading={loading} />
+                );
+              }
+              if (!error && !loading) {
+                const filteredGroups = this.filterGroups(data.groups);
 
-              return (
-                <Card.Body>
+                return (
                   <GroupsTable
                     groups={filteredGroups}
                     showCount
                   />
-                </Card.Body>
-              );
-            }
+                );
+              }
 
-            return null;
-          }}
-        </Query>
+              return null;
+            }}
+          </Query>
+        </Card.Body>
       </Card.Container>
     );
   }
