@@ -200,7 +200,7 @@ class MyPicks extends React.Component {
           </span>
         </Card.Header>
         <Card.Body>
-          <Query query={PICKS_QUERY} variables={{
+          <Query query={PICKS_QUERY} fetchPolicy="network-only" variables={{
             userIds: [currentUser.id],
             type: "round-by-round",
             sport: "nba",
@@ -258,6 +258,6 @@ MyPicks.propTypes = {
 };
 
 export default compose(
-  graphql(NBA_BRACKETS_QUERY, { name: 'bracketQuery' }),
+  graphql(NBA_BRACKETS_QUERY, { name: 'bracketQuery', options: { fetchPolicy: 'network-only' } }),
   graphql(PICK_MUTATION, { name: 'setPick' }),
 )(MyPicks);
