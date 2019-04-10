@@ -7,7 +7,7 @@ import { GroupsTable } from '../../components/Table';
 
 import { GROUPS_QUERY } from '../../queries';
 
-class Search extends React.Component {
+class Browse extends React.Component {
   state = {
     query: '',
   };
@@ -66,4 +66,4 @@ class Search extends React.Component {
   }
 }
 
-export default Search;
+export default Browse;

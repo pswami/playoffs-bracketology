@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import Home from './routes/Home/Home';
 import Me from './routes/Account/Me';
 // import Landing from './routes/Bracket/Landing';
-import Search from './routes/Search';
+import Browse from './routes/Browse';
 // import Create from './routes/Group/Create';
 import Show from './routes/Group/Show';
 import GroupCreate from './routes/Group/Create';
@@ -51,7 +51,7 @@ class App extends Component {
               <Switch>
                 <RouteProps exact path='/' Component={Home} />
                 <RouteProps path='/me' Component={Me} />
-                <RouteProps path='/browse' Component={Search} />
+                <RouteProps path='/browse' Component={Browse} />
                 <RouteProps path='/group/create' Component={GroupCreate} />
                 <RouteProps path='/group/:groupId' Component={Show} />
               </Switch>
