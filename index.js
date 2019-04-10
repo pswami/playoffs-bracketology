@@ -15,9 +15,10 @@ const server = new GraphQLServer({
   },
 });
 
-server.express.get(server.options.endpoint, (req, res, done) => {
+server.express.use(express.static(paths.appBuild));
+
+server.express.get("/*", (req, res, done) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  server.express.use(express.static(paths.appBuild));
   res.sendFile(paths.appBuild + '/index.html');
 })
 
