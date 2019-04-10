@@ -2,9 +2,6 @@
   "name": "nba_playoffs_bracketology",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "8.10.0"
-  },
   "devDependencies": {
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7"
