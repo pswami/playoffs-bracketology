@@ -2,7 +2,6 @@
 - https://data.nba.net/prod/v1/2016/playoffsBracket.json
 - [ ] ~invite users~
 - [ ] fill in secrets
-- [X] create groups
 - [ ] notifications
 - [ ] lots of refactor
 - [ ] Error States
@@ -14,6 +13,7 @@
 
 MVP
 - [ ] Landing page
+- [X] create groups
 - [X] Mobile-Friendly
   - [X] Card header mobile
 - [X] show page loading

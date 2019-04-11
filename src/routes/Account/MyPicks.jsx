@@ -169,7 +169,7 @@ class MyPicks extends React.Component {
 
     if (NBABracket) {
       return NBABracket.reduce((acc, series) => {
-        if (checkSeriesLocked(series)) {
+        if (!checkSeriesLocked(series)) {
           acc[series.roundNum].push(series);
         }
         return acc;
@@ -211,13 +211,13 @@ class MyPicks extends React.Component {
 
                 return (
                   <Loading isLoading={loading}>
-                    {picks && (
+                    {(
                       <React.Fragment>
                         {error && <div className="alert alert-danger" role="alert">{error}</div>}
                           <form onSubmit={this.handleSubmit}>
                             {Object.keys(bracketMap).map(roundNum => {
                               const seriesArr = bracketMap[roundNum];
-                              const pickBySeries = this.getPickBySeries(picks);
+                              const pickBySeries = picks ? this.getPickBySeries(picks) : {};
 
                               return (
                                 <React.Fragment key={`round-${roundNum}`}>

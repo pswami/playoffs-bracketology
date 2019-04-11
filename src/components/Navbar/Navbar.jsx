@@ -94,6 +94,9 @@ class Navbar extends React.Component {
                           <a className="nav-link"  href="#login-form" data-toggle="modal" data-target="#login-register-modal">Create Group</a>
                         }
                       </li>
+                      <li className="nav-item">
+                        <a className="nav-link" onClick={() => alert('work in progress')}>Leaderboard</a>
+                      </li>
                     </ul>
                     <div className="form-inline my-2 my-lg-0">
                       {currentUser ?
