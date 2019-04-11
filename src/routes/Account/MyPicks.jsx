@@ -159,7 +159,7 @@ class MyPicks extends React.Component {
       }]
     })
     .then(() => {
-      swal('Sucessfully Updated', '', 'success');
+      swal('Sucessfully Updated', 'If you have not already joined a group, Navigate to the Browse page and join a group', 'success');
     })
     .catch(() => swal('Failed', 'Please try again', 'error'))
   }
