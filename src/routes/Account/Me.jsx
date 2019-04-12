@@ -64,7 +64,7 @@ class Me extends React.Component {
                     </Card.Header>
                     <Card.Body>
                       <React.Fragment>
-                        {currentUser ? <GroupsTable groups={currentUser.groups} /> : null}
+                        {currentUser ? <GroupsTable groups={currentUser.groups} singleTable /> : null}
                       </React.Fragment>
                     </Card.Body>
                   </Card.Container>

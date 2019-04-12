@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import Table from '../../components/Table';
 
-const GroupsTable = ({ showCount, groups, history }) => {
+const GroupsTable = ({ showCount, groups, history, singleTable }) => {
   const handleSubmit = groupId => () => {
     history.push(`/group/${groupId}`);
   };
@@ -16,6 +16,31 @@ const GroupsTable = ({ showCount, groups, history }) => {
       'Work in Progress',
     );
   };
+
+  if (singleTable) {
+    return (
+      <Table.Container hoverable>
+          <Table.Head>
+            <Table.Row>
+              <Table.Header>Name</Table.Header>
+              {showCount &&
+                <Table.Header className="text-center" style={{ width: '102px' }}>Members</Table.Header>
+              }
+            </Table.Row>
+          </Table.Head>
+          <tbody>
+            {groups.map(group =>
+              <Table.Row key={group.id} onClick={handleSubmit(group.id)}>
+                <Table.Col>{group.name}</Table.Col>
+                {showCount &&
+                  <Table.Col className="text-center">{group.users.length}</Table.Col>
+                }
+              </Table.Row>
+            )}
+          </tbody>
+        </Table.Container>
+    );
+  }
 
   return (
     <React.Fragment>
