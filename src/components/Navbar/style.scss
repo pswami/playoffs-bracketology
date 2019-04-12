@@ -4,9 +4,13 @@
 
 .navbar-brand {
   font-size: 1.3rem;
+}
+
+.title-block {
   font-family: 'Black Han Sans', sans-serif;
   text-transform: uppercase;
   text-shadow: 2px 2px 1px black;
+  white-space: nowrap;
 }
 
 .bracket-sign {

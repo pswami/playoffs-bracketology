@@ -1,4 +1,28 @@
+.welcome-h1 {
+  font-size: 3rem;
+}
+
 .welcome-image {
   width: 128px;
   height: 128px;
+}
+
+.bracket-image {
+  width: 200px;
+  height: 200px;
+}
+
+.news-card-body {
+  min-height: 200px;
+}
+
+.welcome-title-block {
+  white-space: nowrap;
+  font-size: 1.8rem;
+}
+
+@media (max-width: 575.98px) {
+  .welcome-title-block {
+    font-size: 1.5rem;
+  }
 }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 export const Container = ({ children, className, variant }) => (
-  <div className={`card text-white bg-${variant}`}>{children}</div>
+  <div className={`card text-white bg-${variant} ${className}`}>{children}</div>
 );
 
 Container.propTypes = {

@@ -5,13 +5,48 @@ import { Link } from 'react-router-dom';
 import pencil from './pencil.svg';
 import trophy from './trophy.svg';
 import group from './group.svg';
+// import bracket from './bracket.svg';
 import Card from '../../components/Card';
-import Jumbotron from '../../components/Jumbotron';
 
 import './style.scss';
 
+const i18n = {
+  bracketology: 'Bracketology'
+};
+
 const Home = () => (
   <div>
+    <div class="row justify-content-between mb-4">
+      <div className="col-lg-6 col-xs-9">
+        <Card.Container className="news-card-body">
+          <Card.Body className="text-center">
+            <React.Fragment>
+              <p className="title-block welcome-title-block"><span className="bracket-sign left">{'['}</span> {i18n.bracketology} <span className="bracket-sign right">{']'}</span></p>
+              <p className="mt-4 h3">A platform to create brackets on a round-by-round basis</p>
+            </React.Fragment>
+          </Card.Body>
+        </Card.Container>
+        <br />
+      </div>
+      <div className="col-lg-6 d-sm-none d-md-none d-lg-block">
+        <Card.Container className="news-card-body">
+          <Card.Header>News</Card.Header>
+          <Card.Body>
+            <ul>
+              <li className="h5">
+                First Round picks are now live!
+              </li>
+              <li className="h5">
+                UI/UX is a work in progress
+              </li>
+              <li className="h5">
+                NFL and MLB coming soon
+              </li>
+            </ul>
+          </Card.Body>
+        </Card.Container>
+      </div>
+    </div>
     <div className="row">
       <div className="col-lg-4">
         <Link to="/me" className="hover-grow no-underline">
