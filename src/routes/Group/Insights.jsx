@@ -9,6 +9,7 @@ import { checkSeriesLocked, roundNames } from '../../utils';
 
 import teams_by_tri from '../../data/teams_by_tri.json';
 
+import Loading from '../../components/Loading';
 import Card from '../../components/Card';
 
 import './style.scss';
@@ -83,7 +84,7 @@ class Insights extends React.Component {
             Insights
           </span>
           <div className="float-right">
-            <Tippy content="Only shows once series has been started or group contains more than 10 users">
+            <Tippy content="Insights will be visible once series have started or if group contains more than 10 users">
               <i className="fas fa-info-circle" />
             </Tippy>
           </div>
@@ -96,6 +97,12 @@ class Insights extends React.Component {
             year: 2019
           }}>
           {({ loading, error, data }) => {
+            if (loading) {
+              return(
+                <Loading isLoading={loading} />
+              );
+            }
+            
             if (data.picks) {
 
               return (
