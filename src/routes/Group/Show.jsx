@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import { withRouter } from 'react-router-dom';
 import { Query, graphql, compose } from "react-apollo";
 
@@ -160,7 +161,10 @@ class Show extends React.Component {
                       {currentUserQuery.currentUser &&
                         <button
                           type="button"
-                          className="btn btn-outline-primary btn-sm"
+                          className={cx('btn', 'btn-sm', {
+                            'btn-outline-success': !isUserInGroup,
+                            'btn-outline-danger': isUserInGroup,
+                          })}
                           data-toggle="modal"
                           data-target="#addMemberModal"
                         >
@@ -169,7 +173,7 @@ class Show extends React.Component {
                       }
                       <button
                         type="button"
-                        className="btn btn-outline-success btn-sm ml-2"
+                        className="btn btn-outline-primary btn-sm ml-2"
                         data-toggle="modal"
                         data-target="#groupSettingsModal"
                       >

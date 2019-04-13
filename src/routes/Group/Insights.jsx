@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tippy from '@tippy.js/react';
 import { withRouter } from 'react-router-dom';
 import { graphql, compose, Query } from 'react-apollo';
 
@@ -81,6 +82,11 @@ class Insights extends React.Component {
             <i className="fas fa-chart-bar mr-3" />
             Insights
           </span>
+          <div className="float-right">
+            <Tippy content="Only shows once series has been started or group contains more than 10 users">
+              <i className="fas fa-info-circle" />
+            </Tippy>
+          </div>
         </Card.Header>
         <Card.Body>
           <Query query={PICKS_QUERY} fetchPolicy="network-only" variables={{
@@ -108,7 +114,7 @@ class Insights extends React.Component {
                           {seriesArr.map(series => {
                             const percentItem = percentTable[series.seriesId];
 
-                            if (percentItem && checkSeriesLocked(series)) {
+                            if (percentItem && (checkSeriesLocked(series) || users.length > 10)) {
                               const namesArr = Object.keys(percentItem);
 
                               return (
