@@ -36,3 +36,12 @@ export const getWinner = (series) => {
     games: totalGames.toString()
   };
 };
+
+export const checkUserInGroup = (currentUser, users) => {
+  if(currentUser) {
+    return users.some(user => user.email === currentUser.email);
+  }
+
+  return false;
+};
+
