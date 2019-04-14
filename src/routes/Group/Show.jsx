@@ -110,7 +110,7 @@ class Show extends React.Component {
 
     if (NBABracket) {
       return NBABracket.reduce((acc, series) => {
-        if (!checkSeriesLocked(series)) {
+        if (checkSeriesLocked(series)) {
           acc[series.roundNum].push(series);
         }
         return acc;
