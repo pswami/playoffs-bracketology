@@ -34,7 +34,7 @@ const Home = () => (
           <Card.Body>
             <ul>
               <li className="h5">
-                First Round picks are now live!
+                First Round picks are now locked!
               </li>
               <li className="h5">
                 UI/UX is a work in progress
