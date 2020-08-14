@@ -93,7 +93,7 @@ export const GROUPS_QUERY = gql`
 `;
 
 export const GROUP_QUERY = gql`
-  query group($id: ID!) {
+  query group($id: ID!, $year: Int) {
     group(id: $id) {
       id
       name
@@ -104,12 +104,13 @@ export const GROUP_QUERY = gql`
         id
         username
         email
-        picks {
+        picks(where: { year: $year }) {
           id
           team
           wins
           seriesId
           round
+          year
         }
       }
 
