@@ -74,7 +74,7 @@ class Insights extends React.Component {
   }
 
   render() {
-    const { users, bracketMap } = this.props;
+    const { users, bracketMap, selectedYear } = this.props;
 
     return(
       <Card.Container>
@@ -94,7 +94,7 @@ class Insights extends React.Component {
             userIds: users.map(user => user.id),
             type: "round-by-round",
             sport: "nba",
-            year: 2019
+            year: selectedYear
           }}>
           {({ loading, error, data }) => {
             if (loading) {
@@ -102,7 +102,6 @@ class Insights extends React.Component {
                 <Loading isLoading={loading} />
               );
             }
-            
             if (data.picks) {
 
               return (

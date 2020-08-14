@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { withRouter } from 'react-router-dom';
@@ -104,9 +104,12 @@ const TeamTable = ({ group, users, brackets }) => {
   );
 };
 
-class Show extends React.Component {
-  mappedByRound = () => {
-    const { NBABracket } = this.props.bracketQuery;
+const Show = ({ currentUserQuery, bracketQuery, match }) => {
+  const [selectedYear, setYear] = useState(2020);
+  const { groupId } = match.params;
+
+  const mappedByRound = () => {
+    const { NBABracket } = bracketQuery;
 
     if (NBABracket) {
       return NBABracket.reduce((acc, series) => {
@@ -119,96 +122,98 @@ class Show extends React.Component {
     return { 1: [], 2: [], 3: [], 4: [] };
   }
 
-  render() {
-    const { currentUserQuery, bracketQuery, match } = this.props;
-    const { groupId } = match.params;
 
-    return (
-      <Query query={GROUP_QUERY} variables={{ id: groupId }}>
-        {(groupQuery) => {
-          const { loading, error, data } = groupQuery;
+  return (
+    <Query query={GROUP_QUERY} variables={{ id: groupId, year: selectedYear }}>
+      {(groupQuery) => {
+        const { loading, error, data } = groupQuery;
 
-          if (loading) {
-            return (
-              <PageLoading isLoading={loading} />
-            );
-          }
-          if (!error && !loading && bracketQuery.NBABracket) {
-            const bracketMap = this.mappedByRound();
-            const { group } = data;
-            const { users } = group;
-            const isUserInGroup = checkUserInGroup(currentUserQuery.currentUser, users);
+        if (loading) {
+          return (
+            <PageLoading isLoading={loading} />
+          );
+        }
+        if (!error && !loading && bracketQuery.NBABracket) {
+          const bracketMap = mappedByRound();
+          const { group } = data;
+          const { users } = group;
+          const isUserInGroup = checkUserInGroup(currentUserQuery.currentUser, users);
 
-            return (
-              <React.Fragment>
-                {currentUserQuery.currentUser &&
-                  <AddMemberModal isUserInGroup={isUserInGroup} groupQuery={groupQuery} />
-                }
-                <SettingsModal group={group} />
-                {group.private &&
-                  <Alert>
-                    {i18n.private_group_message}
-                  </Alert>
-                }
-                <Card.Container>
-                  <Card.Header>
-                    <span>
-                      <i className="fas fa-users mr-3"></i>
-                      {group.name}
-                    </span>
-                    <div className="float-right">
-                      {currentUserQuery.currentUser &&
-                        <button
-                          type="button"
-                          className={cx('btn', 'btn-sm', {
-                            'btn-outline-success': !isUserInGroup,
-                            'btn-outline-danger': isUserInGroup,
-                          })}
-                          data-toggle="modal"
-                          data-target="#addMemberModal"
-                        >
-                          {isUserInGroup ? <span>Leave</span> : <span>+ Join</span>}
-                        </button>
-                      }
+          return (
+            <React.Fragment>
+              {currentUserQuery.currentUser &&
+                <AddMemberModal isUserInGroup={isUserInGroup} groupQuery={groupQuery} />
+              }
+              <SettingsModal group={group} />
+              {group.private &&
+                <Alert>
+                  {i18n.private_group_message}
+                </Alert>
+              }
+              <Alert>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button type="button" onClick={() => setYear(2020)} class="btn btn-secondary">2020</button>
+                  <button type="button" onClick={() => setYear(2019)} class="btn btn-secondary">2019</button>
+                </div>
+              </Alert>
+              <Card.Container>
+                <Card.Header>
+                  <span>
+                    <i className="fas fa-users mr-3"></i>
+                    {group.name}
+                  </span>
+                  <div className="float-right">
+                    {currentUserQuery.currentUser &&
                       <button
                         type="button"
-                        className="btn btn-outline-primary btn-sm ml-2"
+                        className={cx('btn', 'btn-sm', {
+                          'btn-outline-success': !isUserInGroup,
+                          'btn-outline-danger': isUserInGroup,
+                        })}
                         data-toggle="modal"
-                        data-target="#groupSettingsModal"
+                        data-target="#addMemberModal"
                       >
-                        <i className="fas fa-info-circle" />
+                        {isUserInGroup ? <span>Leave</span> : <span>+ Join</span>}
                       </button>
-                    </div>
-                  </Card.Header>
-                  <Card.Body>
-                    {Object.keys(users).length > 0 &&
-                      <TeamTable
-                        users={users}
-                        group={group}
-                        brackets={bracketQuery.NBABracket}
-                      />
                     }
-                  </Card.Body>
-                </Card.Container>
-                <br />
-                <div className="row">
-                  <div className="col-lg-6">
-                    <AllPicks {...{ group, users, bracketMap }} />
-                    <br />
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm ml-2"
+                      data-toggle="modal"
+                      data-target="#groupSettingsModal"
+                    >
+                      <i className="fas fa-info-circle" />
+                    </button>
                   </div>
-                  <div className="col-lg-6">
-                    {<Insights  {...{ users, bracketMap }} />}
-                  </div>
+                </Card.Header>
+                <Card.Body>
+                  {Object.keys(users).length > 0 &&
+                    <TeamTable
+                      users={users}
+                      group={group}
+                      brackets={bracketQuery.NBABracket}
+                    />
+                  }
+                </Card.Body>
+              </Card.Container>
+              <br />
+              <div className="row">
+                <div className="col-lg-6">
+                  <AllPicks {...{ group, users, bracketMap, selectedYear }} />
+                  <br />
                 </div>
-              </React.Fragment>
-            );
-          }
+                <div className="col-lg-6">
+                  {<Insights  {...{ users, bracketMap, selectedYear }} />}
+                </div>
+              </div>
+            </React.Fragment>
+          );
+        }
 
-          return null;
-        }}
-      </Query>
-    );
-  }
+        return null;
+      }}
+    </Query>
+  );
 }
 
 Show.propTypes = {
