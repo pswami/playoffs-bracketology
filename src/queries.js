@@ -127,18 +127,20 @@ export const PICK_MUTATION = gql`
       seriesId
       team
       wins
+      year
     }
   }
 `;
 
 export const PICKS_QUERY = gql`
   query picks($userIds: [ID!], $type: String!, $sport: String!, $year: Int!) {
-    picks(where: { user: { id_in: $userIds }, type: $type, sport: $sport, year: $year,  }) {
+    picks(where: { user: { id_in: $userIds }, type: $type, sport: $sport, year: $year }) {
       id
       team
       wins
       seriesId
       round
+      year
       user {
         id
         username

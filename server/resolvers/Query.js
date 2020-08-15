@@ -2,7 +2,7 @@ const { getUserId } = require('../utils')
 const rp = require('request-promise');
 
 
-const NBA_BRACKETS_URL = 'https://data.nba.net/prod/v1/2018/playoffsBracket.json';
+const NBA_BRACKETS_URL = 'https://data.nba.net/prod/v1/2019/playoffsBracket.json';
 
 const Query = {
   group(parent, args, ctx, info) {

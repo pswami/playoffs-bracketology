@@ -15,6 +15,8 @@ import { NBA_BRACKETS_QUERY, PICKS_QUERY, PICK_MUTATION } from '../../queries';
 
 import './style.scss';
 
+const currentYear = new Date().getFullYear();
+
 class TeamOption extends React.Component {
   constructor(props) {
     super(props);
@@ -46,7 +48,7 @@ class TeamOption extends React.Component {
     round: parseInt(this.props.series.roundNum, 10),
     type: 'round-by-round',
     sport: 'nba',
-    year: 2019,
+    year: currentYear,
   })
 
   isFilled = () => !!(this.state.team && this.state.wins)
@@ -154,7 +156,7 @@ class MyPicks extends React.Component {
           userIds: [currentUser.id],
           type: "round-by-round",
           sport: "nba",
-          year: 2019,
+          year: currentYear,
         },
       }]
     })
@@ -204,7 +206,7 @@ class MyPicks extends React.Component {
             userIds: [currentUser.id],
             type: "round-by-round",
             sport: "nba",
-            year: 2019,
+            year: currentYear,
           }}>
             {({ loading, error, data }) => {
               const { picks } = data;
