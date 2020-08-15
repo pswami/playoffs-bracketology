@@ -150,7 +150,7 @@ export const PICKS_QUERY = gql`
 `;
 
 export const NBA_BRACKETS_QUERY = gql`
-  query {
-    NBABracket
+  query($year: Int) {
+    NBABracket(year: $year)
   }
 `;

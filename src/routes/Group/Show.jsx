@@ -18,6 +18,7 @@ import { checkSeriesLocked, getWinner, checkUserInGroup } from '../../utils';
 
 import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY } from '../../queries';
 
+const availableYears = [2020, 2019];
 
 const i18n = {
   private_group_message: <div>To share private group (Temporary Solution): Send <a href={window.location}>group URL</a> to friends and click "Join"</div>,
@@ -108,6 +109,16 @@ const Show = ({ currentUserQuery, bracketQuery, match }) => {
   const [selectedYear, setYear] = useState(2020);
   const { groupId } = match.params;
 
+  const changeYear = (year) => {
+    setYear(year);
+    // bracketQuery.updateQuery(() => ({
+    //   options: { variables: { year: selectedYear } },
+    // }));
+    bracketQuery.refetch({ year: year - 1 });
+  };
+
+  console.log(bracketQuery)
+
   const mappedByRound = () => {
     const { NBABracket } = bracketQuery;
 
@@ -152,8 +163,9 @@ const Show = ({ currentUserQuery, bracketQuery, match }) => {
               }
               <Alert>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" onClick={() => setYear(2020)} class="btn btn-secondary">2020</button>
-                  <button type="button" onClick={() => setYear(2019)} class="btn btn-secondary">2019</button>
+                  {availableYears.map(year => (
+                    <button type="button" onClick={() => changeYear(year)} class="btn btn-secondary">{year}</button>
+                  ))}
                 </div>
               </Alert>
               <Card.Container>

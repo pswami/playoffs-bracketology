@@ -8,7 +8,7 @@ type Query {
   groupsForUser(userId: ID!): [Group!]!
   group(id: ID!): Group
   picks(where: PickWhereInput): [Pick!]!
-  NBABracket: JSON!
+  NBABracket(year: Int): JSON!
   currentUser: User
 }
 
