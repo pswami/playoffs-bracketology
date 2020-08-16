@@ -3,6 +3,7 @@ const { prisma } = require('./server/generated/prisma-client')
 const { GraphQLServer } = require('graphql-yoga')
 const resolvers = require('./server/resolvers')
 const paths   = require('./config/paths');
+const hsp   = require('heroku-self-ping')
 
 const server = new GraphQLServer({
   typeDefs: './server/schema.graphql',
@@ -14,11 +15,6 @@ const server = new GraphQLServer({
     }
   },
 });
-
-server.express.get("/wakemydyno.txt", (req, res, done) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.sendFile(paths.appPublic + '/wakemydyno.txt');
-})
 
 server.express.use(express.static(paths.appBuild));
 
@@ -33,5 +29,6 @@ const options = {
   playground: '/playground',
 };
 
+hsp.default("https://bracketology-beta.herokuapp.com/");
 
 server.start(options, (url) => console.log(`Server is running on`, url))

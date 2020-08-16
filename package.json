@@ -45,6 +45,7 @@
     "file-loader": "1.1.5",
     "fs-extra": "3.0.1",
     "graphql-yoga": "^1.17.4",
+    "heroku-self-ping": "^2.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "jsonwebtoken": "^8.5.0",
