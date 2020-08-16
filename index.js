@@ -15,6 +15,11 @@ const server = new GraphQLServer({
   },
 });
 
+server.express.get("/wakemydyno.txt", (req, res, done) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.sendFile(paths.appPublic + '/wakemydyno.txt');
+})
+
 server.express.use(express.static(paths.appBuild));
 
 server.express.get("/*", (req, res, done) => {
