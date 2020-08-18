@@ -2,8 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { Query } from "react-apollo";
 
 import Table from '../../components/Table';
+import { CURRENT_USER_QUERY } from '../../queries';
+import { checkUserInGroup } from '../../utils';
 
 const GroupsTable = ({ showCount, groups, history, singleTable }) => {
   const handleSubmit = groupId => () => {
@@ -77,15 +80,29 @@ const GroupsTable = ({ showCount, groups, history, singleTable }) => {
           </Table.Row>
         </Table.Head>
         <tbody>
-          {groups.map(group =>
-            group.private &&
-              <Table.Row key={group.id} onClick={handleRequest(group.id)}>
-                <Table.Col>{group.name}</Table.Col>
-                {showCount &&
-                  <Table.Col className="text-center">{group.users.length}</Table.Col>
-                }
-              </Table.Row>
-          )}
+        <Query query={CURRENT_USER_QUERY}>
+          {({ loading, error, data }) => {
+            let currentUser;
+
+            try {
+              currentUser = data.currentUser;
+            } catch(e) {
+              currentUser = undefined;
+            }
+
+            return (
+              groups.map(group =>
+                group.private &&
+                  <Table.Row key={group.id} onClick={checkUserInGroup(currentUser, group.users) ? handleSubmit(group.id) : handleRequest(group.id)}>
+                    <Table.Col>{group.name}</Table.Col>
+                    {showCount &&
+                      <Table.Col className="text-center">{group.users.length}</Table.Col>
+                    }
+                  </Table.Row>
+              )
+            );
+          }}
+        </Query>
         </tbody>
       </Table.Container>
     </React.Fragment>
