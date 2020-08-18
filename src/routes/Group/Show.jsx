@@ -14,7 +14,7 @@ import Table from '../../components/Table';
 import Card from '../../components/Card';
 import PageLoading from '../../components/Loading/PageLoading';
 
-import { checkSeriesLocked, getWinner, checkUserInGroup } from '../../utils';
+import { getWinner, checkUserInGroup } from '../../utils';
 
 import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY } from '../../queries';
 
