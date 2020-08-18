@@ -41,7 +41,8 @@ const mapById = (items) => (
 class AllPicks extends React.Component {
   renderPicks(picks, numUsers) {
     const { users, bracketMap } = this.props;
-    const picksTable = getUsersPicks(picks, users);
+    const filteredUsers = users.filter(user => user.picks.length > 0);
+    const picksTable = getUsersPicks(picks, filteredUsers);
     const seriesIds = Object.keys(picksTable || {});
 
     return (
@@ -110,7 +111,8 @@ class AllPicks extends React.Component {
 
   render() {
     const { users, selectedYear } = this.props;
-    const numUsers = Object.keys(users).length;
+    const filteredUsers = users.filter(user => user.picks.length > 0);
+    const numUsers = Object.keys(filteredUsers).length;
 
     return (
       <Card.Container>
@@ -127,7 +129,7 @@ class AllPicks extends React.Component {
         </Card.Header>
         <Card.Body>
           <Query query={PICKS_QUERY} fetchPolicy="network-only" variables={{
-            userIds: users.map(user => user.id),
+            userIds: filteredUsers.map(user => user.id),
             type: "round-by-round",
             sport: "nba",
             year: selectedYear
@@ -145,7 +147,7 @@ class AllPicks extends React.Component {
                     <Table.Head>
                       {numUsers > 0 &&
                         <Table.Row>
-                          {users.map(user =>
+                          {filteredUsers.map(user =>
                             <Table.Header key={user.id}>{user.username}</Table.Header>
                           )}
                         </Table.Row>

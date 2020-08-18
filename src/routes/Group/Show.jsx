@@ -148,7 +148,8 @@ const Show = ({ currentUserQuery, bracketQuery, match }) => {
           const bracketMap = mappedByRound();
           const { group } = data;
           const { users } = group;
-          const isUserInGroup = checkUserInGroup(currentUserQuery.currentUser, users);
+          const filteredUsers = users.filter(user => user.picks.length > 0);
+          const isUserInGroup = checkUserInGroup(currentUserQuery.currentUser, filteredUsers);
 
           return (
             <React.Fragment>
@@ -199,9 +200,9 @@ const Show = ({ currentUserQuery, bracketQuery, match }) => {
                   </div>
                 </Card.Header>
                 <Card.Body>
-                  {Object.keys(users).length > 0 &&
+                  {Object.keys(filteredUsers).length > 0 &&
                     <TeamTable
-                      users={users}
+                      users={filteredUsers}
                       group={group}
                       brackets={bracketQuery.NBABracket}
                     />
