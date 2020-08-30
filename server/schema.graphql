@@ -15,6 +15,7 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, username: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
+  googleSSO(email: String!, password: String!, info: JSON!): AuthPayload!
   createGroup(data: GroupCreateInput!): Group!
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group!
   joinGroup(groupId: ID!, userId: ID!): Group!
@@ -35,6 +36,7 @@ type User {
   updatedAt: DateTime!
   email: String!
   username: String!
+  sso: String
   groups: [Group]
   picks(where: PickWhereInput): [Pick!]!
 }

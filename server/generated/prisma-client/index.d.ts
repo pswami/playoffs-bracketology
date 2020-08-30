@@ -201,7 +201,9 @@ export type UserOrderByInput =
   | "password_ASC"
   | "password_DESC"
   | "username_ASC"
-  | "username_DESC";
+  | "username_DESC"
+  | "sso_ASC"
+  | "sso_DESC";
 
 export type GroupOrderByInput =
   | "id_ASC"
@@ -462,6 +464,7 @@ export interface UserUpdateWithoutGroupsDataInput {
   email?: String;
   password?: String;
   username?: String;
+  sso?: String;
   picks?: PickUpdateManyWithoutUserInput;
 }
 
@@ -469,6 +472,7 @@ export interface UserUpdateInput {
   email?: String;
   password?: String;
   username?: String;
+  sso?: String;
   groups?: GroupUpdateManyWithoutUsersInput;
   picks?: PickUpdateManyWithoutUserInput;
 }
@@ -682,6 +686,7 @@ export interface UserUpdateWithoutPicksDataInput {
   email?: String;
   password?: String;
   username?: String;
+  sso?: String;
   groups?: GroupUpdateManyWithoutUsersInput;
 }
 
@@ -874,6 +879,20 @@ export interface UserWhereInput {
   username_not_starts_with?: String;
   username_ends_with?: String;
   username_not_ends_with?: String;
+  sso?: String;
+  sso_not?: String;
+  sso_in?: String[] | String;
+  sso_not_in?: String[] | String;
+  sso_lt?: String;
+  sso_lte?: String;
+  sso_gt?: String;
+  sso_gte?: String;
+  sso_contains?: String;
+  sso_not_contains?: String;
+  sso_starts_with?: String;
+  sso_not_starts_with?: String;
+  sso_ends_with?: String;
+  sso_not_ends_with?: String;
   groups_every?: GroupWhereInput;
   groups_some?: GroupWhereInput;
   groups_none?: GroupWhereInput;
@@ -958,6 +977,20 @@ export interface UserScalarWhereInput {
   username_not_starts_with?: String;
   username_ends_with?: String;
   username_not_ends_with?: String;
+  sso?: String;
+  sso_not?: String;
+  sso_in?: String[] | String;
+  sso_not_in?: String[] | String;
+  sso_lt?: String;
+  sso_lte?: String;
+  sso_gt?: String;
+  sso_gte?: String;
+  sso_contains?: String;
+  sso_not_contains?: String;
+  sso_starts_with?: String;
+  sso_not_starts_with?: String;
+  sso_ends_with?: String;
+  sso_not_ends_with?: String;
   AND?: UserScalarWhereInput[] | UserScalarWhereInput;
   OR?: UserScalarWhereInput[] | UserScalarWhereInput;
   NOT?: UserScalarWhereInput[] | UserScalarWhereInput;
@@ -967,6 +1000,7 @@ export interface UserCreateInput {
   email: String;
   password: String;
   username: String;
+  sso?: String;
   groups?: GroupCreateManyWithoutUsersInput;
   picks?: PickCreateManyWithoutUserInput;
 }
@@ -990,6 +1024,7 @@ export interface UserUpdateManyDataInput {
   email?: String;
   password?: String;
   username?: String;
+  sso?: String;
 }
 
 export interface GroupUpsertWithWhereUniqueWithoutUsersInput {
@@ -1062,6 +1097,7 @@ export interface UserCreateWithoutPicksInput {
   email: String;
   password: String;
   username: String;
+  sso?: String;
   groups?: GroupCreateManyWithoutUsersInput;
 }
 
@@ -1189,12 +1225,14 @@ export interface UserUpdateManyMutationInput {
   email?: String;
   password?: String;
   username?: String;
+  sso?: String;
 }
 
 export interface UserCreateWithoutGroupsInput {
   email: String;
   password: String;
   username: String;
+  sso?: String;
   picks?: PickCreateManyWithoutUserInput;
 }
 
@@ -1214,6 +1252,7 @@ export interface UserPreviousValues {
   email: String;
   password: String;
   username: String;
+  sso?: String;
 }
 
 export interface UserPreviousValuesPromise
@@ -1225,6 +1264,7 @@ export interface UserPreviousValuesPromise
   email: () => Promise<String>;
   password: () => Promise<String>;
   username: () => Promise<String>;
+  sso: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -1236,6 +1276,7 @@ export interface UserPreviousValuesSubscription
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   username: () => Promise<AsyncIterator<String>>;
+  sso: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateGroup {
@@ -1261,6 +1302,7 @@ export interface User {
   email: String;
   password: String;
   username: String;
+  sso?: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -1270,6 +1312,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   email: () => Promise<String>;
   password: () => Promise<String>;
   username: () => Promise<String>;
+  sso: () => Promise<String>;
   groups: <T = FragmentableArray<Group>>(
     args?: {
       where?: GroupWhereInput;
@@ -1303,6 +1346,7 @@ export interface UserSubscription
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   username: () => Promise<AsyncIterator<String>>;
+  sso: () => Promise<AsyncIterator<String>>;
   groups: <T = Promise<AsyncIterator<GroupSubscription>>>(
     args?: {
       where?: GroupWhereInput;

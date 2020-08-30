@@ -35,6 +35,7 @@ type User {
   email: String! @unique
   password: String!
   username: String!
+  sso: String
   groups: [Group!]! @relation(name: "GroupUser")
   picks: [Pick]
 }

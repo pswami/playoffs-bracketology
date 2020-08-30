@@ -875,6 +875,7 @@ type User {
   email: String!
   password: String!
   username: String!
+  sso: String
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   picks(where: PickWhereInput, orderBy: PickOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Pick!]
 }
@@ -889,6 +890,7 @@ input UserCreateInput {
   email: String!
   password: String!
   username: String!
+  sso: String
   groups: GroupCreateManyWithoutUsersInput
   picks: PickCreateManyWithoutUserInput
 }
@@ -907,6 +909,7 @@ input UserCreateWithoutGroupsInput {
   email: String!
   password: String!
   username: String!
+  sso: String
   picks: PickCreateManyWithoutUserInput
 }
 
@@ -914,6 +917,7 @@ input UserCreateWithoutPicksInput {
   email: String!
   password: String!
   username: String!
+  sso: String
   groups: GroupCreateManyWithoutUsersInput
 }
 
@@ -935,6 +939,8 @@ enum UserOrderByInput {
   password_DESC
   username_ASC
   username_DESC
+  sso_ASC
+  sso_DESC
 }
 
 type UserPreviousValues {
@@ -944,6 +950,7 @@ type UserPreviousValues {
   email: String!
   password: String!
   username: String!
+  sso: String
 }
 
 input UserScalarWhereInput {
@@ -1019,6 +1026,20 @@ input UserScalarWhereInput {
   username_not_starts_with: String
   username_ends_with: String
   username_not_ends_with: String
+  sso: String
+  sso_not: String
+  sso_in: [String!]
+  sso_not_in: [String!]
+  sso_lt: String
+  sso_lte: String
+  sso_gt: String
+  sso_gte: String
+  sso_contains: String
+  sso_not_contains: String
+  sso_starts_with: String
+  sso_not_starts_with: String
+  sso_ends_with: String
+  sso_not_ends_with: String
   AND: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   NOT: [UserScalarWhereInput!]
@@ -1046,6 +1067,7 @@ input UserUpdateInput {
   email: String
   password: String
   username: String
+  sso: String
   groups: GroupUpdateManyWithoutUsersInput
   picks: PickUpdateManyWithoutUserInput
 }
@@ -1054,12 +1076,14 @@ input UserUpdateManyDataInput {
   email: String
   password: String
   username: String
+  sso: String
 }
 
 input UserUpdateManyMutationInput {
   email: String
   password: String
   username: String
+  sso: String
 }
 
 input UserUpdateManyWithoutGroupsInput {
@@ -1090,6 +1114,7 @@ input UserUpdateWithoutGroupsDataInput {
   email: String
   password: String
   username: String
+  sso: String
   picks: PickUpdateManyWithoutUserInput
 }
 
@@ -1097,6 +1122,7 @@ input UserUpdateWithoutPicksDataInput {
   email: String
   password: String
   username: String
+  sso: String
   groups: GroupUpdateManyWithoutUsersInput
 }
 
@@ -1189,6 +1215,20 @@ input UserWhereInput {
   username_not_starts_with: String
   username_ends_with: String
   username_not_ends_with: String
+  sso: String
+  sso_not: String
+  sso_in: [String!]
+  sso_not_in: [String!]
+  sso_lt: String
+  sso_lte: String
+  sso_gt: String
+  sso_gte: String
+  sso_contains: String
+  sso_not_contains: String
+  sso_starts_with: String
+  sso_not_starts_with: String
+  sso_ends_with: String
+  sso_not_ends_with: String
   groups_every: GroupWhereInput
   groups_some: GroupWhereInput
   groups_none: GroupWhereInput

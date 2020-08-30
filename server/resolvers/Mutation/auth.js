@@ -2,6 +2,24 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const auth = {
+  async googleSSO(parent, args, ctx, info) {
+    let user = await ctx.prisma.user({ email: args.email })
+
+    if (!user) {
+      user = await ctx.prisma.createUser({
+        username: `${args.info.givenName} ${args.info.familyName}`,
+        email: args.email,
+        password: args.info.googleId,
+        sso: 'google',
+      })
+    }
+
+    return {
+      token: jwt.sign({ userId: user.id }, 'process.env.APP_SECRET'),
+      user,
+    }
+  },
+
   async signup(parent, args, ctx, info) {
     const password = await bcrypt.hash(args.password, 10)
     const user = await ctx.prisma.createUser({
