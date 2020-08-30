@@ -34,13 +34,7 @@ const Home = () => (
           <Card.Body>
             <ul>
               <li className="h5">
-                First Round picks are now locked!
-              </li>
-              <li className="h5">
-                UI/UX is a work in progress
-              </li>
-              <li className="h5">
-                NFL and MLB coming soon
+                Google SSO now available
               </li>
             </ul>
           </Card.Body>
