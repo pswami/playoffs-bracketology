@@ -2,11 +2,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { graphql, compose } from 'react-apollo';
+import GoogleLogin from 'react-google-login';
 
 import Loading from '../Loading';
 import Alert from '../Alert';
 
-import { LOGIN_MUTATION, CURRENT_USER_QUERY, SIGNUP_MUTATION } from '../../queries';
+import { LOGIN_MUTATION, CURRENT_USER_QUERY, SIGNUP_MUTATION, GOOGLE_SSO_MUTATION } from '../../queries';
 
 class LoginTab extends React.Component {
   state = {
@@ -35,6 +36,31 @@ class LoginTab extends React.Component {
         // console.log('token set', data.login.token);
 
         localStorage.setItem('token', data.login.token);
+        this.props.data.refetch();
+        this.setLoadingOff([]);
+
+        toggleModal();
+        history.push('/me');
+      }).catch(error => {
+        this.setLoadingOff(error.graphQLErrors);
+      });
+    })
+  };
+
+  handleGoogleSuccess = res => {
+    console.log(res)
+    const { googleSSO, toggleModal, history } = this.props;
+    const email = res.profileObj.email;
+    const password = res.profileObj.googleId;
+
+    this.setState({ loading: true }, () => {
+      googleSSO({
+        variables: { email, password, info: res.profileObj },
+      }).then(({ data }) => {
+        console.log('logged in', data);
+        // console.log('token set', data.login.token);
+
+        localStorage.setItem('token', data.googleSSO.token);
         this.props.data.refetch();
         this.setLoadingOff([]);
 
@@ -86,6 +112,13 @@ class LoginTab extends React.Component {
             <div className="modal-footer">
               <button onSubmit={this.handleSubmit} type="submit" className="btn btn-primary">Login</button>
             </div>
+            <GoogleLogin
+              clientId="125252181070-ed8bl8u571c4mtf4sqpcu08lp9e1kob5.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={this.handleGoogleSuccess}
+              onFailure={(res) => console.log('res', res)}
+              cookiePolicy={'single_host_origin'}
+            />
           </form>
         </Loading>
       </div>
@@ -185,6 +218,7 @@ class SignupTab extends React.Component {
 
 const Login = compose(
   graphql(LOGIN_MUTATION, { name: 'login' }),
+  graphql(GOOGLE_SSO_MUTATION, { name: 'googleSSO' }),
   graphql(CURRENT_USER_QUERY),
 )(withRouter(LoginTab));
 
