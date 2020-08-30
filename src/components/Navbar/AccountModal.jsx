@@ -110,14 +110,16 @@ class LoginTab extends React.Component {
                 <input type="checkbox" name="remember" /> Remember me</label>
             </div>
             <div className="modal-footer">
-              <button onSubmit={this.handleSubmit} type="submit" className="btn btn-primary">Login</button>
+              <button onSubmit={this.handleSubmit} type="submit" className="btn btn-primary btn-block">Login</button>
             </div>
+            <h4 class="text-divider"><span>OR</span></h4>
             <GoogleLogin
               clientId="125252181070-ed8bl8u571c4mtf4sqpcu08lp9e1kob5.apps.googleusercontent.com"
-              buttonText="Login"
+              buttonText="Login with Google"
               onSuccess={this.handleGoogleSuccess}
               onFailure={(res) => console.log('res', res)}
               cookiePolicy={'single_host_origin'}
+              className="google-btn"
             />
           </form>
         </Loading>
@@ -207,7 +209,7 @@ class SignupTab extends React.Component {
               />
             </div>
             <div className="modal-footer">
-              <button onSubmit={this.handleSubmit} type="submit" className="btn btn-primary">Register</button>
+              <button onSubmit={this.handleSubmit} type="submit" className="btn btn-primary btn-block">Register</button>
             </div>
           </form>
         </Loading>
