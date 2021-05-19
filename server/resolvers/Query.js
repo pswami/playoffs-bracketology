@@ -19,7 +19,7 @@ const Query = {
   },
 
   NBABracket(parent, args, ctx, info) {
-    const year = args.year || 2019;
+    const year = args.year || 2020;
     const NBA_BRACKETS_URL = `https://data.nba.net/prod/v1/${year}/playoffsBracket.json`;
     return rp({ uri: NBA_BRACKETS_URL })
       .then(data => JSON.parse(data).series)
