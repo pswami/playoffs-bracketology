@@ -57,7 +57,7 @@
     "raf": "3.4.0",
     "react": "^16.3.1",
     "react-apollo": "^2.5.4",
-    "react-dev-utils": "^5.0.0",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^16.3.1",
     "react-google-login": "^5.1.21",
     "react-router-dom": "^4.2.2",
