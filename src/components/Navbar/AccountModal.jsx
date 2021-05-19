@@ -93,6 +93,7 @@ class LoginTab extends React.Component {
                 type="email"
                 className="form-control"
                 placeholder="Enter email"
+                required="required"
               />
             </div>
             <div className="form-group">
@@ -103,6 +104,7 @@ class LoginTab extends React.Component {
                 className="form-control"
                 placeholder="Enter password"
                 name="pwd"
+                required="required"
               />
             </div>
             <div className="checkbox">
