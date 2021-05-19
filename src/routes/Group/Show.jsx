@@ -18,7 +18,7 @@ import { getWinner, checkUserInGroup } from '../../utils';
 
 import { NBA_BRACKETS_QUERY, CURRENT_USER_QUERY, GROUP_QUERY } from '../../queries';
 
-const availableYears = [2020, 2019];
+const availableYears = [2021, 2020, 2019];
 
 const i18n = {
   private_group_message: <div>To share private group (Temporary Solution): Send <a href={window.location}>group URL</a> to friends and click "Join"</div>,
