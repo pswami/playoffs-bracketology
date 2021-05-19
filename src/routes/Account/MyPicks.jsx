@@ -74,6 +74,8 @@ class TeamOption extends React.Component {
       { disabled: isSeriesLocked }
     );
 
+    if (!series.bottomRow.teamId || !series.topRow.teamId) return null;
+
     return (
       <div className={classNames}>
         <fieldset>
