@@ -16,7 +16,7 @@ const GroupsTable = ({ showCount, groups, history, singleTable }) => {
   const handleRequest = groupId => () => {
     swal(
       'Request Access?',
-      'Work in Progress',
+      'You do not have access to view this group.',
     );
   };
 

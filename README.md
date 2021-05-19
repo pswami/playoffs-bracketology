@@ -1,3 +1,13 @@
+### Local Development
+  1. To run FE server `yarn dev`
+  2. To run BE server `yarn start`
+
+
+### Deployment
+  1. `git push heroku master`
+
+### TODO
+
 MVP
 - [X] Landing page
 - [X] create groups
@@ -36,4 +46,7 @@ MVP
 
 V2
 
-- [ ] reddit login
+- [ ] Fix .env for server
+- [X] SSO Google
+- [ ] SSO Reddit
+- [X] BUG: able to login as blank user
