@@ -42,7 +42,7 @@ const Query = {
               "isScheduleAvailable": true,
               "isSeriesCompleted": series.seriesWinner > 0,
               "summaryStatusText": series.seriesText,
-              "gameNumber": 1,
+              "gameNumber": parseInt((series.nextGameNumber || '0').slice(-1)),
               "isGameLive": series.nextGameStatus > 1,
               "topRow": {
                 "teamId": series.highSeedId,
