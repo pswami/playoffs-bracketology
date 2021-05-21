@@ -106,7 +106,7 @@ const TeamTable = ({ group, users, brackets }) => {
 };
 
 const Show = ({ currentUserQuery, bracketQuery, match }) => {
-  const [selectedYear, setYear] = useState(2020);
+  const [selectedYear, setYear] = useState(new Date().getFullYear());
   const { groupId } = match.params;
 
   const changeYear = (year) => {

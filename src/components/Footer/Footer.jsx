@@ -6,7 +6,7 @@ import './style.scss';
 const Footer = ({ }) => (
   <footer className="page-footer font-small text-light navbar-blue mt-5">
     <div className="footer-copyright text-center py-1">
-      © 2020 Bracketology
+      © 2021 Bracketology
     </div>
   </footer>
 );
