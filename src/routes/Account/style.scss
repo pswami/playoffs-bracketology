@@ -3,6 +3,8 @@
   height: 4rem;
   border: 3px dotted #f1f1f1;
   transition: all .3s ease-in;
+  border-radius: 4rem;
+  padding: 2px;
 
   &:hover {
     border: 3px dotted #ff0000;
@@ -13,8 +15,10 @@
   cursor: pointer;
 
   input:checked + .icon {
+    border-radius: 4rem;
     transition: all .1s ease-in;
-    border: 3px dashed #ff0000;
+    border: 3px solid rgb(128, 28, 28);
+    background: white;
   }
 }
 

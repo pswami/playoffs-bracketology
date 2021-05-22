@@ -17,7 +17,7 @@ const i18n = {
 const Home = () => (
   <div>
     <div class="row justify-content-between mb-4">
-      <div className="col-lg-6 col-xs-9">
+      <div className="col-lg">
         <Card.Container className="news-card-body">
           <Card.Body className="text-center">
             <React.Fragment>
@@ -28,7 +28,7 @@ const Home = () => (
         </Card.Container>
         <br />
       </div>
-      <div className="col-lg-6 d-sm-none d-md-none d-lg-block">
+      {/* <div className="col-lg-6 d-sm-none d-md-none d-lg-block">
         <Card.Container className="news-card-body">
           <Card.Header>News</Card.Header>
           <Card.Body>
@@ -39,7 +39,7 @@ const Home = () => (
             </ul>
           </Card.Body>
         </Card.Container>
-      </div>
+      </div> */}
     </div>
     <div className="row">
       <div className="col-lg-4">

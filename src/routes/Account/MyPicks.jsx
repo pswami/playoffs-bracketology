@@ -108,7 +108,7 @@ class TeamOption extends React.Component {
             </label>
           </div>
         </fieldset>
-        <span> in <br /></span>
+        <span> in &nbsp;</span>
         {isSeriesLocked ?
           <div className="form-control gamesSelect"> {this.state.wins}</div> :
           <select
