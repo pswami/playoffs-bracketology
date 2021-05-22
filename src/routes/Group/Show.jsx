@@ -149,7 +149,7 @@ const Show = ({ currentUserQuery, bracketQuery, match }) => {
           const { group } = data;
           const { users } = group;
           const filteredUsers = users.filter(user => user.picks.length > 0);
-          const isUserInGroup = checkUserInGroup(currentUserQuery.currentUser, filteredUsers);
+          const isUserInGroup = checkUserInGroup(currentUserQuery.currentUser, users);
 
           return (
             <React.Fragment>
