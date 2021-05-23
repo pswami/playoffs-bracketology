@@ -60,6 +60,9 @@
 }
 
 .picksTable {
+  border-collapse: unset;
+  border-spacing: 5px;
+
   th {
     width: 105px;
     white-space: normal;
@@ -80,5 +83,8 @@
 
 
 .pickColumn {
-  font-size: 0.75rem
+  padding: 6px !important;
+  font-size: 0.75rem;
+  border-radius: 185px;
+  border: 1px solid #6c757d !important;
 }
