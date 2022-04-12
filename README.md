@@ -15,6 +15,7 @@
 ### TODO
 
 MVP
+<details>
 - [X] Landing page
 - [X] create groups
 - [X] Mobile-Friendly
@@ -36,8 +37,10 @@ MVP
 - [X] AllPicks Rounder Headers
 - [X] Join/Leave sometimes not changing live
 - [X] More fields on browse groups table (# of users, etc)
-
+</details>
+  
 ## TODO
+<details>
 - https://data.nba.net/prod/v1/2016/playoffsBracket.json
 - [ ] ~invite users~
 - [ ] fill in secrets
@@ -56,3 +59,4 @@ V2
 - [X] SSO Google
 - [ ] SSO Reddit
 - [X] BUG: able to login as blank user
+</details>
