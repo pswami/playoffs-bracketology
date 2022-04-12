@@ -19,7 +19,7 @@ const Query = {
   },
 
   NBABracket(parent, args, ctx, info) {
-    const currentYear = new Date().getFullYear();
+    const currentYear = new Date().getFullYear() - 1;
     const year = args.year || currentYear;
 
     if (year < 2020) {
