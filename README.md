@@ -1,6 +1,7 @@
 Production URL: https://bracketology-beta.herokuapp.com/
 
-<img width="1728" alt="image" src="https://user-images.githubusercontent.com/7545796/162866550-d78cd3c9-de65-4d7d-8124-7fb6149f21d4.png">
+<img width="1137" alt="image" src="https://user-images.githubusercontent.com/7545796/162866627-fd9a65e9-039f-4c60-9c47-9705c23ea2bd.png">
+
 
 ### Local Development
   1. To run FE server `yarn dev`
