@@ -22,7 +22,7 @@ const Home = () => (
           <Card.Body className="text-center">
             <React.Fragment>
               <p className="title-block welcome-title-block"><span className="bracket-sign left">{'['}</span> {i18n.bracketology} <span className="bracket-sign right">{']'}</span></p>
-              <p className="mt-4 h3">A platform to create brackets on a round-by-round basis</p>
+              <p className="mt-4 h3">Create brackets on a round-by-round basis</p>
             </React.Fragment>
           </Card.Body>
         </Card.Container>
