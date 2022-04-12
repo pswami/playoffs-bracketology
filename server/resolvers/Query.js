@@ -19,7 +19,8 @@ const Query = {
   },
 
   NBABracket(parent, args, ctx, info) {
-    const year = args.year || 2020;
+    const currentYear = new Date().getFullYear();
+    const year = args.year || currentYear;
 
     if (year < 2020) {
       const NBA_BRACKETS_URL = `https://data.nba.net/prod/v1/${year}/playoffsBracket.json`;
