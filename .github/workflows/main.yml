@@ -22,12 +22,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-     - name: Heroku Action
-       uses: CDNievas/heroku-action@v1.0
-       with:
-        # Used for authentication. You can find it in your heroku homepage account settings
-        heroku_api_key: c60997ff-1f41-41b3-a491-afd8707aa1c1
-        # Email from Heroku Account
-        heroku_email: pauras53@yahoo.com
-        # The appname to use for deploying/updating
-        heroku_app_name: bracketology-beta
+      - uses: actions/checkout@v1
+      - name: Login to Heroku Container registry
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login 
+      - name: Build and push
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:push -a bracketology-beta web 
+      - name: Release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a bracketology-beta web 
+
