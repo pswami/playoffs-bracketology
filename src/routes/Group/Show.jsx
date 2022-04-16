@@ -211,11 +211,11 @@ const Show = ({ currentUserQuery, bracketQuery, match }) => {
               </Card.Container>
               <br />
               <div className="row">
-                <div className="col-lg-6">
+                <div className={filteredUsers.length > 5 ? 'col-lg-12': 'col-lg-6'}>
                   <AllPicks {...{ group, users, bracketMap, selectedYear }} />
                   <br />
                 </div>
-                <div className="col-lg-6">
+                <div className={filteredUsers.length > 5 ? 'col-lg-12': 'col-lg-6'}>
                   {<Insights  {...{ users, bracketMap, selectedYear }} />}
                 </div>
               </div>
